@@ -9,16 +9,48 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.CommsReport">
+        <activity android:name=".screens.ReportFault.ReportFault">
 
+        </activity>
+        <activity android:name=".screens.ManageDocuments.ManageDocuments">
+
+        </activity>
+        <activity android:name=".screens.ManageFaults.ManageFaults">
+
+        </activity>
+        <activity android:name=".screens.ManageUser.ManageUser" >
+
+
+        </activity>
+        <activity android:name=".screens.UploadDocuments.UploadDocuments" >
+
+        </activity>
+        <activity android:name=".screens.Settings.Settings" >
+        </activity>
+        <activity android:name=".screens.AddUser.AddUser" >
+
+
+        </activity>
+        <activity android:name=".screens.ManageSites.ManageSites" >
+
+        </activity>
+        <activity android:name=".screens.AddSite.AddSite" >
+
+        </activity>
+        <activity android:name=".screens.forgotpassword.ForgotPasswordActivity" >
+
+        </activity>
         <activity android:name=".screens.login.LoginActivity" />
         <activity android:name=".screens.home.HomeActivity" />
-        <activity android:name=".screens.splash.SplashActivity"
-            android:theme="@style/SplashTheme">
+        <activity
+            android:name=".screens.splash.SplashActivity"
+            android:theme="@style/SplashTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+
         </activity>
     </application>
 

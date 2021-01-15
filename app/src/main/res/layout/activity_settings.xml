@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".screens.AddSite.AddSite"
+    android:orientation="vertical"
+    android:background="@drawable/bg"
+    >
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:id="@+id/rlheader"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_50sdp"
+            app:layout_constraintTop_toTopOf="parent">
+            <ImageView
+                android:id="@+id/img_menu"
+                android:layout_width="@dimen/_15sdp"
+                android:layout_height="@dimen/_15sdp"
+                android:layout_centerVertical="true"
+                android:layout_marginLeft="@dimen/_10sdp"
+                android:background="@drawable/menu"/>
+            <TextView
+                android:id="@+id/tv_header_text"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:text="SETTINGS"
+                android:textStyle="bold"
+                android:textSize="@dimen/_18sdp"
+                android:textColor="@color/white"
+                android:gravity="center"
+                android:layout_marginTop="@dimen/_5sdp"
+                android:layout_centerHorizontal="true"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="@dimen/_18sdp"
+                android:layout_alignParentRight="true"
+                android:layout_centerVertical="true"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:background="@drawable/more"
+                ></ImageView>
+
+        </RelativeLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@drawable/whitebg"
+            android:orientation="vertical">
+
+            <ScrollView
+                android:fillViewport="true"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_marginTop="@dimen/_20sdp"
+                    android:layout_marginLeft="@dimen/_20sdp"
+                    android:layout_marginRight="@dimen/_20sdp"
+                    android:orientation="vertical">
+
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:orientation="vertical">
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Name"
+                            android:textSize="12sp"
+                            android:textColor="#1E3F6C"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp">
+
+                        </TextView>
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/asscolor_round"
+                            android:layout_marginBottom="@dimen/_10sdp">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:background="@android:color/transparent"
+                                android:textStyle="normal"
+                                android:textSize="15sp"
+                                android:paddingLeft="@dimen/_9sdp"
+                                android:paddingRight="@dimen/_9sdp"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+
+                                android:inputType="text"
+
+                                >
+
+                            </EditText>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Email"
+                            android:textColor="#1E3F6C"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:textSize="12sp"
+
+                            android:layout_marginBottom="@dimen/_10sdp">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/asscolor_round"
+                            android:layout_marginBottom="@dimen/_20sdp">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:background="@android:color/transparent"
+                                android:textStyle="normal"
+                                android:textSize="15sp"
+                                android:paddingLeft="@dimen/_9sdp"
+                                android:paddingRight="@dimen/_9sdp"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+
+                                android:inputType="textEmailAddress"
+
+                                >
+
+                            </EditText>
+
+                        </LinearLayout>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Password"
+                            android:textColor="#1E3F6C"
+                            android:textSize="@dimen/_18sdp"
+                            android:textStyle="bold">
+
+                        </TextView>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1.5dp"
+                            android:background="#32000000"
+
+                            >
+
+                        </View>
+
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Current password"
+                            android:textColor="#1E3F6C"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:textSize="12sp"
+
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:layout_marginTop="@dimen/_15sdp">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/asscolor_round"
+                            android:layout_marginBottom="@dimen/_15sdp">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:background="@android:color/transparent"
+                                android:textStyle="normal"
+                                android:textSize="15sp"
+                                android:paddingLeft="@dimen/_9sdp"
+                                android:paddingRight="@dimen/_9sdp"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+                                android:inputType="textPassword"
+
+                                >
+
+                            </EditText>
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="New password"
+                            android:textColor="#1E3F6C"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:textSize="12sp"
+
+                            android:layout_marginBottom="@dimen/_5sdp">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/asscolor_round"
+                            android:layout_marginBottom="@dimen/_15sdp">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:background="@android:color/transparent"
+                                android:textStyle="normal"
+                                android:textSize="15sp"
+                                android:paddingLeft="@dimen/_9sdp"
+                                android:paddingRight="@dimen/_9sdp"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+
+                                android:inputType="textPassword"
+
+                                >
+
+                            </EditText>
+
+                        </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:text="Conform new password"
+                            android:textColor="#1E3F6C"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:textSize="12sp"
+
+                            android:layout_marginBottom="@dimen/_5sdp">
+
+                        </TextView>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/asscolor_round"
+                            android:layout_marginBottom="@dimen/_15sdp">
+                            <EditText
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:background="@android:color/transparent"
+                                android:textStyle="normal"
+                                android:textSize="15sp"
+                                android:paddingLeft="@dimen/_9sdp"
+                                android:paddingRight="@dimen/_9sdp"
+                                android:paddingTop="@dimen/_10sdp"
+                                android:paddingBottom="@dimen/_10sdp"
+
+                                android:inputType="number"
+
+                                >
+
+                            </EditText>
+
+                        </LinearLayout>
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:layout_gravity="bottom"
+                            android:gravity="bottom"
+                            android:layout_marginBottom="@dimen/_20sdp">
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_40sdp"
+                                android:layout_marginRight="@dimen/_50sdp"
+                                android:layout_marginLeft="@dimen/_50sdp"
+                                android:background="@drawable/gradient_login_button"
+                                >
+
+                                <TextView
+                                    android:layout_width="match_parent"
+                                    android:layout_height="match_parent"
+                                    android:text="SUBMIT"
+                                    android:textColor="#fff"
+                                    android:layout_gravity="center"
+                                    android:gravity="center">
+
+                                </TextView>
+
+
+
+                            </LinearLayout>
+                        </LinearLayout>
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </ScrollView>
+        </LinearLayout>
+
+    </LinearLayout>
+
+</LinearLayout>
