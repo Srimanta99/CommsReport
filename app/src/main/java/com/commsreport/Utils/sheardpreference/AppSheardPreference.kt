@@ -33,4 +33,5 @@ class AppSheardPreference(activity: Activity) {
     companion object {
         val MyPREFERENCES = "MyPrefs"
     }
+
 }

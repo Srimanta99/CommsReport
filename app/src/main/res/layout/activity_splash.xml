@@ -25,7 +25,7 @@
         app:layout_constraintRight_toRightOf="parent"
         android:layout_marginBottom="@dimen/_25sdp"
         android:text="Loading....."
-        android:textSize="@dimen/_15sdp"
+        android:textSize="@dimen/_13sdp"
         android:textColor="@color/white"
         ></TextView>
 

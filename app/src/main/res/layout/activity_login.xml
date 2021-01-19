@@ -152,13 +152,14 @@
             android:text="@string/forgotpassword"
             android:textSize="@dimen/_11sdp" />
 
-        <Button
+        <androidx.appcompat.widget.AppCompatTextView
             android:id="@+id/btn_login"
-            android:layout_width="@dimen/_180sdp"
-            android:layout_height="@dimen/_47sdp"
+            android:layout_width="@dimen/_175sdp"
+            android:layout_height="@dimen/_44sdp"
             android:layout_below="@+id/chk_remember"
             android:layout_centerHorizontal="true"
             android:layout_marginTop="@dimen/_25sdp"
+            android:gravity="center"
             android:background="@drawable/gradient_login_button"
             android:drawableRight="@drawable/login_arrow"
             android:drawablePadding="@dimen/_7sdp"

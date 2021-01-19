@@ -1,11 +1,12 @@
-package com.commsreport.screens.fragments
+package com.commsreport.screens.fragments.leaderdashboard
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.commsreport.R
+import com.commsreport.Utils.CustomTypeface
+import com.commsreport.databinding.FragmentLeaderDashboardBinding
 import com.commsreport.screens.home.HomeActivity
 
 // TODO: Rename parameter arguments, choose names that match
@@ -17,6 +18,7 @@ class LeaderDashboardFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var activity: HomeActivity?=null
+    var fragmentLeaderDashboardBinding:FragmentLeaderDashboardBinding?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -27,9 +29,17 @@ class LeaderDashboardFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_leader_dashboard, container, false)
+        fragmentLeaderDashboardBinding= FragmentLeaderDashboardBinding.inflate(inflater, container, false);
+        return fragmentLeaderDashboardBinding!!.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        fragmentLeaderDashboardBinding!!.tvReportfault.setTypeface(CustomTypeface.getRajdhaniSemiBold(getActivity()!!))
+        fragmentLeaderDashboardBinding!!.tvUploadDocument.setTypeface(CustomTypeface.getRajdhaniSemiBold(getActivity()!!))
+        fragmentLeaderDashboardBinding!!.tvFaultereport.setTypeface(CustomTypeface.getRajdhaniBold(getActivity()!!))
+        fragmentLeaderDashboardBinding!!.tvfaultcount.setTypeface(CustomTypeface.getRajdhaniBold(getActivity()!!))
+    }
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Leader board")

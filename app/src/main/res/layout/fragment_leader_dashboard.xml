@@ -7,8 +7,8 @@
 
 <RelativeLayout
     android:id="@+id/rl_faultcount"
-    android:layout_width="@dimen/_200sdp"
-    android:layout_height="@dimen/_200sdp"
+    android:layout_width="@dimen/_175sdp"
+    android:layout_height="@dimen/_175sdp"
     android:layout_centerHorizontal="true"
     android:layout_marginTop="@dimen/_30sdp"
     android:background="@drawable/circle">
@@ -19,40 +19,43 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_25sdp"
         android:textColor="@color/text_red"
-        android:textSize="@dimen/_60sdp"
+        android:textSize="@dimen/_55sdp"
         android:text="20"></TextView>
     <TextView
+        android:id="@+id/tv_faultereport"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:text="FAULTS \n REPORTED"
         android:gravity="center"
-        android:textSize="@dimen/_17sdp"
+        android:textSize="@dimen/_16sdp"
         android:layout_below="@+id/tvfaultcount"></TextView>
 
 </RelativeLayout>
-    <Button
-        android:id="@+id/btn_reportfault"
-        android:layout_width="@dimen/_175sdp"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_reportfault"
+        android:layout_width="@dimen/_170sdp"
         android:layout_height="@dimen/_44sdp"
 
         android:layout_marginTop="@dimen/_25sdp"
         android:layout_below="@+id/rl_faultcount"
         android:background="@drawable/gradient_login_button"
         android:text="REPORT A FAULT"
+        android:gravity="center"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
-        android:textSize="@dimen/_14sdp" />
-    <Button
-        android:id="@+id/btn_uploadDocument"
-        android:layout_width="@dimen/_175sdp"
-        android:layout_height="@dimen/_44sdp"
+        android:textSize="@dimen/_12sdp" />
 
-        android:layout_marginTop="@dimen/_25sdp"
-        android:layout_below="@+id/btn_reportfault"
-       android:background="@drawable/gradient_skyblue_button"
+    <androidx.appcompat.widget.AppCompatTextView
+        android:id="@+id/tv_uploadDocument"
+        android:layout_width="@dimen/_170sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_below="@+id/tv_reportfault"
+        android:background="@drawable/gradient_skyblue_button"
         android:text="UPLOAD DOCUMENT"
         android:layout_centerHorizontal="true"
         android:textColor="@color/white"
-        android:textSize="@dimen/_13sdp" />
+        android:gravity="center"
+        android:textSize="@dimen/_12sdp" />
 </RelativeLayout>

@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.commsreport.R
+import com.commsreport.Utils.CustomTypeface
+import com.commsreport.databinding.FragmentUploadDocumentsBinding
 import com.commsreport.screens.home.HomeActivity
 
 // TODO: Rename parameter arguments, choose names that match
@@ -17,6 +19,7 @@ class DocumentUploadFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var activity: HomeActivity?=null
+    var fragmentUploadDocumentsBinding : FragmentUploadDocumentsBinding?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -27,7 +30,22 @@ class DocumentUploadFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_upload_documents, container, false)
+        fragmentUploadDocumentsBinding= FragmentUploadDocumentsBinding.inflate(inflater,container,false)
+        return fragmentUploadDocumentsBinding!!.root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+
+        fragmentUploadDocumentsBinding!!.tvEmailUploaddoc.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.etEmailUploaddoc.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvStart.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.etStartdate.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvExpiry.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.etExpirydate.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.chkNotify.setTypeface(CustomTypeface.getWhitniBold(activity!!))
+        fragmentUploadDocumentsBinding!!.tvUploadDoc.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvSubmitUploadDoc.setTypeface(CustomTypeface.getwhitMedium(activity!!))
     }
 
     companion object {

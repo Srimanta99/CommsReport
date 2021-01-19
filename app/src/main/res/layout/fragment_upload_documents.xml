@@ -4,7 +4,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".screens.AddSite.AddSite"
     android:orientation="vertical"
     >
 
@@ -72,11 +71,13 @@
                         android:layout_height="match_parent"
                         android:orientation="vertical">
                         <TextView
+                            android:id="@+id/tv_email_uploaddoc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:text="Email"
                             android:textColor="#1E3F6C"
                             android:textStyle="bold"
+                            android:textSize="@dimen/_12sdp"
                             android:layout_marginBottom="@dimen/_5sdp">
 
                         </TextView>
@@ -86,16 +87,16 @@
                             android:background="@drawable/asscolor_round"
                             android:layout_marginBottom="@dimen/_10sdp">
                             <EditText
+                                android:id="@+id/et_email_uploaddoc"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_40sdp"
                                 android:background="@android:color/transparent"
                                 android:textStyle="normal"
-                                android:textSize="15sp"
                                 android:paddingLeft="@dimen/_9sdp"
                                 android:paddingRight="@dimen/_9sdp"
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
-
+                                android:textSize="@dimen/_12sdp"
                                 android:inputType="textEmailAddress"
 
                                 >
@@ -104,180 +105,242 @@
 
                         </LinearLayout>
 
-                   <LinearLayout
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:orientation="horizontal">
-                       <LinearLayout
-                           android:layout_width="0dp"
-                           android:layout_height="wrap_content"
-                           android:layout_weight="1"
-                           android:orientation="vertical"
-                           android:layout_marginRight="@dimen/_10sdp">
-
-                           <TextView
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:text="Start date"
-                               android:textColor="#1E3F6C"
-                               android:textStyle="bold"
-                               android:layout_marginBottom="@dimen/_10sdp">
-
-                           </TextView>
-
-                           <LinearLayout
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:background="@drawable/asscolor_round"
-                           >
-                               <EditText
-                                   android:layout_width="match_parent"
-                                   android:layout_height="@dimen/_40sdp"
-                                   android:background="@android:color/transparent"
-                                   android:textStyle="normal"
-                                   android:textSize="15sp"
-                                   android:drawableRight="@drawable/calender"
-                                   android:paddingLeft="@dimen/_9sdp"
-                                   android:paddingRight="@dimen/_9sdp"
-                                   android:paddingTop="@dimen/_10sdp"
-                                   android:paddingBottom="@dimen/_10sdp"
-
-                                   android:inputType="textEmailAddress">
-
-                               </EditText>
-
-                           </LinearLayout>
-
-
-                       </LinearLayout>
-                       <LinearLayout
-                           android:layout_width="0dp"
-                           android:layout_height="wrap_content"
-                           android:layout_weight="1"
-                           android:orientation="vertical"
-                           android:layout_marginLeft="@dimen/_10sdp">
-                           <TextView
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:text="Expiry date"
-                               android:textColor="#1E3F6C"
-                               android:textStyle="bold"
-                               android:layout_marginBottom="@dimen/_10sdp">
-
-                           </TextView>
-
-                           <LinearLayout
-                               android:layout_width="match_parent"
-                               android:layout_height="wrap_content"
-                               android:background="@drawable/asscolor_round"
-                              >
-                               <EditText
-                                   android:layout_width="match_parent"
-                                   android:layout_height="@dimen/_40sdp"
-                                   android:background="@android:color/transparent"
-                                   android:textStyle="normal"
-                                   android:textSize="15sp"
-                                   android:drawableRight="@drawable/calender"
-                                   android:paddingLeft="@dimen/_9sdp"
-                                   android:paddingRight="@dimen/_9sdp"
-                                   android:paddingTop="@dimen/_10sdp"
-                                   android:paddingBottom="@dimen/_10sdp"
-
-                                   android:inputType="textEmailAddress"
-
-                                   >
-
-                               </EditText>
-
-                           </LinearLayout>
-
-                       </LinearLayout>
-
-                   </LinearLayout>
-
-
                         <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:orientation="horizontal">
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_marginRight="@dimen/_10sdp">
+
+                                <TextView
+                                    android:id="@+id/tv_start"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Start date"
+                                    android:textColor="#1E3F6C"
+                                    android:textStyle="bold"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:layout_marginBottom="@dimen/_10sdp">
+
+                                </TextView>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/asscolor_round"
+                                    >
+                                    <!--  <EditText
+                                          android:layout_width="match_parent"
+                                          android:layout_height="@dimen/_40sdp"
+                                          android:background="@android:color/transparent"
+                                          android:textStyle="normal"
+                                          android:textSize="15sp"
+                                          android:paddingLeft="@dimen/_9sdp"
+                                          android:paddingRight="@dimen/_9sdp"
+                                          android:paddingTop="@dimen/_10sdp"
+                                          android:paddingBottom="@dimen/_10sdp"
+
+                                          android:inputType="textEmailAddress"
+
+                                          >
+
+                                      </EditText>-->
+
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_weight="1">
+                                        <EditText
+                                            android:id="@+id/et_startdate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_40sdp"
+                                            android:background="@android:color/transparent"
+                                            android:textStyle="normal"
+                                            android:textSize="@dimen/_12sdp"
+                                            android:paddingLeft="@dimen/_9sdp"
+                                            android:paddingRight="@dimen/_9sdp"
+                                            android:paddingTop="@dimen/_10sdp"
+                                            android:paddingBottom="@dimen/_10sdp"
+
+                                            android:inputType="text"
+
+                                            >
+
+                                        </EditText>
+
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_weight="0.3">
+                                        <ImageView
+                                            android:layout_width="@dimen/_15sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/calender"
+                                            android:layout_gravity="center"
+
+                                            >
+
+                                        </ImageView>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+
+                            </LinearLayout>
+                            <LinearLayout
+                                android:layout_width="0dp"
+                                android:layout_height="wrap_content"
+                                android:layout_weight="1"
+                                android:orientation="vertical"
+                                android:layout_marginLeft="@dimen/_10sdp">
+                                <TextView
+                                    android:id="@+id/tv_expiry"
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:text="Expiry date"
+                                    android:textColor="#1E3F6C"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:textStyle="bold"
+                                    android:layout_marginBottom="@dimen/_10sdp">
+
+                                </TextView>
+
+                                <LinearLayout
+                                    android:layout_width="match_parent"
+                                    android:layout_height="wrap_content"
+                                    android:background="@drawable/asscolor_round"
+                                    >
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_weight="1">
+                                        <EditText
+                                            android:id="@+id/et_expirydate"
+                                            android:layout_width="match_parent"
+                                            android:layout_height="@dimen/_40sdp"
+                                            android:background="@android:color/transparent"
+                                            android:textStyle="normal"
+                                            android:textSize="@dimen/_12sdp"
+                                            android:paddingLeft="@dimen/_9sdp"
+                                            android:paddingRight="@dimen/_9sdp"
+                                            android:paddingTop="@dimen/_10sdp"
+                                            android:paddingBottom="@dimen/_10sdp"
+
+                                            android:inputType="text"
+
+                                            >
+
+                                        </EditText>
+
+                                    </LinearLayout>
+                                    <LinearLayout
+                                        android:layout_width="0dp"
+                                        android:layout_height="@dimen/_40sdp"
+                                        android:layout_weight="0.3">
+                                        <ImageView
+                                            android:layout_width="@dimen/_15sdp"
+                                            android:layout_height="@dimen/_15sdp"
+                                            android:src="@drawable/calender"
+                                            android:layout_gravity="center"
+
+                                            >
+
+                                        </ImageView>
+                                    </LinearLayout>
+                                </LinearLayout>
+
+                            </LinearLayout>
+
+                        </LinearLayout>
+
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_22sdp"
                             android:layout_gravity="center"
                             android:gravity="center"
-                            android:layout_marginLeft="@dimen/_50sdp"
-                            android:layout_marginRight="@dimen/_50sdp">
+                           >
 
 
 
                             <CheckBox
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_20sdp">
+                                android:id="@+id/chk_notify"
+                                android:layout_width="wrap_content"
+                                android:layout_height="@dimen/_20sdp"
+
+                                android:textColor="#1E3F6C"
+                                android:textSize="@dimen/_12sdp"
+                                android:layout_centerInParent="true"
+                                android:button="@drawable/customcheckboxselector"
+                                android:text="Notify me prior 7 days"
+                                android:paddingLeft="@dimen/_13sdp">
 
                             </CheckBox>
-                            <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="wrap_content"
-                                android:text="Notify me prior 7 days"
-                                android:textColor="#1E3F6C"
-                                android:layout_marginLeft="@dimen/_5sdp"
-                                android:textStyle="bold">
 
-                            </TextView>
 
-                        </LinearLayout>
 
-                        <LinearLayout
+
+                        </RelativeLayout>
+
+                        <RelativeLayout
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
-                            android:background="@drawable/bluecapsulshapebutton"
-                            android:layout_marginTop="@dimen/_22sdp"
-                            android:layout_marginRight="@dimen/_50sdp"
-                            android:layout_marginLeft="@dimen/_50sdp">
+                            android:layout_height="@dimen/_44sdp"
+                            android:layout_marginTop="@dimen/_22sdp">
 
                             <TextView
-                                android:layout_width="match_parent"
-                                android:layout_height="match_parent"
+                                android:id="@+id/tv_upload_Doc"
+                                android:layout_width="@dimen/_174sdp"
+                                android:layout_height="@dimen/_44sdp"
                                 android:text="UPLOAD DOCUMENTS"
                                 android:textColor="#fff"
                                 android:layout_gravity="center"
+                                android:textSize="@dimen/_12sdp"
+                                android:background="@drawable/bluecapsulshapebutton"
+                                android:layout_centerHorizontal="true"
+
                                 android:gravity="center">
 
                             </TextView>
 
-                        </LinearLayout>
-                        <LinearLayout
+                        </RelativeLayout>
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="bottom"
                             android:gravity="bottom"
                             android:layout_marginBottom="@dimen/_20sdp">
-                            <LinearLayout
-                                android:layout_width="match_parent"
-                                android:layout_height="@dimen/_40sdp"
-                                android:layout_marginRight="@dimen/_50sdp"
-                                android:layout_marginLeft="@dimen/_50sdp"
-                                android:background="@drawable/gradient_login_button"
-                                >
+
 
                                 <TextView
-                                    android:layout_width="match_parent"
-                                    android:layout_height="match_parent"
+
+                                    android:id="@+id/tv_submit_upload_doc"
+                                    android:layout_width="@dimen/_175sdp"
+                                    android:layout_height="@dimen/_44sdp"
                                     android:text="SUBMIT"
                                     android:textColor="#fff"
                                     android:layout_gravity="center"
+                                    android:layout_centerHorizontal="true"
+                                    android:textSize="@dimen/_12sdp"
+                                    android:background="@drawable/gradient_login_button"
                                     android:gravity="center">
 
                                 </TextView>
 
 
 
-                            </LinearLayout>
-                        </LinearLayout>
+
+                        </RelativeLayout>
 
                     </LinearLayout>
 
                 </LinearLayout>
             </ScrollView>
         </LinearLayout>
-
     </LinearLayout>
 
 </LinearLayout>

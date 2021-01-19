@@ -40,7 +40,7 @@ import java.util.List;
  */
 
 public class AttributeBindings {
-    @BindingAdapter({"bind:typeface"})
+   /* @BindingAdapter({"bind:typeface"})
     public static void setTypeFace(TextView view, TypeFaceType tft) {
         Log.i("AttributeBindings", "setting typeface:"+tft);
         Typeface typeface = null;
@@ -62,7 +62,7 @@ public class AttributeBindings {
         }
         if (typeface!=null)
             view.setTypeface(typeface);
-    }
+    }*/
 
     /*@BindingAdapter({"bind:srcUrl", "bind:error"})
     public static void loadImage(ImageView view, String url, Drawable error) {

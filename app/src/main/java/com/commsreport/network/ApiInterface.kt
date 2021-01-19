@@ -1,5 +1,6 @@
 package com.wecompli.network
 
+import com.commsreport.model.LoginResponseModel
 import com.google.gson.JsonObject
 
 import okhttp3.MultipartBody
@@ -10,6 +11,8 @@ import retrofit2.http.*
 
 interface ApiInterface {
 
+    @POST(NetworkUtility.LOGIN)
+    fun callLogInApi(@Body body: JsonObject): Call<LoginResponseModel>
 
    // @Headers("Content-Type: application/json")
     /*@POST(NetworkUtility.LOG_IN)

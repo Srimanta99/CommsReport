@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="LEADER BOARD"
-            android:textSize="@dimen/_17sdp"
+            android:textSize="@dimen/_18sdp"
             android:textColor="@color/white"
             android:gravity="center"
             android:textAllCaps="true"

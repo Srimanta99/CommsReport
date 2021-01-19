@@ -178,17 +178,18 @@
 
                 android:layout_marginLeft="@dimen/_15sdp">
                 <RelativeLayout
+                    android:id="@+id/rl_settings"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
 
-                    android:layout_marginRight="@dimen/_13sdp"
-
+                    android:layout_marginRight="@dimen/_10sdp"
+                  android:layout_marginLeft="@dimen/_10sdp"
                     android:background="@drawable/rectangular_shape_rounded_corner_skyblue">
 
                     <ImageView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="@dimen/_20sdp"
+                        android:layout_height="@dimen/_20sdp"
                         android:layout_margin="@dimen/_7sdp"
                         android:layout_centerInParent="true"
                         android:background="@drawable/settings_icon">
@@ -196,11 +197,12 @@
                     </ImageView>
                 </RelativeLayout>
                 <RelativeLayout
+                    android:id="@+id/rl_logout"
                     android:layout_width="0dp"
                     android:layout_weight="1"
                     android:layout_height="match_parent"
-                    android:layout_marginLeft="@dimen/_13sdp"
-
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
                     android:background="@drawable/rectangular_shape_rounded_corner_white">
                     <ImageView
                         android:layout_width="wrap_content"

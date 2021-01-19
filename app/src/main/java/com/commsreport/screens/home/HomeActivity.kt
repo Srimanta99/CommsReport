@@ -1,6 +1,14 @@
 package com.commsreport.screens.home
 
+import android.app.AlertDialog
+import android.app.Dialog
+import android.content.DialogInterface
+import android.content.Intent
+import android.content.pm.PackageInfo
+import android.content.pm.PackageManager
 import android.graphics.Color
+import android.net.Uri
+import android.os.AsyncTask
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -11,13 +19,16 @@ import androidx.fragment.app.Fragment
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.databinding.ActivityHomeBinding
-import com.commsreport.screens.fragments.LeaderDashboardFragment
+import com.commsreport.screens.fragments.leaderdashboard.LeaderDashboardFragment
+import org.jsoup.Jsoup
+import java.io.IOException
 
 
 class HomeActivity : AppCompatActivity() {
     public var homeBinding: ActivityHomeBinding?=null
     var linearLayout:LinearLayout?=null
-
+    internal var currentVersion: String?=""
+    internal var dialog: Dialog?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         homeBinding= ActivityHomeBinding.inflate(LayoutInflater.from(this))
@@ -56,8 +67,8 @@ class HomeActivity : AppCompatActivity() {
     private fun setTypeface() {
         homeBinding!!.mainView!!.tvHeaderText!!.setTypeface(CustomTypeface.getRajdhaniBold(this))
         homeBinding!!.tvCompanyname.setTypeface(CustomTypeface.getRajdhaniBold(this))
-        homeBinding!!.tvUsername.setTypeface(CustomTypeface.getRajdhaniRegular(this))
-        homeBinding!!.tvEmaile.setTypeface(CustomTypeface.getRajdhaniRegular(this))
+        homeBinding!!.tvUsername.setTypeface(CustomTypeface.gettitanuiumWebRegular(this))
+        homeBinding!!.tvEmaile.setTypeface(CustomTypeface.gettitanuiumWebRegular(this))
         homeBinding!!.tvSites.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvUser.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvFault.setTypeface(CustomTypeface.getRajdhaniMedium(this))
@@ -73,5 +84,106 @@ class HomeActivity : AppCompatActivity() {
             fragmentManager.popBackStack()
         }
     }*/
+    private fun getCurrentVersion() {
+        val pm = this.packageManager
+        var pInfo: PackageInfo? = null
 
+        try {
+            pInfo = pm.getPackageInfo(this.packageName, 0)
+        } catch (e1: PackageManager.NameNotFoundException) {
+            // TODO Auto-generated catch block
+            e1.printStackTrace()
+        }
+
+        currentVersion = pInfo!!.versionName
+        GetVersionCode().execute()
+
+    }
+
+    internal inner class GetVersionCode : AsyncTask<Void, String, String>() {
+
+        override fun doInBackground(vararg voids: Void): String? {
+
+            var newVersion: String? = null
+
+            try {
+                val document =
+                    Jsoup.connect("https://play.google.com/store/apps/details?id=" + this@HomeActivity.packageName + "&hl=en")
+                        //  Document document = Jsoup.connect("https://play.google.com/store/apps/details?id=" + "com.app.astrolab"  + "&hl=en")
+                        .timeout(30000)
+                        .userAgent("Mozilla/5.0 (Windows; U; WindowsNT 5.1; en-US; rv1.8.1.6) Gecko/20070725 Firefox/2.0.0.6")
+                        .referrer("http://www.google.com")
+                        .get()
+                if (document != null) {
+                    val element = document!!.getElementsContainingOwnText("Current Version")
+                    for (ele in element) {
+                        if (ele.siblingElements() != null) {
+                            val sibElemets = ele.siblingElements()
+                            for (sibElemet in sibElemets) {
+                                newVersion = sibElemet.text()
+                            }
+                        }
+                    }
+                }
+            } catch (e: IOException) {
+                e.printStackTrace()
+            }
+
+            return newVersion
+
+        }
+
+
+        override fun onPostExecute(onlineVersion: String?) {
+
+            super.onPostExecute(onlineVersion)
+
+            if (onlineVersion != null && !onlineVersion.isEmpty()) {
+
+                if (java.lang.Float.valueOf(currentVersion!!) < java.lang.Float.valueOf(
+                        onlineVersion
+                    )) {
+                    //show anything
+                    showUpdateDialog()
+                }
+
+            }
+
+            // Log.d("update", "Current version " + currentVersion + "playstore version " + onlineVersion);
+
+        }
+    }
+    private fun showUpdateDialog() {
+        val builder = AlertDialog.Builder(this)
+        builder.setTitle(resources.getString(R.string.new_version_avalible))
+        builder.setPositiveButton(resources.getText(R.string.update)) { dialog, which ->
+            /* startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse
+                            ("market://details?id=com.wecompli")));*/
+            val appPackageName = packageName // getPackageName() from Context or Activity object
+            try {
+                startActivity(Intent(Intent.ACTION_VIEW, Uri.parse("market://details?id=$appPackageName")))
+            } catch (anfe: android.content.ActivityNotFoundException) {
+                startActivity(
+                    Intent(
+                        Intent.ACTION_VIEW,
+                        Uri.parse("https://play.google.com/store/apps/details?id=$appPackageName")
+                    )
+                )
+            }
+
+            dialog.dismiss()
+        }
+
+        builder.setNegativeButton(
+            resources.getString(R.string.cancel),
+            object : DialogInterface.OnClickListener {
+                override fun onClick(dialog: DialogInterface, which: Int) {
+                    dialog.dismiss()
+                }
+            })
+
+        builder.setCancelable(true)
+        dialog = builder.show()
+        dialog!!.setCancelable(false)
+    }
 }
