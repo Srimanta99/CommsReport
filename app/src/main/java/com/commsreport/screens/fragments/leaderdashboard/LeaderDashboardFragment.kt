@@ -42,7 +42,7 @@ class LeaderDashboardFragment : Fragment() {
     }
     override fun onResume() {
         super.onResume()
-        activity!!.homeBinding!!.mainView.tvHeaderText.setText("Leader board")
+        activity!!.homeBinding!!.mainView.tvHeaderText.setText("Dashboard")
     }
     companion object {
         @JvmStatic

@@ -12,4 +12,10 @@
     <string name="start">START</string>
     <string name="new_version_avalible">A New Update is Available</string>
     <string name="update">Update</string>
+    <string name="select_phato_choose">Select Action</string>
+    <string name="select_from_gallery">Select photo from gallery</string>
+    <string name="capture_from_camera">Capture photo from camera</string>
+    <string name="select_image_mode">Choose Image from </string>
+    <string name="from_gallery">Select photo from gallery</string>
+    <string name="from_camera">Capture photo from camera</string>
 </resources>

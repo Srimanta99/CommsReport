@@ -12,6 +12,8 @@ import com.commsreport.screens.fragments.adduser.AddUserFragment
 
 import com.commsreport.screens.fragments.document.DocumentUploadFragment
 import com.commsreport.screens.fragments.faults.FaultFragment
+import com.commsreport.screens.fragments.leaderdashboard.LeaderDashboardFragment
+import com.commsreport.screens.fragments.managesite.ManageSiteFragment
 import com.commsreport.screens.fragments.settings.SettingFragment
 import com.commsreport.screens.fragments.site.SiteFragment
 
@@ -19,6 +21,7 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
 
     init {
         homeBinding!!.mainView!!.imgMenu.setOnClickListener(this)
+        homeBinding.llHome.setOnClickListener(this)
         homeBinding.llSite.setOnClickListener(this)
         homeBinding.llUser.setOnClickListener(this)
         homeBinding.llDocument.setOnClickListener(this)
@@ -29,6 +32,10 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
     }
     override fun onClick(p0: View?) {
         when(p0!!.id){
+            R.id.ll_home->{
+                homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
+                homeActivity.openFragment(LeaderDashboardFragment())
+            }
              R.id.img_menu->{
                  homeBinding!!.drawerLayout!!.openDrawer(Gravity.LEFT)
              }
@@ -38,7 +45,7 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
             }
             R.id.ll_site->{
                 homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
-                homeActivity.openFragment(SiteFragment())
+                homeActivity.openFragment(ManageSiteFragment())
             }
             R.id.ll_user->{
                 homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)

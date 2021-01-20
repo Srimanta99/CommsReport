@@ -101,8 +101,11 @@ class LoginOnclick(val activity: LoginActivity,val activityLoginBinding: Activit
             val loginApiCall = apiInterface.callLogInApi(gsonObject)
             loginApiCall.enqueue(object :Callback<LoginResponseModel>{
                 override fun onResponse(call: Call<LoginResponseModel>, response: Response<LoginResponseModel>) {
+                    AppSheardPreference(activity).setUserData(PreferenceConstent.userData,response.body()!!.data)
+                    AppSheardPreference(activity).setvalue_in_preference(PreferenceConstent.loginuser_token,response!!.body()!!.data.token)
                     Log.d("response",response.body().toString())
                     customProgress.hideProgress()
+                    activity.startActivity(Intent(activity,HomeActivity::class.java))
                 }
 
                 override fun onFailure(call: Call<LoginResponseModel>, t: Throwable) {

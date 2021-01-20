@@ -6,6 +6,7 @@ import android.content.DialogInterface
 import android.content.Intent
 import android.content.pm.PackageInfo
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Color
 import android.net.Uri
 import android.os.AsyncTask
@@ -19,7 +20,16 @@ import androidx.fragment.app.Fragment
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.databinding.ActivityHomeBinding
+import com.commsreport.model.LoginResponseModel
 import com.commsreport.screens.fragments.leaderdashboard.LeaderDashboardFragment
+import com.nostra13.universalimageloader.core.DisplayImageOptions
+import com.nostra13.universalimageloader.core.ImageLoader
+import com.nostra13.universalimageloader.core.ImageLoaderConfiguration
+import com.nostra13.universalimageloader.core.assist.ImageScaleType
+import com.nostra13.universalimageloader.core.display.FadeInBitmapDisplayer
+import com.nostra13.universalimageloader.core.listener.SimpleImageLoadingListener
+import com.wecompli.utils.sheardpreference.AppSheardPreference
+import com.wecompli.utils.sheardpreference.PreferenceConstent
 import org.jsoup.Jsoup
 import java.io.IOException
 
@@ -52,8 +62,35 @@ class HomeActivity : AppCompatActivity() {
             }
         homeBinding!!.drawerLayout!!.addDrawerListener(actionBarDrawerToggle)
         setTypeface();
-       openFragment(LeaderDashboardFragment())
+        setuserdata();
+         openFragment(LeaderDashboardFragment())
     }
+   public  fun setuserdata(){
+       var userdata=AppSheardPreference(this).getUser(PreferenceConstent.userData)
+       homeBinding!!.tvCompanyname.setText(userdata!!.company_name)
+       homeBinding!!.tvUsername.setText(userdata!!.full_name)
+       homeBinding!!.tvEmaile.setText(userdata!!.email)
+       val options = DisplayImageOptions.Builder()
+           /* .showImageForEmptyUri(R.drawable.ic_empty)
+                .showImageOnFail(R.drawable.ic_error)*/
+           .resetViewBeforeLoading(true)
+           .cacheOnDisk(true)
+           .imageScaleType(ImageScaleType.EXACTLY)
+           .bitmapConfig(Bitmap.Config.RGB_565)
+           .considerExifParams(true)
+           .displayer(FadeInBitmapDisplayer(300))
+           .build()
+
+       var imageLoader: ImageLoader
+       imageLoader = ImageLoader.getInstance() // Get singleton instance
+       imageLoader.init(ImageLoaderConfiguration.createDefault(this))
+       imageLoader.loadImage(userdata!!.user_profile_picture_path, options,
+           object : SimpleImageLoadingListener() {
+               override fun onLoadingComplete(imageUri: String?, view: View?, loadedImage: Bitmap?) {
+                   homeBinding!!.imgProfile!!.setImageBitmap(loadedImage)
+               }
+           })
+   }
 
     public fun openFragment(fragment: Fragment) {
         val transaction =supportFragmentManager.beginTransaction()
@@ -67,6 +104,7 @@ class HomeActivity : AppCompatActivity() {
     private fun setTypeface() {
         homeBinding!!.mainView!!.tvHeaderText!!.setTypeface(CustomTypeface.getRajdhaniBold(this))
         homeBinding!!.tvCompanyname.setTypeface(CustomTypeface.getRajdhaniBold(this))
+        homeBinding!!.tvHome.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvUsername.setTypeface(CustomTypeface.gettitanuiumWebRegular(this))
         homeBinding!!.tvEmaile.setTypeface(CustomTypeface.gettitanuiumWebRegular(this))
         homeBinding!!.tvSites.setTypeface(CustomTypeface.getRajdhaniMedium(this))

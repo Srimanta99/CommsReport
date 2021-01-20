@@ -10,6 +10,7 @@ object PreferenceConstent {
     var useremail_key = "loginusername"
     var password_key = "password"
     var isremember="isremenber"
+    var userData="userdata"
     var iS_Checked_login = "checklogin"
     var loginuser_data = "userdata"
     var loginuser_name = "username"
