@@ -38,38 +38,42 @@
                     android:background="@drawable/grey_bg"
                     android:orientation="vertical">
 
-                    <LinearLayout
+                    <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_margin="@dimen/_15sdp"
+                        android:layout_height="@dimen/_60sdp"
+                        android:layout_margin="@dimen/_5sdp"
                         android:orientation="vertical">
 
                         <ImageView
+                            android:id="@+id/img_company"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
                             android:padding="@dimen/_5sdp"
+                            android:visibility="gone"
                             android:src="@drawable/camera">
 
                         </ImageView>
 
                         <TextView
-                            android:layout_width="match_parent"
+                            android:id="@+id/tv_no_image"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_gravity="center"
-                            android:layout_marginTop="@dimen/_10sdp"
-                            android:gravity="center"
-                            android:text="CILCK HERE\n FOR ADD IMAGE"
-                            android:textSize="8sp">
+                            android:layout_marginTop="@dimen/_5sdp"
+                            android:layout_centerInParent="true"
+                            android:text="No Image"
+                            android:visibility="visible"
+                            android:textSize="@dimen/_14sdp">
 
                         </TextView>
-                    </LinearLayout>
+                    </RelativeLayout>
 
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_marginLeft="@dimen/_15sdp"
+                    android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_marginRight="@dimen/_15sdp"
                     android:layout_weight="1"
                     android:orientation="vertical">
@@ -78,10 +82,11 @@
                         android:id="@+id/tv_companyname"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_20sdp"
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:layout_marginRight="@dimen/_10sdp"
                         android:text="Chatham"
                         android:textColor="#1E3F6C"
-                        android:textSize="15sp"
+                        android:textSize="@dimen/_12sdp"
                         android:textStyle="bold">
 
                     </TextView>
@@ -90,10 +95,10 @@
                         android:id="@+id/tv_adddress"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="@dimen/_5sdp"
+                        android:layout_marginTop="@dimen/_4sdp"
                         android:text="Nabapally Barasat Boys School Road, kolkata 700126"
                         android:textColor="#1E3F6C"
-                        android:textSize="12sp">
+                        android:textSize="@dimen/_11sdp">
 
                     </TextView>
 
@@ -119,6 +124,7 @@
 
     </RelativeLayout>
     <ImageView
+        android:id="@+id/img_edit"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_25sdp"
         android:layout_marginLeft="@dimen/_7sdp"

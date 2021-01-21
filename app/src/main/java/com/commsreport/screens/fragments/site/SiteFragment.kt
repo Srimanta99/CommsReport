@@ -16,6 +16,7 @@ import android.view.ViewGroup
 import android.view.Window
 import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import com.commsreport.R
@@ -23,10 +24,18 @@ import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.databinding.FragmentAddSiteBinding
 import com.commsreport.screens.home.HomeActivity
+import com.sculptee.utils.customprogress.CustomProgressDialog
+import com.wecompli.network.NetworkUtility
+import com.wecompli.utils.sheardpreference.AppSheardPreference
+import com.wecompli.utils.sheardpreference.PreferenceConstent
+import okhttp3.*
+import org.json.JSONObject
 import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
+import java.lang.Exception
+import java.util.concurrent.TimeUnit
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -40,6 +49,7 @@ class SiteFragment : Fragment() {
     var activity: HomeActivity?=null
     var image: String?=null
     var fragmentAddSiteBinding:FragmentAddSiteBinding?=null
+    var imgFile:File?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -57,18 +67,81 @@ class SiteFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         fragmentAddSiteBinding!!.tvEmail.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentAddSiteBinding!!.etEmailSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentAddSiteBinding!!.etSiteName.setTypeface(CustomTypeface.getwhitMedium(activity!!))
         fragmentAddSiteBinding!!.tvAddressSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
         fragmentAddSiteBinding!!.etAddressSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
         fragmentAddSiteBinding!!.tvPincode.setTypeface(CustomTypeface.getwhitMedium(activity!!))
         fragmentAddSiteBinding!!.etPinCode.setTypeface(CustomTypeface.getwhitMedium(activity!!))
         fragmentAddSiteBinding!!.tvUpload.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentAddSiteBinding!!.etUpload.setTypeface(CustomTypeface.getWhitniBold(activity!!))
+       // fragmentAddSiteBinding!!.etUpload.setTypeface(CustomTypeface.getWhitniBold(activity!!))
         fragmentAddSiteBinding!!.tvBrowes.setTypeface(CustomTypeface.getWhitniBold(activity!!))
         fragmentAddSiteBinding!!.tvSubmitSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
         fragmentAddSiteBinding!!.tvBrowes.setOnClickListener {
            showAlertForChooseImage()
         }
+        fragmentAddSiteBinding!!.tvSubmitSite.setOnClickListener {
+            CallApiForAddSite()
+        }
+    }
+
+    private fun CallApiForAddSite() {
+        var userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
+        val customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!, "Please Wait..", false)
+        val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+        builder.addFormDataPart("company_id" ,userdata!!.company_id)
+        builder.addFormDataPart("site_name", fragmentAddSiteBinding!!.etSiteName.text.toString())
+        builder.addFormDataPart("site_address", fragmentAddSiteBinding!!.etAddressSite.text.toString())
+        builder.addFormDataPart("site_postcode" ,userdata!!.company_id)
+        builder.addFormDataPart("site_logo",imgFile!!.absolutePath , okhttp3.RequestBody.create(
+            MediaType.parse("image/jpeg"), imgFile))
+
+        builder.addFormDataPart("status_id" ,"1")
+        val requestBody = builder.build()
+        var request: Request? = null
+        request = Request.Builder()
+            .addHeader("Authorization", userdata.token)
+            .addHeader("Content-Type","application/json")
+            .url(NetworkUtility.BASE_URL + NetworkUtility.CREATE_SITE)
+            .post(requestBody)
+            .build()
+
+        val client = okhttp3.OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
+
+        val call = client.newCall(request)
+        call.enqueue(object :Callback{
+            override fun onResponse(call: Call, response: Response) {
+                customProgress.hideProgress()
+                try {
+                    var resStr :String=response.body()!!.string()
+                    var response_obj= JSONObject(resStr)
+                    //val response_obj = JSONObject(response.body()!!.string())
+                    if (response_obj.getBoolean("status")){
+                        //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
+                        //callApiforfaultcreate(check_process_log_id);
+                        Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
+                    }else{
+                        Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
+
+                    }
+                }
+                catch (e: Exception){
+                    e.printStackTrace()
+                    Toast.makeText(activity, "Try later. Something Wrong.", Toast.LENGTH_LONG).show()
+
+                }
+            }
+
+            override fun onFailure(call: Call, e: IOException) {
+                customProgress.hideProgress()
+            }
+        })
+
+
     }
 
     private fun showAlertForChooseImage() {
@@ -182,12 +255,14 @@ class SiteFragment : Fragment() {
                     bm.compress(Bitmap.CompressFormat.JPEG, 100, out)
                     out.flush()
                     out.close()
+                    imgFile=file
 
                 } catch (e: FileNotFoundException) {
                     e.printStackTrace()
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
+                fragmentAddSiteBinding!!.imgSelectedImage.setImageBitmap(bm)
 
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -229,6 +304,7 @@ class SiteFragment : Fragment() {
                  fo.close()*/
                 val out = FileOutputStream(file)
                 thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 100, out)
+                imgFile=file
                 out.flush()
                 out.close()
             } catch (e: FileNotFoundException) {
@@ -240,7 +316,7 @@ class SiteFragment : Fragment() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-
+        fragmentAddSiteBinding!!.imgSelectedImage.setImageBitmap(thumbnail)
         /* try {
              destination.createNewFile()
              fo = FileOutputStream(destination)

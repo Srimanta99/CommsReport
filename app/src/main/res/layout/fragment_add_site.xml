@@ -73,7 +73,7 @@
             android:id="@+id/tv_email"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Email"
+            android:text="Site name"
             android:layout_marginBottom="@dimen/_5sdp"
             android:textColor="#1E3F6C"
             android:layout_marginLeft="@dimen/_5sdp"
@@ -82,7 +82,7 @@
         </TextView>
 
             <EditText
-                android:id="@+id/et_email_site"
+                android:id="@+id/et_site_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
 
@@ -188,7 +188,7 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="50dp"
+            android:layout_height="@dimen/_50sdp"
             android:background="@drawable/asscolor_round"
             >
 
@@ -197,8 +197,14 @@
                 android:layout_width="0dp"
                 android:layout_weight="1.7"
                 android:layout_height="match_parent">
+                <ImageView
+                    android:id="@+id/img_selectedImage"
+                    android:layout_width="@dimen/_50sdp"
+                    android:layout_margin="@dimen/_3sdp"
+                    android:adjustViewBounds="true"
+                    android:layout_height="match_parent"></ImageView>
 
-                <EditText
+                <!--<EditText
                     android:id="@+id/et_upload"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
@@ -215,7 +221,7 @@
                     android:singleLine="true"
                     android:lines="1"
                     >
-                </EditText>
+                </EditText>-->
 
 
             </LinearLayout>
@@ -225,8 +231,8 @@
                 android:layout_weight="1"
                 android:layout_height="match_parent"
                 android:background="@drawable/bluecapsulshapebutton"
-                android:layout_marginTop="@dimen/_2sdp"
-                android:layout_marginBottom="@dimen/_2sdp"
+                android:layout_marginTop="@dimen/_7sdp"
+                android:layout_marginBottom="@dimen/_7sdp"
                 android:layout_marginRight="@dimen/_2sdp">
 
                 <TextView

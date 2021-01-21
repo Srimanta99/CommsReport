@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.content.SharedPreferences
 import com.commsreport.model.LoginResponseModel
+import com.commsreport.model.SiteListModel
 import com.google.gson.Gson
 
 class AppSheardPreference(activity: Activity) {
@@ -35,6 +36,16 @@ class AppSheardPreference(activity: Activity) {
     fun getUser(key: String):LoginResponseModel.Userdata?{
         var sata = sharedpreferences!!.getString(key, "")
         return Gson().fromJson(sata,LoginResponseModel.Userdata::class.java)
+    }
+
+    fun setSiteDetails(key: String,sitemodel : SiteListModel.RowList) {
+        editor.putString(key, Gson().toJson(sitemodel))
+        editor.apply()
+    }
+
+    fun getSite(key: String):SiteListModel.RowList?{
+        var sata = sharedpreferences!!.getString(key, "")
+        return Gson().fromJson(sata,SiteListModel.RowList::class.java)
     }
 
     fun clerpreference() {

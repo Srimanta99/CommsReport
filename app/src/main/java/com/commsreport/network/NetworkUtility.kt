@@ -6,6 +6,7 @@ class NetworkUtility {
        // val BASE_URL ="https://wecompli.io/rest/api/mobile/"
        const val LOGIN="api/user/login"
         const val  SITELIST="api/site/list"
+        const val  CREATE_SITE="api/site/create"
 
     }
 }

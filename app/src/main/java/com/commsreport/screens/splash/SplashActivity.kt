@@ -10,7 +10,10 @@ import com.commsreport.R
 import com.commsreport.Utils.ApplicationConstant
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.databinding.ActivitySplashBinding
+import com.commsreport.screens.home.HomeActivity
 import com.commsreport.screens.login.LoginActivity
+import com.wecompli.utils.sheardpreference.AppSheardPreference
+import com.wecompli.utils.sheardpreference.PreferenceConstent
 
 class SplashActivity : AppCompatActivity() {
     var activitySplashBinding:ActivitySplashBinding?=null
@@ -21,8 +24,13 @@ class SplashActivity : AppCompatActivity() {
         activitySplashBinding!!.tvLoading.setTypeface(CustomTypeface.getrobotoLight(this))
 
         Handler().postDelayed(Runnable {
-            startActivity(Intent(this,LoginActivity::class.java))
-            finish()
+            if(AppSheardPreference(this).getvalue_in_preference(PreferenceConstent.iS_LOGIN).equals("1")){
+                startActivity(Intent(this,HomeActivity::class.java))
+                finish()
+            }else {
+                startActivity(Intent(this, LoginActivity::class.java))
+                finish()
+            }
         },ApplicationConstant.SPLASHTIME)
     }
 }

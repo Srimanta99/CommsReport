@@ -105,6 +105,7 @@ class LoginOnclick(val activity: LoginActivity,val activityLoginBinding: Activit
                     AppSheardPreference(activity).setvalue_in_preference(PreferenceConstent.loginuser_token,response!!.body()!!.data.token)
                     Log.d("response",response.body().toString())
                     customProgress.hideProgress()
+                    AppSheardPreference(activity).setvalue_in_preference(PreferenceConstent.iS_LOGIN,"1")
                     activity.startActivity(Intent(activity,HomeActivity::class.java))
                 }
 
