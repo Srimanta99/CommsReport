@@ -7,10 +7,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.databinding.FragmentLeaderDashboardBinding
+import com.commsreport.screens.fragments.document.DocumentUploadFragment
+import com.commsreport.screens.fragments.reportfault.ReportFaultFragment
 import com.commsreport.screens.home.HomeActivity
 
-// TODO: Rename parameter arguments, choose names that match
-// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
@@ -39,6 +39,12 @@ class LeaderDashboardFragment : Fragment() {
         fragmentLeaderDashboardBinding!!.tvUploadDocument.setTypeface(CustomTypeface.getRajdhaniSemiBold(getActivity()!!))
         fragmentLeaderDashboardBinding!!.tvFaultereport.setTypeface(CustomTypeface.getRajdhaniBold(getActivity()!!))
         fragmentLeaderDashboardBinding!!.tvfaultcount.setTypeface(CustomTypeface.getRajdhaniBold(getActivity()!!))
+        fragmentLeaderDashboardBinding!!.tvUploadDocument.setOnClickListener {
+            activity!!.openFragment(DocumentUploadFragment())
+        }
+        fragmentLeaderDashboardBinding!!.tvReportfault.setOnClickListener {
+            activity!!.openFragment(ReportFaultFragment())
+        }
     }
     override fun onResume() {
         super.onResume()

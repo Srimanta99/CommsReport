@@ -7,13 +7,16 @@ import androidx.core.view.GravityCompat
 import com.commsreport.R
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.databinding.ActivityHomeBinding
+
 import com.commsreport.screens.fragments.adduser.AddUserFragment
 
 
 import com.commsreport.screens.fragments.document.DocumentUploadFragment
 import com.commsreport.screens.fragments.faults.FaultFragment
 import com.commsreport.screens.fragments.leaderdashboard.LeaderDashboardFragment
+import com.commsreport.screens.fragments.managedocument.ManageDocumentFragment
 import com.commsreport.screens.fragments.managesite.ManageSiteFragment
+import com.commsreport.screens.fragments.manageuser.ManageUserFragment
 import com.commsreport.screens.fragments.settings.SettingFragment
 import com.commsreport.screens.fragments.site.SiteFragment
 
@@ -41,7 +44,7 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
              }
             R.id.ll_document->{
                 homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
-                homeActivity.openFragment(DocumentUploadFragment())
+                homeActivity.openFragment(ManageDocumentFragment())
             }
             R.id.ll_site->{
                 homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
@@ -49,7 +52,7 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
             }
             R.id.ll_user->{
                 homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
-                homeActivity.openFragment(AddUserFragment())
+                homeActivity.openFragment(ManageUserFragment())
             }
             R.id.ll_fault->{
                 homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
