@@ -37,6 +37,7 @@
             android:layout_alignParentRight="true"
             android:layout_centerVertical="true"
             android:layout_marginRight="@dimen/_15sdp"
+            android:visibility="invisible"
             android:background="@drawable/more"></ImageView>
 
     </RelativeLayout>
