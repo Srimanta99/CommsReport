@@ -18,4 +18,5 @@
     <color name="text_color_sky">#1BB8F9</color>
     <color name="red_button_color">#FE0100</color>
     <color name="login_bg_header">#032c71</color>
+    <color name="dialog_grey_color">#aaaaaa</color>
 </resources>

@@ -1,7 +1,9 @@
 package com.wecompli.network
 
+import com.commsreport.model.AddUserResponse
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
+import com.commsreport.model.SiteUserListModel
 import com.google.gson.JsonObject
 
 import okhttp3.MultipartBody
@@ -19,7 +21,16 @@ interface ApiInterface {
     @POST(NetworkUtility.SITELIST)
     fun callSiteListApi(@Header("Authorization") token:String,@Body body: JsonObject): Call<SiteListModel>
 
-   // @Headers("Content-Type: application/json")
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.CREATE_USER)
+    fun caallCreateUserApi(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.SITE_USER_LIST)
+    fun callSiteUserListApi(@Header("Authorization") token:String, @Body body: JsonObject): Call<SiteUserListModel>
+
+
+    // @Headers("Content-Type: application/json")
     /*@POST(NetworkUtility.LOG_IN)
     fun callLogInApi(@Field("user_email") email:String,
                      @Field("password") pass:String,

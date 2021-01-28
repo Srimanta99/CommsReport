@@ -56,7 +56,7 @@ class ManageSiteFragment : Fragment() {
         manageSiteAdapter= ManageSiteAdapter(activity!!,siteList)
         fragmentManageSiteBinding!!.recManagesite.adapter=manageSiteAdapter
         callApiForSiteList()
-        fragmentManageSiteBinding!!.tvAddsite.setOnClickListener {
+        fragmentManageSiteBinding!!.tvAddSite.setOnClickListener {
             activity!!.openFragment(SiteFragment())
         }
     }
@@ -79,8 +79,11 @@ class ManageSiteFragment : Fragment() {
                     customProgress.hideProgress()
                     if(response.code()==200) {
                         siteList = response.body()!!.row
-                        manageSiteAdapter = ManageSiteAdapter(activity!!, siteList)
-                        fragmentManageSiteBinding!!.recManagesite.adapter = manageSiteAdapter
+                        if (siteList.size>=0) {
+                            manageSiteAdapter = ManageSiteAdapter(activity!!, siteList)
+                            fragmentManageSiteBinding!!.recManagesite.adapter = manageSiteAdapter
+                        }else
+                            Alert.showalert(activity!!, "No Site Found")
                     }else if(response.code()==401){
                         Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
 
