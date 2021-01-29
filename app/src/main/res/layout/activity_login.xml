@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/login_bg"
+    android:orientation="vertical"
     tools:context=".screens.login.LoginActivity">
     <ImageView
         android:id="@+id/logo"
@@ -13,19 +14,30 @@
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintLeft_toLeftOf="parent"
         app:layout_constraintRight_toRightOf="parent"
+        android:layout_gravity="center_horizontal"
         android:layout_marginTop="@dimen/_30sdp"
         android:background="@drawable/logo"></ImageView>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintTop_toBottomOf="@+id/logo"
+        app:layout_constraintRight_toRightOf="parent"
+        app:layout_constraintLeft_toLeftOf="parent"
+        android:layout_marginTop="@dimen/_45sdp"
+        android:background="@drawable/top_two_rounded_corner_white"
+        android:orientation="vertical">
     <TextView
         android:id="@+id/tv_loginhader"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintLeft_toLeftOf="parent"
-        android:layout_marginTop="@dimen/_75sdp"
+
+        android:layout_marginTop="@dimen/_25sdp"
+        android:gravity="center_horizontal"
         android:textColor="@color/login_text_color"
         android:textSize="@dimen/_20sdp"
         android:text="@string/login"
-        app:layout_constraintTop_toBottomOf="@id/logo"
-        app:layout_constraintRight_toRightOf="parent"></TextView>
+
+       ></TextView>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -38,7 +50,7 @@
             android:id="@+id/tvemail"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginLeft="@dimen/_18sdp"
             android:layout_marginRight="@dimen/_12sdp"
             android:text="Email"
             android:textColor="@color/email_color"
@@ -73,7 +85,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@+id/et_email"
-            android:layout_marginLeft="@dimen/_16sdp"
+            android:layout_marginLeft="@dimen/_18sdp"
             android:layout_marginTop="@dimen/_17sdp"
             android:layout_marginRight="@dimen/_12sdp"
             android:text="Password"
@@ -168,6 +180,6 @@
             android:textColor="@color/white"
             android:textSize="@dimen/_14sdp" />
     </RelativeLayout>
+    </LinearLayout>
 
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+</LinearLayout>

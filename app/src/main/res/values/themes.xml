@@ -51,4 +51,26 @@
         <item name="android:backgroundDimEnabled">false</item>
         <item name="android:background">@android:color/transparent</item>
     </style>
+
+    <style name="DialogThemedatepicker" parent="Theme.AppCompat.Light.Dialog">
+        <item name="colorAccent">@color/homehearbg</item>
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:windowBackground">@color/white</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:textColor">@color/black</item>
+
+    </style>
+
+    <style name="MyTimePickerDialogTheme" parent="@style/Theme.AppCompat.Light.Dialog">
+        <item name="android:textColor">@color/purple_700</item>
+        <item name="colorAccent">@color/purple_700</item>
+        <item name="android:buttonBarPositiveButtonStyle">@style/Widget.MaterialComponents.Button</item>
+    <item name="android:buttonBarNegativeButtonStyle">@style/Widget.MaterialComponents.Button.TextButton</item>
+    <item name="android:buttonBarNeutralButtonStyle">@style/Widget.MaterialComponents.Button</item>
+    </style>
+    <style name="MyTimePickerDialogTheme1" parent="Theme.MaterialComponents.Light.DarkActionBar">
+        <!-- Customize your theme here. --> <item name="colorPrimary">@color/colorPrimary
+    </item> <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorAccent">@color/black</item></style>
+
 </resources>

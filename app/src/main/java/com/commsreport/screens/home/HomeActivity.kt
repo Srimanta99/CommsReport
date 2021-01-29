@@ -84,12 +84,18 @@ class HomeActivity : AppCompatActivity() {
        var imageLoader: ImageLoader
        imageLoader = ImageLoader.getInstance() // Get singleton instance
        imageLoader.init(ImageLoaderConfiguration.createDefault(this))
-       imageLoader.loadImage(userdata!!.user_profile_picture_path, options,
+       imageLoader.loadImage(userdata!!.company_logo, options,
            object : SimpleImageLoadingListener() {
                override fun onLoadingComplete(imageUri: String?, view: View?, loadedImage: Bitmap?) {
                    homeBinding!!.imgProfile!!.setImageBitmap(loadedImage)
                }
            })
+
+       if(userdata.user_type.equals("COMPANY_ADMIN")){
+           homeBinding!!.llSite.visibility=View.VISIBLE
+           homeBinding!!.llUser.visibility=View.VISIBLE
+
+       }
    }
 
     public fun openFragment(fragment: Fragment) {

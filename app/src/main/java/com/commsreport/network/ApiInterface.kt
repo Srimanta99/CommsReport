@@ -1,9 +1,6 @@
 package com.wecompli.network
 
-import com.commsreport.model.AddUserResponse
-import com.commsreport.model.LoginResponseModel
-import com.commsreport.model.SiteListModel
-import com.commsreport.model.SiteUserListModel
+import com.commsreport.model.*
 import com.google.gson.JsonObject
 
 import okhttp3.MultipartBody
@@ -26,8 +23,20 @@ interface ApiInterface {
     fun caallCreateUserApi(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
     @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.SITE_USER_UPDATE)
+    fun callSiteUserUpdateApi(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
+    @Headers("Content-Type: application/json")
     @POST(NetworkUtility.SITE_USER_LIST)
     fun callSiteUserListApi(@Header("Authorization") token:String, @Body body: JsonObject): Call<SiteUserListModel>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.FAULTLIST)
+    fun callFaultApi(@Header("Authorization") token:String, @Body body: JsonObject): Call<FaultListModel>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.FAULTREPAIR)
+    fun callApiforFaultRepair(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
 
     // @Headers("Content-Type: application/json")

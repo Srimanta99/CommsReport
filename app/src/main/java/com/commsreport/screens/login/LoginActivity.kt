@@ -5,12 +5,13 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.databinding.ActivityLoginBinding
+
 import com.wecompli.utils.sheardpreference.AppSheardPreference
 import com.wecompli.utils.sheardpreference.PreferenceConstent
 
 
 class LoginActivity : AppCompatActivity() {
-      var activityLoginBinding:ActivityLoginBinding?=null
+      var activityLoginBinding: ActivityLoginBinding?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

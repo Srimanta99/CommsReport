@@ -10,6 +10,10 @@ class NetworkUtility {
         const val  CREATE_FAULT="api/fault/create"
         const val  CREATE_USER="api/site/user/create"
         const val  SITE_USER_LIST="api/site/user/list"
+        const val  SITE_USER_UPDATE="api/site/user/update"
+        const val  UPLOAD_DOC="api/document/create"
+        const val  FAULTLIST="api/fault/list"
+        const val  FAULTREPAIR="api/fault/repair"
 
     }
 }

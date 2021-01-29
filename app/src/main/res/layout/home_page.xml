@@ -8,7 +8,7 @@
     <RelativeLayout
         android:id="@+id/rlheader"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_75sdp"
+        android:layout_height="@dimen/_55sdp"
 
         app:layout_constraintTop_toTopOf="parent">
         <ImageView
@@ -23,7 +23,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="LEADER BOARD"
-            android:textSize="@dimen/_18sdp"
+            android:textSize="@dimen/_16sdp"
             android:textColor="@color/white"
             android:gravity="center"
             android:textAllCaps="true"
@@ -41,13 +41,19 @@
             android:background="@drawable/more"></ImageView>
 
     </RelativeLayout>
-    <FrameLayout
-        android:id="@+id/content_frame"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
+    <LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+        android:background="@drawable/top_two_rounded_corner_white">
+        <FrameLayout
+            android:id="@+id/content_frame"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
 
-        app:layout_constraintTop_toBottomOf="@+id/rlheader"
+            app:layout_constraintTop_toBottomOf="@+id/rlheader"
 
-        android:layout_margin="@dimen/_5sdp"
-        />
+            android:layout_margin="@dimen/_5sdp"
+            />
+    </LinearLayout>
+
 </LinearLayout>

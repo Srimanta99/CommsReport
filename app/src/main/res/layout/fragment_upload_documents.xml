@@ -74,7 +74,7 @@
                             android:id="@+id/tv_email_uploaddoc"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:text="Email"
+                            android:text="Document Name"
                             android:textColor="#1E3F6C"
                             android:textStyle="bold"
                             android:textSize="@dimen/_12sdp"
@@ -87,7 +87,7 @@
                             android:background="@drawable/asscolor_round"
                             android:layout_marginBottom="@dimen/_10sdp">
                             <EditText
-                                android:id="@+id/et_email_uploaddoc"
+                                android:id="@+id/et_name_uploaddoc"
                                 android:layout_width="match_parent"
                                 android:layout_height="@dimen/_40sdp"
                                 android:background="@android:color/transparent"
@@ -154,8 +154,8 @@
                                         android:layout_width="0dp"
                                         android:layout_height="@dimen/_40sdp"
                                         android:layout_weight="1">
-                                        <EditText
-                                            android:id="@+id/et_startdate"
+                                        <TextView
+                                            android:id="@+id/tv_startdate"
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/_40sdp"
                                             android:background="@android:color/transparent"
@@ -165,19 +165,18 @@
                                             android:paddingRight="@dimen/_9sdp"
                                             android:paddingTop="@dimen/_10sdp"
                                             android:paddingBottom="@dimen/_10sdp"
+                                            android:inputType="text">
 
-                                            android:inputType="text"
-
-                                            >
-
-                                        </EditText>
+                                        </TextView>
 
                                     </LinearLayout>
                                     <LinearLayout
+                                        android:id="@+id/ll_cal1"
                                         android:layout_width="0dp"
                                         android:layout_height="@dimen/_40sdp"
                                         android:layout_weight="0.3">
                                         <ImageView
+
                                             android:layout_width="@dimen/_15sdp"
                                             android:layout_height="@dimen/_15sdp"
                                             android:src="@drawable/calender"
@@ -218,8 +217,8 @@
                                         android:layout_width="0dp"
                                         android:layout_height="@dimen/_40sdp"
                                         android:layout_weight="1">
-                                        <EditText
-                                            android:id="@+id/et_expirydate"
+                                        <TextView
+                                            android:id="@+id/tv_expirydate"
                                             android:layout_width="match_parent"
                                             android:layout_height="@dimen/_40sdp"
                                             android:background="@android:color/transparent"
@@ -234,7 +233,7 @@
 
                                             >
 
-                                        </EditText>
+                                        </TextView>
 
                                     </LinearLayout>
                                     <LinearLayout
@@ -242,6 +241,7 @@
                                         android:layout_height="@dimen/_40sdp"
                                         android:layout_weight="0.3">
                                         <ImageView
+                                            android:id="@+id/ll_cal2"
                                             android:layout_width="@dimen/_15sdp"
                                             android:layout_height="@dimen/_15sdp"
                                             android:src="@drawable/calender"
@@ -311,9 +311,34 @@
                         <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:layout_gravity="bottom"
-                            android:gravity="bottom"
+
                             android:layout_marginBottom="@dimen/_20sdp">
+
+                            <LinearLayout
+                                android:id="@+id/ll_attachment"
+                                android:layout_width="match_parent"
+                                android:layout_height="@dimen/_30sdp"
+                                android:layout_margin="@dimen/_12sdp"
+                                android:visibility="gone">
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:layout_gravity="center_vertical"
+                                    android:background="@drawable/attachment">
+
+                                </ImageView>
+                                <TextView
+                                    android:id="@+id/tv_attachment1"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:paddingLeft="@dimen/_12sdp"
+                                    android:text=" Attachment 1"
+                                    android:textSize="@dimen/_13sdp"
+                                    android:textColor="@color/black"
+                                    android:gravity="center_vertical"
+                                    ></TextView>
+
+                            </LinearLayout>
 
 
                                 <TextView
@@ -326,6 +351,7 @@
                                     android:layout_gravity="center"
                                     android:layout_centerHorizontal="true"
                                     android:textSize="@dimen/_12sdp"
+                                    android:layout_alignParentBottom="true"
                                     android:background="@drawable/gradient_login_button"
                                     android:gravity="center">
 

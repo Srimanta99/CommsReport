@@ -5,12 +5,14 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForUser
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteListAddUser
 import com.commsreport.databinding.FragmentEditUserBinding
+import com.commsreport.model.AddUserResponse
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
 import com.commsreport.model.SiteUserListModel
@@ -58,6 +60,11 @@ class EditUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
+        if(userdata!!.user_type.equals("COMPANY_ADMIN")){
+            editUserBinding!!.llSelectsite.visibility=View.VISIBLE
+
+        }else
+            selectedSiteId=userdata!!.site_id
         editUserBinding!!.tvNameAddUser.setTypeface(CustomTypeface.getwhitMedium(activity!!))
         editUserBinding!!.etnName.setTypeface(CustomTypeface.getwhitMedium(activity!!))
         editUserBinding!!.tvEmailAddUser.setTypeface(CustomTypeface.getwhitMedium(activity!!))
@@ -70,6 +77,10 @@ class EditUserFragment : Fragment() {
         editUserBinding!!.tvDropdownSelectsite.setOnClickListener {
             val customPopUpDialogSiteList= CustomPopUpDialogSiteForUser(activity,siteList,this)
             customPopUpDialogSiteList!!.show()
+        }
+        editUserBinding!!.submitTvid.setOnClickListener {
+            if (checkValidation())
+                callApiforUpdateUser()
         }
 
         userdetails=AppSheardPreference(activity!!).getSelectedUser(PreferenceConstent.selectedUser)
@@ -90,6 +101,11 @@ class EditUserFragment : Fragment() {
                     putString(ARG_PARAM2, param2)
                 }
             }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity!!.homeBinding!!.mainView.tvHeaderText.setText("Edit User")
     }
     private fun callApiForSiteList() {
 
@@ -125,4 +141,77 @@ class EditUserFragment : Fragment() {
             e.printStackTrace()
         }
     }
+
+    private fun checkValidation():Boolean{
+        if(editUserBinding!!.etnName.text.toString().equals("")){
+            editUserBinding!!.etnName.requestFocus()
+            return false
+        }
+        if(editUserBinding!!.etnEmail.text.toString().equals("")){
+            editUserBinding!!.etnEmail.requestFocus()
+            return false
+        }
+        if(editUserBinding!!.etnContactno.text.toString().equals("")){
+            editUserBinding!!.etnContactno.requestFocus()
+            return false
+        }
+        if(editUserBinding!!.etnAddress.text.toString().equals("")){
+            editUserBinding!!.etnAddress.requestFocus()
+            return false
+        }
+        if (selectedSiteId.equals("")){
+            Alert.showalert(activity!!,"Select Site")
+            return false
+        }
+        return true
+
+    }
+
+    private fun callApiforUpdateUser() {
+        val customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!, "Please Wait..", false)
+        val apiInterface = Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        try {
+            val paramObject = JSONObject()
+            paramObject.put("user_first_name", editUserBinding!!.etnName.text.toString())
+            paramObject.put("user_email_ID", editUserBinding!!.etnEmail.text.toString())
+            paramObject.put("user_address", editUserBinding!!.etnAddress.text.toString())
+            paramObject.put("user_contactno", editUserBinding!!.etnContactno.text.toString())
+            paramObject.put("company_id", userdata!!.company_id)
+            paramObject.put("site_id",selectedSiteId)
+            paramObject.put("status_id","1")
+            paramObject.put("user_profile_image","")
+
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi= apiInterface.callSiteUserUpdateApi(userdata!!.token, gsonObject!!)
+            callApi.enqueue(object : Callback<AddUserResponse> {
+                override fun onResponse(call: Call<AddUserResponse>, response: Response<AddUserResponse>) {
+                    customProgress.hideProgress()
+                    if (response.isSuccessful) {
+                        if (response.body()!!.status) {
+                            Alert.showalert(activity!!,response!!.body()!!.message)
+                            editUserBinding!!.etnName.setText("")
+                            editUserBinding!!.etnEmail.setText("")
+                            editUserBinding!!.etnContactno.setText("")
+                            editUserBinding!!.etnAddress.setText("")
+                        }
+                        else
+                            Alert.showalert(activity!!,response!!.body()!!.message)
+
+                    }
+                    else
+                        Toast.makeText(activity, "Try later. Something Wrong.", Toast.LENGTH_LONG).show()
+                }
+                override fun onFailure(call: Call<AddUserResponse>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e: java.lang.Exception){
+            e.printStackTrace()
+        }
+    }
+
 }
