@@ -47,9 +47,10 @@
                         <ImageView
                             android:id="@+id/img_company"
                             android:layout_width="match_parent"
-                            android:layout_height="@dimen/_40sdp"
+                            android:layout_height="match_parent"
                             android:padding="@dimen/_5sdp"
                             android:visibility="gone"
+                            android:scaleType="fitXY"
                             android:src="@drawable/camera">
 
                         </ImageView>

@@ -6,10 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.commsreport.Utils.CustomTypeface
+import com.commsreport.Utils.alert.Alert
+import com.commsreport.adapter.ManageDocumentAdapter
 import com.commsreport.databinding.FragmentLeaderDashboardBinding
+import com.commsreport.model.DocumentListModel
+import com.commsreport.model.FaultCountModel
+import com.commsreport.model.LoginResponseModel
 import com.commsreport.screens.fragments.document.DocumentUploadFragment
 import com.commsreport.screens.fragments.reportfault.ReportFaultFragment
 import com.commsreport.screens.home.HomeActivity
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import com.sculptee.utils.customprogress.CustomProgressDialog
+import com.wecompli.network.ApiInterface
+import com.wecompli.network.Retrofit
+import com.wecompli.utils.sheardpreference.AppSheardPreference
+import com.wecompli.utils.sheardpreference.PreferenceConstent
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -18,6 +34,7 @@ class LeaderDashboardFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var activity: HomeActivity?=null
+    var userdata: LoginResponseModel.Userdata? =null
     var fragmentLeaderDashboardBinding:FragmentLeaderDashboardBinding?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,6 +62,8 @@ class LeaderDashboardFragment : Fragment() {
         fragmentLeaderDashboardBinding!!.tvReportfault.setOnClickListener {
             activity!!.openFragment(ReportFaultFragment())
         }
+        userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
+        callApiForFaultCount()
     }
     override fun onResume() {
         super.onResume()
@@ -59,5 +78,48 @@ class LeaderDashboardFragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+    private fun callApiForFaultCount() {
+
+        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!, "Please Wait..", false)
+        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        try {
+            val paramObject = JSONObject()
+            paramObject.put("company_id", userdata!!.company_id)
+            paramObject.put("status_id", "1")
+            if(!userdata!!.user_type.equals("COMPANY_ADMIN")){
+                    paramObject.put("site_id", userdata!!.site_id)
+            }
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi=apiInterface.callFaultCountApt(userdata!!.token, gsonObject)
+            callApi.enqueue(object : Callback<FaultCountModel> {
+                override fun onResponse(call: Call<FaultCountModel>, response: Response<FaultCountModel>) {
+                    customProgress.hideProgress()
+                    System.out.println("response g"+response!!.body()!!.fault_count)
+                    if (response.code() == 200) {
+                        if (response.body()!!.status ){
+                           // if (response.body()!!.response!=null)
+                              fragmentLeaderDashboardBinding!!.tvfaultcount!!.setText((response!!.body()!!.fault_count).toString())
+                        }else
+                            fragmentLeaderDashboardBinding!!.tvfaultcount!!.setText("0")
+
+                    } else if (response.code() == 401) {
+                        Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<FaultCountModel>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
     }
 }

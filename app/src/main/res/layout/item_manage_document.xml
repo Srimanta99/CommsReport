@@ -32,6 +32,7 @@
                 android:layout_height="wrap_content"
                 android:text="Chatham Report Hoc"
                 android:textColor="#1E3F6C"
+                android:textSize="@dimen/_12sdp"
                 android:textStyle="bold">
 
             </TextView>
@@ -66,6 +67,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Start date"
+                            android:textSize="@dimen/_12sdp"
                             android:textColor="#1E3F6C"
                             android:textStyle="bold">
 
@@ -78,6 +80,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="12 th Dec, 2020"
+                        android:textSize="@dimen/_12sdp"
                         android:textColor="#1E3F6C">
 
                     </TextView>
@@ -107,6 +110,7 @@
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Start date"
+                            android:textSize="@dimen/_12sdp"
                             android:textColor="#1E3F6C"
                             android:textStyle="bold">
 
@@ -119,6 +123,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:text="12 th Dec, 2020"
+                        android:textSize="@dimen/_12sdp"
                         android:textColor="#1E3F6C">
 
                     </TextView>
@@ -148,7 +153,8 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="DOWNLOAD"
-                        android:textColor="#fff">
+                        android:textSize="@dimen/_12sdp"
+                          android:textColor="#fff">
 
                     </TextView>
 
@@ -169,6 +175,7 @@
                         android:layout_gravity="center"
                         android:gravity="center"
                         android:text="REMOVE"
+                        android:textSize="@dimen/_12sdp"
                         android:textColor="#fff">
 
                     </TextView>

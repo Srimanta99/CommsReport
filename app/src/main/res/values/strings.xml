@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">CommsReport</string>
+    <string name="app_name">Comms</string>
     <string name="login">LOGIN</string>
     <string name="rember_me">Remember me</string>
     <string name="forgotpassword">Forgot Password?</string>

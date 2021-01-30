@@ -14,6 +14,8 @@ class NetworkUtility {
         const val  UPLOAD_DOC="api/document/create"
         const val  FAULTLIST="api/fault/list"
         const val  FAULTREPAIR="api/fault/repair"
+        const val  DOCUMENT_LIST="api/document/list"
+        const val FAULTCOUNT="api/dashboard/information"
 
     }
 }

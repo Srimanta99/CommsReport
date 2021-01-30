@@ -13,7 +13,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="@drawable/asscolor_round"
-            android:layout_margin="@dimen/_7sdp"
+            android:layout_margin="@dimen/_5sdp"
             android:orientation="vertical">
 
 
@@ -32,6 +32,7 @@
                     android:layout_height="wrap_content"
                     android:text="Fault despriction"
                     android:textColor="#1E3F6C"
+                    android:textSize="@dimen/_12sdp"
                     android:textStyle="bold">
 
                 </TextView>
@@ -43,7 +44,7 @@
                     android:layout_marginTop="@dimen/_4sdp"
                     android:text="Fruits are the means by which angiosperms disseminate seeds. Edible fruits, in particular,have propagated with the movements of humans"
                     android:textColor="#1E3F6C"
-                    android:textSize="12sp">
+                    android:textSize="@dimen/_12sdp">
 
                 </TextView>
 
@@ -67,6 +68,7 @@
                         android:layout_height="wrap_content"
                         android:text="Fault date"
                         android:textColor="#1E3F6C"
+                        android:textSize="@dimen/_12sdp"
                         android:textStyle="bold">
 
 
@@ -78,6 +80,7 @@
                         android:layout_height="wrap_content"
                         android:layout_marginLeft="@dimen/_4sdp"
                         android:text="14/01/2021"
+                        android:textSize="@dimen/_12sdp"
                         android:textColor="#1E3F6C">
 
 
@@ -95,6 +98,7 @@
                         android:id="@+id/img_fault1"
                         android:layout_width="0dp"
                         android:layout_weight="1"
+                        android:scaleType="fitXY"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_marginLeft="@dimen/_7sdp"
                         android:layout_marginRight="@dimen/_10sdp"
@@ -109,6 +113,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="@dimen/_50sdp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:background="@drawable/no_image">
 
@@ -119,6 +124,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="@dimen/_50sdp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:background="@drawable/no_image">
 
@@ -129,6 +135,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:layout_height="@dimen/_50sdp"
+                        android:scaleType="fitXY"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:background="@drawable/no_image">
 
@@ -151,6 +158,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_marginRight="@dimen/_5sdp"
+                            android:textSize="@dimen/_12sdp"
                             android:background="@drawable/gradient_login_button">
 
                             <TextView
@@ -186,7 +194,8 @@
                                 android:layout_height="match_parent"
                                 android:layout_gravity="center"
                                 android:gravity="center"
-                                android:text="REMOVE"
+                                android:text="FIX FAULT"
+                                android:textSize="@dimen/_12sdp"
                                 android:textColor="#fff">
 
                             </TextView>

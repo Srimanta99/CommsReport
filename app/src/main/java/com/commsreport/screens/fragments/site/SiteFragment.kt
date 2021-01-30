@@ -66,16 +66,16 @@ class SiteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragmentAddSiteBinding!!.tvEmail.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentAddSiteBinding!!.etSiteName.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentAddSiteBinding!!.tvAddressSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentAddSiteBinding!!.etAddressSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentAddSiteBinding!!.tvPincode.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentAddSiteBinding!!.etPinCode.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentAddSiteBinding!!.tvUpload.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentAddSiteBinding!!.tvEmail.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentAddSiteBinding!!.etSiteName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentAddSiteBinding!!.tvAddressSite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentAddSiteBinding!!.etAddressSite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentAddSiteBinding!!.tvPincode.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentAddSiteBinding!!.etPinCode.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentAddSiteBinding!!.tvUpload.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
        // fragmentAddSiteBinding!!.etUpload.setTypeface(CustomTypeface.getWhitniBold(activity!!))
-        fragmentAddSiteBinding!!.tvBrowes.setTypeface(CustomTypeface.getWhitniBold(activity!!))
-        fragmentAddSiteBinding!!.tvSubmitSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentAddSiteBinding!!.tvBrowes.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
+        fragmentAddSiteBinding!!.tvSubmitSite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentAddSiteBinding!!.tvBrowes.setOnClickListener {
            showAlertForChooseImage()
         }
@@ -93,6 +93,7 @@ class SiteFragment : Fragment() {
         builder.addFormDataPart("site_name", fragmentAddSiteBinding!!.etSiteName.text.toString())
         builder.addFormDataPart("site_address", fragmentAddSiteBinding!!.etAddressSite.text.toString())
         builder.addFormDataPart("site_postcode" ,userdata!!.company_id)
+        if (imgFile!=null)
         builder.addFormDataPart("site_logo",imgFile!!.absolutePath , okhttp3.RequestBody.create(
             MediaType.parse("image/jpeg"), imgFile))
 
@@ -120,18 +121,25 @@ class SiteFragment : Fragment() {
                     var resStr :String=response.body()!!.string()
                     var response_obj= JSONObject(resStr)
                     //val response_obj = JSONObject(response.body()!!.string())
-                    if (response_obj.getBoolean("status")){
-                        //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
-                        //callApiforfaultcreate(check_process_log_id);
-                        Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                    }else{
-                        Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
+                    activity!!.runOnUiThread {
+                        if (response_obj.getBoolean("status")){
+                            //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
+                            //callApiforfaultcreate(check_process_log_id);
+                            Alert.showalert(activity!!,response_obj.getString("message"))
+                            activity!!.getSupportFragmentManager().popBackStack();
+                        }else{
+                            Alert.showalert(activity!!,response_obj.getString("message"))
 
+                        }
                     }
+
                 }
                 catch (e: Exception){
                     e.printStackTrace()
-                    Toast.makeText(activity, "Try later. Something Wrong.", Toast.LENGTH_LONG).show()
+                    activity!!.runOnUiThread {
+                        Toast.makeText(activity, "Try later. Something Wrong.", Toast.LENGTH_LONG).show()
+                    }
+
 
                 }
             }

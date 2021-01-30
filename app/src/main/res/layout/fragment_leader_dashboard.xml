@@ -20,7 +20,7 @@
         android:layout_marginTop="@dimen/_25sdp"
         android:textColor="@color/text_red"
         android:textSize="@dimen/_55sdp"
-        android:text="20"></TextView>
+        android:text="0"></TextView>
     <TextView
         android:id="@+id/tv_faultereport"
         android:layout_width="wrap_content"
