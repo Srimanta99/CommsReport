@@ -22,6 +22,7 @@ import androidx.core.content.ContextCompat
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
+import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.databinding.FragmentAddSiteBinding
 import com.commsreport.screens.home.HomeActivity
 import com.sculptee.utils.customprogress.CustomProgressDialog
@@ -80,8 +81,30 @@ class SiteFragment : Fragment() {
            showAlertForChooseImage()
         }
         fragmentAddSiteBinding!!.tvSubmitSite.setOnClickListener {
-            CallApiForAddSite()
+
+            if(checkValidation())
+             CallApiForAddSite()
         }
+    }
+
+    private fun checkValidation():Boolean{
+        if(fragmentAddSiteBinding!!.etSiteName.text.toString().equals("")){
+            fragmentAddSiteBinding!!.etSiteName.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter Site name")
+            return false
+        }
+        if(fragmentAddSiteBinding!!.etAddressSite.text.toString().equals("")){
+            fragmentAddSiteBinding!!.etAddressSite.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter Site address")
+            return false
+        }
+        if(fragmentAddSiteBinding!!.etPinCode.text.toString().equals("")){
+            fragmentAddSiteBinding!!.etPinCode.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter Site postcode")
+            return false
+        }
+
+        return true
     }
 
     private fun CallApiForAddSite() {
@@ -92,7 +115,7 @@ class SiteFragment : Fragment() {
         builder.addFormDataPart("company_id" ,userdata!!.company_id)
         builder.addFormDataPart("site_name", fragmentAddSiteBinding!!.etSiteName.text.toString())
         builder.addFormDataPart("site_address", fragmentAddSiteBinding!!.etAddressSite.text.toString())
-        builder.addFormDataPart("site_postcode" ,userdata!!.company_id)
+        builder.addFormDataPart("site_postcode",fragmentAddSiteBinding!!.etPinCode.text.toString())
         if (imgFile!=null)
         builder.addFormDataPart("site_logo",imgFile!!.absolutePath , okhttp3.RequestBody.create(
             MediaType.parse("image/jpeg"), imgFile))

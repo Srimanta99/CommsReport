@@ -8,6 +8,7 @@ import android.view.View
 import com.commsreport.R
 import com.commsreport.Utils.ConnectionDector
 import com.commsreport.Utils.alert.Alert
+import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.databinding.ActivityLoginBinding
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.screens.forgotpassword.ForgotPasswordActivity
@@ -19,7 +20,6 @@ import com.wecompli.network.ApiInterface
 import com.wecompli.network.Retrofit
 import com.wecompli.utils.sheardpreference.AppSheardPreference
 import com.wecompli.utils.sheardpreference.PreferenceConstent
-import okhttp3.ResponseBody
 import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
@@ -101,12 +101,18 @@ class LoginOnclick(val activity: LoginActivity,val activityLoginBinding: Activit
             val loginApiCall = apiInterface.callLogInApi(gsonObject)
             loginApiCall.enqueue(object :Callback<LoginResponseModel>{
                 override fun onResponse(call: Call<LoginResponseModel>, response: Response<LoginResponseModel>) {
-                    AppSheardPreference(activity).setUserData(PreferenceConstent.userData,response.body()!!.data)
-                    AppSheardPreference(activity).setvalue_in_preference(PreferenceConstent.loginuser_token,response!!.body()!!.data.token)
-                    Log.d("response",response.body().toString())
                     customProgress.hideProgress()
-                    AppSheardPreference(activity).setvalue_in_preference(PreferenceConstent.iS_LOGIN,"1")
-                    activity.startActivity(Intent(activity,HomeActivity::class.java))
+                    if (response.body()!!.status) {
+                        AppSheardPreference(activity).setUserData(PreferenceConstent.userData, response.body()!!.data)
+                        AppSheardPreference(activity).setvalue_in_preference(PreferenceConstent.loginuser_token, response!!.body()!!.data.token)
+                        Log.d("response", response.body().toString())
+
+                        AppSheardPreference(activity).setvalue_in_preference(PreferenceConstent.iS_LOGIN, "1")
+                        activity.startActivity(Intent(activity, HomeActivity::class.java))
+                    }else{
+                            ToastAlert.CustomToasterror(activity,response!!.body()!!.message)
+
+                    }
                 }
 
                 override fun onFailure(call: Call<LoginResponseModel>, t: Throwable) {

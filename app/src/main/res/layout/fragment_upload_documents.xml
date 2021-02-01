@@ -129,6 +129,7 @@
                                 </TextView>
 
                                 <LinearLayout
+                                    android:id="@+id/ll_cal1"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/asscolor_round"
@@ -171,7 +172,7 @@
 
                                     </LinearLayout>
                                     <LinearLayout
-                                        android:id="@+id/ll_cal1"
+
                                         android:layout_width="0dp"
                                         android:layout_height="@dimen/_40sdp"
                                         android:layout_weight="0.3">
@@ -209,6 +210,7 @@
                                 </TextView>
 
                                 <LinearLayout
+                                    android:id="@+id/ll_cal2"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
                                     android:background="@drawable/asscolor_round"
@@ -241,7 +243,7 @@
                                         android:layout_height="@dimen/_40sdp"
                                         android:layout_weight="0.3">
                                         <ImageView
-                                            android:id="@+id/ll_cal2"
+
                                             android:layout_width="@dimen/_15sdp"
                                             android:layout_height="@dimen/_15sdp"
                                             android:src="@drawable/calender"
@@ -313,14 +315,19 @@
                             android:layout_height="match_parent"
 
                             android:layout_marginBottom="@dimen/_20sdp">
-
+                            <ScrollView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginBottom="@dimen/_55sdp">
                             <LinearLayout
                                 android:id="@+id/ll_attachment"
                                 android:layout_width="match_parent"
-                                android:layout_height="@dimen/_30sdp"
-                                android:layout_margin="@dimen/_12sdp"
-                                android:visibility="gone">
-                                <ImageView
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/_10sdp"
+                                android:orientation="vertical"
+
+                                >
+                                <!--<ImageView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
                                     android:layout_gravity="center_vertical"
@@ -337,8 +344,9 @@
                                     android:textColor="@color/black"
                                     android:gravity="center_vertical"
                                     ></TextView>
-
+-->
                             </LinearLayout>
+                            </ScrollView>
 
 
                                 <TextView

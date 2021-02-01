@@ -16,6 +16,7 @@ class NetworkUtility {
         const val  FAULTREPAIR="api/fault/repair"
         const val  DOCUMENT_LIST="api/document/list"
         const val FAULTCOUNT="api/dashboard/information"
+        const val DOCUMENT_REMOVE="api/document/remove"
 
     }
 }

@@ -46,6 +46,10 @@ interface ApiInterface {
     @POST(NetworkUtility.FAULTCOUNT)
     fun callFaultCountApt(@Header("Authorization") token:String,@Body body: JsonObject): Call<FaultCountModel>
 
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.DOCUMENT_REMOVE)
+    fun callApifordocumentremove(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
 
     // @Headers("Content-Type: application/json")
     /*@POST(NetworkUtility.LOG_IN)
