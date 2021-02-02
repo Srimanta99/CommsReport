@@ -195,11 +195,11 @@ class DocumentUploadFragment : Fragment() {
                         if (response_obj.getBoolean("status")) {
                             //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
                             //Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                            Alert.showalert(activity!!, response_obj.getString("message"))
+                            ToastAlert.CustomToastSuccess(activity!!, response_obj.getString("message"))
                             activity!!.getSupportFragmentManager().popBackStack();
                         } else {
                             //Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                            Alert.showalert(activity!!, response_obj.getString("message"))
+                            ToastAlert.CustomToasterror(activity!!, response_obj.getString("message"))
                         }
                     }
                     //val response_obj = JSONObject(response.body()!!.string())
@@ -207,8 +207,7 @@ class DocumentUploadFragment : Fragment() {
                 } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                     activity!!.runOnUiThread {
-                        Toast.makeText(activity!!, "Try later. Something Wrong.", Toast.LENGTH_LONG)
-                            .show()
+                        ToastAlert.CustomToasterror(activity!!, "Try later. Something Wrong.")
                     }
                     // Toast.makeText(activity!!, "Try later. Something Wrong.", Toast.LENGTH_LONG).show()
 
@@ -254,7 +253,7 @@ class DocumentUploadFragment : Fragment() {
                       val destination = File(Environment.getExternalStorageDirectory(), "fault_image"+ ".jpg")*/
                     // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
                     val root = Environment.getExternalStorageDirectory().toString()
-                    val myDir = File("$root/comos/document")
+                    val myDir = File("$root/Commsreport/document")
                     myDir.mkdirs()
                     /* val generator = Random()
                       var n = 100

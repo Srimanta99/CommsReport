@@ -17,7 +17,7 @@
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
         android:usesCleartextTraffic="true"
-        android:theme="@style/Theme.CommsReport">
+        android:theme="@style/AppTheme">
         <activity android:name=".screens.forgotpassword.ForgotPasswordActivity" >
 
         </activity>

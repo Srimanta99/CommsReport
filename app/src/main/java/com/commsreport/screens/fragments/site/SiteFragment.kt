@@ -148,10 +148,10 @@ class SiteFragment : Fragment() {
                         if (response_obj.getBoolean("status")){
                             //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
                             //callApiforfaultcreate(check_process_log_id);
-                            Alert.showalert(activity!!,response_obj.getString("message"))
+                            ToastAlert.CustomToastSuccess(activity!!,response_obj.getString("message"))
                             activity!!.getSupportFragmentManager().popBackStack();
                         }else{
-                            Alert.showalert(activity!!,response_obj.getString("message"))
+                            ToastAlert.CustomToasterror(activity!!,response_obj.getString("message"))
 
                         }
                     }
@@ -160,7 +160,7 @@ class SiteFragment : Fragment() {
                 catch (e: Exception){
                     e.printStackTrace()
                     activity!!.runOnUiThread {
-                        Toast.makeText(activity, "Try later. Something Wrong.", Toast.LENGTH_LONG).show()
+                        ToastAlert.CustomToasterror(activity!!, "Try later. Something Wrong.")
                     }
 
 
@@ -267,12 +267,12 @@ class SiteFragment : Fragment() {
                 // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
                 val root = Environment.getExternalStorageDirectory().toString()
-                val myDir = File("$root/wecompli/minorfault")
+                val myDir = File("$root/Commsreport/site")
                 myDir.mkdirs()
                 /* val generator = Random()
                   var n = 100
                   n = generator.nextInt(n)*/
-                val fname ="fault_image.jpg"
+                val fname ="site.jpg"
                 val file = File(myDir, fname)
                 val fo: FileOutputStream
                 if (file.exists())
@@ -318,12 +318,12 @@ class SiteFragment : Fragment() {
             // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
             val root = Environment.getExternalStorageDirectory().toString()
-            val myDir = File("$root/wecompli/minorfault")
+            val myDir = File("$root/Commsreport/site")
             myDir.mkdirs()
             /* val generator = Random()
               var n = 100
               n = generator.nextInt(n)*/
-            val fname ="fault_image.jpg"
+            val fname ="site.jpg"
             val file = File(myDir, fname)
             val fo: FileOutputStream
             if (file.exists())

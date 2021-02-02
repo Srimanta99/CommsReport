@@ -13,6 +13,7 @@ import com.commsreport.model.DocumentListModel
 import com.commsreport.model.FaultCountModel
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.screens.fragments.document.DocumentUploadFragment
+import com.commsreport.screens.fragments.faults.FaultFragment
 import com.commsreport.screens.fragments.reportfault.ReportFaultFragment
 import com.commsreport.screens.home.HomeActivity
 import com.google.gson.JsonObject
@@ -61,6 +62,9 @@ class LeaderDashboardFragment : Fragment() {
         }
         fragmentLeaderDashboardBinding!!.tvReportfault.setOnClickListener {
             activity!!.openFragment(ReportFaultFragment())
+        }
+        fragmentLeaderDashboardBinding!!.rlFaultcount.setOnClickListener {
+            activity!!.openFragment(FaultFragment())
         }
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         callApiForFaultCount()

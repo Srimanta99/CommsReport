@@ -17,6 +17,8 @@ class NetworkUtility {
         const val  DOCUMENT_LIST="api/document/list"
         const val FAULTCOUNT="api/dashboard/information"
         const val DOCUMENT_REMOVE="api/document/remove"
+        const val EDIT_USER="api/site/user/update"
+        const val EDIT_SITE="api/site/update"
 
     }
 }
