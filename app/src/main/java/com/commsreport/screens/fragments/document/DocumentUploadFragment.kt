@@ -3,11 +3,12 @@ package com.commsreport.screens.fragments.document
 import android.Manifest
 import android.app.Activity
 import android.app.DatePickerDialog
+import android.content.ContentResolver
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
-import android.os.Build
+import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
@@ -16,7 +17,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.webkit.MimeTypeMap
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
@@ -36,12 +36,10 @@ import okhttp3.MediaType
 import okhttp3.MultipartBody
 import okhttp3.Request
 import org.json.JSONObject
-import java.io.File
-import java.io.FileNotFoundException
-import java.io.FileOutputStream
-import java.io.IOException
+import java.io.*
 import java.util.*
 import java.util.concurrent.TimeUnit
+import kotlin.collections.ArrayList
 
 // TODO: Rename parameter arguments, choose names that match
 // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -57,6 +55,8 @@ class DocumentUploadFragment : Fragment() {
     var fragmentUploadDocumentsBinding : FragmentUploadDocumentsBinding?=null
     var docCount=1
     internal var imagearraylist = ArrayList<File>()
+    var filetypeed= ArrayList<String>()
+    var filetype:String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -69,44 +69,26 @@ class DocumentUploadFragment : Fragment() {
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
-        fragmentUploadDocumentsBinding= FragmentUploadDocumentsBinding.inflate(
-            inflater,
-            container,
-            false
-        )
+        savedInstanceState: Bundle?): View? {
+        fragmentUploadDocumentsBinding= FragmentUploadDocumentsBinding.inflate(inflater, container, false)
         return fragmentUploadDocumentsBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        fragmentUploadDocumentsBinding!!.tvEmailUploaddoc.setTypeface(
-            CustomTypeface.getwhitMedium(
-                activity!!
-            )
+        fragmentUploadDocumentsBinding!!.tvEmailUploaddoc.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!)
         )
-        fragmentUploadDocumentsBinding!!.etNameUploaddoc.setTypeface(
-            CustomTypeface.getwhitMedium(
-                activity!!
-            )
+        fragmentUploadDocumentsBinding!!.etNameUploaddoc.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!)
         )
-        fragmentUploadDocumentsBinding!!.tvStart.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentUploadDocumentsBinding!!.tvStartdate.setTypeface(
-            CustomTypeface.getwhitMedium(
-                activity!!
-            )
+        fragmentUploadDocumentsBinding!!.tvStart.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvStartdate.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!)
         )
-        fragmentUploadDocumentsBinding!!.tvExpiry.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentUploadDocumentsBinding!!.tvExpirydate.setTypeface(
-            CustomTypeface.getwhitMedium(
-                activity!!
-            )
-        )
-        fragmentUploadDocumentsBinding!!.chkNotify.setTypeface(CustomTypeface.getWhitniBold(activity!!))
-        fragmentUploadDocumentsBinding!!.tvUploadDoc.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        fragmentUploadDocumentsBinding!!.tvSubmitUploadDoc.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvExpiry.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvExpirydate.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.chkNotify.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvUploadDoc.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvSubmitUploadDoc.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
        // fragmentUploadDocumentsBinding!!.tvAttachment1.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
 
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
@@ -126,23 +108,26 @@ class DocumentUploadFragment : Fragment() {
             if (docCount<=4)
             checkpermession()
             else
-                Alert.showalert(activity!!,"Max. 4 attachments allow")
+                ToastAlert.CustomToastwornning(activity!!, "Max. 4 attachments allow")
         }
 
         fragmentUploadDocumentsBinding!!.tvSubmitUploadDoc.setOnClickListener {
             if (!fragmentUploadDocumentsBinding!!.etNameUploaddoc.text.toString().equals("")){
                 if (!fragmentUploadDocumentsBinding!!.tvStartdate.text.toString().equals("")){
                     if (!fragmentUploadDocumentsBinding!!.tvExpirydate.text.toString().equals("")){
+                        if(imagearraylist.size>0)
                         callApiforUploadDoc()
+                        else
+                            ToastAlert.CustomToastwornning(activity!!, "Select at least one document file")
                     }else
                         //Alert.showalert(activity!!, "Select Expiry Date")
-                        ToastAlert.CustomToastwornning(activity!!,"Select Expiry Date")
+                        ToastAlert.CustomToastwornning(activity!!, "Select Expiry Date")
                 }else
-                    ToastAlert.CustomToastwornning(activity!!,"Select Start Date")
+                    ToastAlert.CustomToastwornning(activity!!, "Select Start Date")
                     //Alert.showalert(activity!!, "Select Start Date")
             }else{
                 fragmentUploadDocumentsBinding!!.etNameUploaddoc.requestFocus()
-                ToastAlert.CustomToastwornning(activity!!,"Enter Document Name")
+                ToastAlert.CustomToastwornning(activity!!, "Enter Document Name")
             }
 
 
@@ -156,14 +141,26 @@ class DocumentUploadFragment : Fragment() {
         customProgress.showProgress(activity!!, "Please Wait..", false)
         val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
         builder.addFormDataPart("company_id", userdata!!.company_id)
-        builder.addFormDataPart("document_name", fragmentUploadDocumentsBinding!!.etNameUploaddoc.text.toString())
-        builder.addFormDataPart("affected_date", fragmentUploadDocumentsBinding!!.tvStartdate.text.toString())
-        builder.addFormDataPart("expire_date", fragmentUploadDocumentsBinding!!.tvExpirydate.text.toString())
+        builder.addFormDataPart(
+            "document_name",
+            fragmentUploadDocumentsBinding!!.etNameUploaddoc.text.toString()
+        )
+        builder.addFormDataPart(
+            "affected_date",
+            fragmentUploadDocumentsBinding!!.tvStartdate.text.toString()
+        )
+        builder.addFormDataPart(
+            "expire_date",
+            fragmentUploadDocumentsBinding!!.tvExpirydate.text.toString()
+        )
         builder.addFormDataPart("status_id", "1")
         builder.addFormDataPart("notify_about_expiry", "1")
 
         for (i in imagearraylist.indices) {
-            builder.addFormDataPart("document_file[]", imagearraylist.get(i).name, okhttp3.RequestBody.create(MediaType.parse("image/jpeg"), imagearraylist.get(i))
+            builder.addFormDataPart(
+                "document_file[]", imagearraylist.get(i).name, okhttp3.RequestBody.create(
+                    MediaType.parse(filetypeed.get(i)), imagearraylist.get(i)
+                )
             )
         }
         //builder.addFormDataPart("fault_image", imagearraylist.get(0).name, okhttp3.RequestBody.create(MediaType.parse("image/jpeg"), imagearraylist.get(0)))
@@ -195,11 +192,17 @@ class DocumentUploadFragment : Fragment() {
                         if (response_obj.getBoolean("status")) {
                             //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
                             //Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                            ToastAlert.CustomToastSuccess(activity!!, response_obj.getString("message"))
+                            ToastAlert.CustomToastSuccess(
+                                activity!!,
+                                response_obj.getString("message")
+                            )
                             activity!!.getSupportFragmentManager().popBackStack();
                         } else {
                             //Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                            ToastAlert.CustomToasterror(activity!!, response_obj.getString("message"))
+                            ToastAlert.CustomToasterror(
+                                activity!!,
+                                response_obj.getString("message")
+                            )
                         }
                     }
                     //val response_obj = JSONObject(response.body()!!.string())
@@ -221,13 +224,24 @@ class DocumentUploadFragment : Fragment() {
     }
 
     private fun checkpermession() {
-        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED){ ActivityCompat.requestPermissions(
-            activity!!, arrayOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+        if (ContextCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) !== PackageManager.PERMISSION_GRANTED){ ActivityCompat.requestPermissions(
+            activity!!, arrayOf<String>(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ), 0
+        )
         }else{
             galleryIntent()
         }
     }
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         if (requestCode == 0) {
             if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
@@ -246,6 +260,11 @@ class DocumentUploadFragment : Fragment() {
         var bm: Bitmap? = null
 
             if (data != null) {
+                val selectedfile: Uri? = data!!.getData()
+                filetype=getMimeType(selectedfile!!)
+
+                if (filetype!!.contains("image")){
+                    filetypeed.add(filetype!!)
                 try {
                     bm = MediaStore.Images.Media.getBitmap(activity!!.contentResolver, data.data)
                     /*  val bytes = ByteArrayOutputStream()
@@ -253,7 +272,7 @@ class DocumentUploadFragment : Fragment() {
                       val destination = File(Environment.getExternalStorageDirectory(), "fault_image"+ ".jpg")*/
                     // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
                     val root = Environment.getExternalStorageDirectory().toString()
-                    val myDir = File("$root/Commsreport/document")
+                    val myDir = File("$root/mycomms/document")
                     myDir.mkdirs()
                     /* val generator = Random()
                       var n = 100
@@ -279,19 +298,76 @@ class DocumentUploadFragment : Fragment() {
                     } catch (e: IOException) {
                         e.printStackTrace()
                     }
-                    val view: View = LayoutInflater.from(activity).inflate(R.layout.item_attachment_view, null)
+
+                    val view: View = LayoutInflater.from(activity).inflate(
+                        R.layout.item_attachment_view,
+                        null
+                    )
                     val tvattachment:TextView=view.findViewById(R.id.tv_attachment1)
                     tvattachment.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-                    tvattachment.setText("Attachment "+docCount)
+                    tvattachment.setText("Attachment " + docCount)
                     fragmentUploadDocumentsBinding!!.llAttachment.addView(view)
                     docCount++
-
                     //  fragmentUploadDocumentsBinding!!.llAttachment.visibility=View.VISIBLE
                     //fragmentAddSiteBinding!!.imgSelectedImage.setImageBitmap(bm)
 
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
+                }else if (filetype!!.contains("pdf")){
+                    val uri = data.data
+                    filetypeed.add(filetype!!)
+                    try {
+                        val root = Environment.getExternalStorageDirectory().toString()
+                        val myDir = File("$root/mycomms/document")
+                        myDir.mkdirs()
+
+                        val fname ="doc"+docCount+".pdf"
+                        val file = File(myDir, fname)
+                        val fo: FileOutputStream
+                        if (file.exists())
+                            file.delete()
+                        try {
+                            /* destination.createNewFile()
+                             fo = FileOutputStream(destination)
+                             fo.write(bytes.toByteArray())
+                             fo.close()*/
+                            val out = FileOutputStream(file)
+
+                            val `is`: InputStream = activity!!.getContentResolver().openInputStream(uri!!)!!;
+
+                            val buffer = ByteArray(4096)
+                            var len1 = 0
+
+                            while (`is`.read(buffer).also({ len1 = it }) != -1) {
+                                out.write(buffer, 0, len1)
+                            }
+
+                            out.close()
+                            `is`.close()
+                            File=file
+                            imagearraylist.add(File!!)
+                        } catch (e: FileNotFoundException) {
+                            e.printStackTrace()
+                        } catch (e: IOException) {
+                            e.printStackTrace()
+                        }
+                        val view: View = LayoutInflater.from(activity).inflate(
+                            R.layout.item_attachment_view,
+                            null
+                        )
+                        val tvattachment:TextView=view.findViewById(R.id.tv_attachment1)
+                        tvattachment.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+                        tvattachment.setText("Attachment " + docCount)
+                        fragmentUploadDocumentsBinding!!.llAttachment.addView(view)
+                        docCount++
+
+                    } catch (e: IOException) {
+                    e.printStackTrace()
+                }
+
+                }else
+                    ToastAlert.CustomToasterror(activity!!, "Only image and pdf file is allowed")
 
             }
 
@@ -350,9 +426,10 @@ class DocumentUploadFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             activity!!, R.style.AppDatepickerDilogtheam,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                val choosedate = padnumber(dayOfMonth) + "/" + padnumber(monthOfYear + 1) + "/" + year.toString()
-               // val checkdate = year.toString() + "-" + padnumber(monthOfYear + 1) + "-" + padnumber(dayOfMonth)
-              //  val listcheckdate = padnumber(monthOfYear + 1) + "/" + padnumber(dayOfMonth) + "/" + year.toString()
+                val choosedate =
+                    padnumber(dayOfMonth) + "/" + padnumber(monthOfYear + 1) + "/" + year.toString()
+                // val checkdate = year.toString() + "-" + padnumber(monthOfYear + 1) + "-" + padnumber(dayOfMonth)
+                //  val listcheckdate = padnumber(monthOfYear + 1) + "/" + padnumber(dayOfMonth) + "/" + year.toString()
                 fragmentUploadDocumentsBinding!!.tvStartdate!!.setText(choosedate)
 
             }, mYear, mMonth, mDay
@@ -371,9 +448,10 @@ class DocumentUploadFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             activity!!, R.style.AppDatepickerDilogtheam,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                val choosedate = padnumber(dayOfMonth) + "/" + padnumber(monthOfYear + 1) + "/" + year.toString()
-               // val checkdate = year.toString() + "-" + padnumber(monthOfYear + 1) + "-" + padnumber(dayOfMonth)
-               // val listcheckdate = padnumber(monthOfYear + 1) + "/" + padnumber(dayOfMonth) + "/" + year.toString()
+                val choosedate =
+                    padnumber(dayOfMonth) + "/" + padnumber(monthOfYear + 1) + "/" + year.toString()
+                // val checkdate = year.toString() + "-" + padnumber(monthOfYear + 1) + "-" + padnumber(dayOfMonth)
+                // val listcheckdate = padnumber(monthOfYear + 1) + "/" + padnumber(dayOfMonth) + "/" + year.toString()
                 fragmentUploadDocumentsBinding!!.tvExpirydate!!.setText(choosedate)
 
             }, mYear, mMonth, mDay
@@ -395,5 +473,20 @@ class DocumentUploadFragment : Fragment() {
         val mimeTypeMap: String = MimeTypeMap.getFileExtensionFromUrl(extention)
         return MimeTypeMap.getSingleton().getMimeTypeFromExtension(mimeTypeMap)
     }
-
+    fun getMimeType(uri: Uri): String? {
+        var mimeType: String? = null
+        mimeType = if (ContentResolver.SCHEME_CONTENT.equals(uri.getScheme())) {
+            val cr: ContentResolver = activity!!.getContentResolver()
+            cr.getType(uri)
+        } else {
+            val fileExtension = MimeTypeMap.getFileExtensionFromUrl(
+                uri
+                    .toString()
+            )
+            MimeTypeMap.getSingleton().getMimeTypeFromExtension(
+                fileExtension.toLowerCase()
+            )
+        }
+        return mimeType
+    }
 }

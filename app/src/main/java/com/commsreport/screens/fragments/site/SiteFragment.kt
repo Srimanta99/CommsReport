@@ -267,7 +267,7 @@ class SiteFragment : Fragment() {
                 // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
                 val root = Environment.getExternalStorageDirectory().toString()
-                val myDir = File("$root/Commsreport/site")
+                val myDir = File("$root/mycomms/site")
                 myDir.mkdirs()
                 /* val generator = Random()
                   var n = 100
@@ -318,7 +318,7 @@ class SiteFragment : Fragment() {
             // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
             val root = Environment.getExternalStorageDirectory().toString()
-            val myDir = File("$root/Commsreport/site")
+            val myDir = File("$root/mycomms/site")
             myDir.mkdirs()
             /* val generator = Random()
               var n = 100

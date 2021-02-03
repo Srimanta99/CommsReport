@@ -21,6 +21,7 @@ import androidx.core.content.ContextCompat
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
+import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteList
 import com.commsreport.adapter.ManageSiteAdapter
 import com.commsreport.databinding.FragmentReportFaultaBinding
@@ -133,10 +134,12 @@ class ReportFaultFragment : Fragment() {
             if (!selectedSiteId.equals("")) {
                 if (!fragmentReportFaultBinding!!.etAddnote.text.toString().equals("")) {
                     submitfalutusingmultipartBulider()
-                }else
+                }else {
                     fragmentReportFaultBinding!!.etAddnote.requestFocus()
+                   ToastAlert.CustomToastwornning(activity!!,"Enter note")
+                }
             }else
-                Alert.showalert(activity!!,"Please select site")
+                ToastAlert.CustomToastwornning(activity!!,"Please select site")
         }
 
     }
@@ -280,7 +283,7 @@ class ReportFaultFragment : Fragment() {
                   val destination = File(Environment.getExternalStorageDirectory(), "fault_image"+ ".jpg")*/
                 // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
                 val root = Environment.getExternalStorageDirectory().toString()
-                val myDir = File("$root/Commsreport/fault")
+                val myDir = File("$root/mycomms/fault")
                 myDir.mkdirs()
                 /* val generator = Random()
                   var n = 100
@@ -359,7 +362,7 @@ class ReportFaultFragment : Fragment() {
             // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
             val root = Environment.getExternalStorageDirectory().toString()
-            val myDir = File("$root/Commsreport/fault")
+            val myDir = File("$root/mycomms/fault")
             myDir.mkdirs()
             /* val generator = Random()
               var n = 100
@@ -480,13 +483,13 @@ class ReportFaultFragment : Fragment() {
                         if (response_obj.getBoolean("status")) {
                             //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
                           //  Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                            Alert.showalert(activity!!,response_obj.getString("message"))
+                            ToastAlert.CustomToastwornning(activity!!,response_obj.getString("message"))
                            // fragmentReportFaultBinding!!.etAddnote.setText("")
                              activity!!.getSupportFragmentManager().popBackStack()
 
                         } else {
                            // Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                            Alert.showalert(activity!!,response_obj.getString("message"))
+                            ToastAlert.CustomToasterror(activity!!,response_obj.getString("message"))
                         }
                     }
                 }

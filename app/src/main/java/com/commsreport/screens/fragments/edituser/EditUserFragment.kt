@@ -230,7 +230,7 @@ class EditUserFragment : Fragment() {
                 // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
                 val root = Environment.getExternalStorageDirectory().toString()
-                val myDir = File("$root/Commsreport/useredit")
+                val myDir = File("$root/mycomms/useredit")
                 myDir.mkdirs()
                 /* val generator = Random()
                   var n = 100
@@ -281,7 +281,7 @@ class EditUserFragment : Fragment() {
             // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
             val root = Environment.getExternalStorageDirectory().toString()
-            val myDir = File("$root/Commsreport/useredit")
+            val myDir = File("$root/mycomms/useredit")
             myDir.mkdirs()
             /* val generator = Random()
               var n = 100
