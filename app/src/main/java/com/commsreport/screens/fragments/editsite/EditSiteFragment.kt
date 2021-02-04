@@ -1,4 +1,4 @@
-package com.commsreport.screens.fragments.edituser
+package com.commsreport.screens.fragments.editsite
 
 import android.Manifest
 import android.app.Activity
@@ -23,13 +23,11 @@ import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
-import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForUser
+import com.commsreport.Utils.custompopupsite.CustomPopUpDialogEditSite
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteListAddUser
-import com.commsreport.databinding.FragmentEditUserBinding
-import com.commsreport.model.AddUserResponse
+import com.commsreport.databinding.FragmentEditSiteBinding
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
-import com.commsreport.model.SiteUserListModel
 import com.commsreport.screens.fragments.site.REQUEST_CAMERA
 import com.commsreport.screens.fragments.site.SELECT_FILE
 import com.commsreport.screens.home.HomeActivity
@@ -54,21 +52,23 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-
-class EditUserFragment : Fragment() {
+class EditSiteFragment : Fragment() {
+    // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
+    var editSiteBinding:FragmentEditSiteBinding?=null
+    var siteDetails:SiteListModel.RowList?=null
     var activity: HomeActivity?=null
-    var editUserBinding:FragmentEditUserBinding?=null
-    var userdetails:SiteUserListModel.UserList?=null
     var userdata: LoginResponseModel.Userdata? =null
-    var siteList=ArrayList<SiteListModel.RowList>()
-    var selectedSiteId:String?=""
+    public  var selectedSiteId=""
     var image: String?=null
-    var imgFile:File?=null
+    var imgFile: File?=null
+    var siteList=ArrayList<SiteListModel.RowList>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -76,59 +76,148 @@ class EditUserFragment : Fragment() {
             param2 = it.getString(ARG_PARAM2)
         }
         activity=getActivity() as HomeActivity
-
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        editUserBinding=FragmentEditUserBinding.inflate(inflater,container,false)
-        return editUserBinding!!.root
+         editSiteBinding =FragmentEditSiteBinding.inflate(inflater,container,false)
+        return editSiteBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
+        siteDetails=AppSheardPreference(activity!!).getSite(PreferenceConstent.siteDetails)
         if(userdata!!.user_type.equals("COMPANY_ADMIN")){
-            editUserBinding!!.llSelectsite.visibility=View.VISIBLE
+            editSiteBinding!!.llSelectsite.visibility=View.VISIBLE
             callApiForSiteList()
 
         }else
-            selectedSiteId=userdetails!!.site_id
+            selectedSiteId=siteDetails!!.id
+        editSiteBinding!!.tvEmail.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        editSiteBinding!!.etSiteName.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        editSiteBinding!!.tvAddressSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        editSiteBinding!!.etAddressSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        editSiteBinding!!.tvPincode.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        editSiteBinding!!.etPinCode.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        editSiteBinding!!.tvUpload.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        // fragmentAddSiteBinding!!.etUpload.setTypeface(CustomTypeface.getWhitniBold(activity!!))
+        editSiteBinding!!.tvBrowes.setTypeface(CustomTypeface.getWhitniBold(activity!!))
+        editSiteBinding!!.tvSubmitSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
 
-        editUserBinding!!.tvNameAddUser.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.etnName.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvEmailAddUser.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.etnEmail.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvContactno.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.etnContactno.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvSelectsite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvDropdownSelectsite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.submitTvid.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvDropdownSelectsite.setOnClickListener {
-            val customPopUpDialogSiteList= CustomPopUpDialogSiteForUser(activity,siteList,this)
-            customPopUpDialogSiteList!!.show()
+        editSiteBinding!!.etSiteName.setText(siteDetails!!.site_name)
+        editSiteBinding!!.etAddressSite.setText(siteDetails!!.site_address)
+        editSiteBinding!!.etPinCode.setText(siteDetails!!.site_postcode)
+        if (siteDetails!!.site_logo_path!=null) {
+            Glide.with(activity!!)
+                .load(siteDetails!!.site_logo_path)
+                .into(editSiteBinding!!.imgEditsiteImage);
         }
-        editUserBinding!!.tvBrowes.setOnClickListener {
+        editSiteBinding!!.tvBrowes.setOnClickListener {
             showAlertForChooseImage()
         }
-        editUserBinding!!.submitTvid.setOnClickListener {
-            if (checkValidation())
-                callApiforUpdateUser()
+        editSiteBinding!!.tvDropdownSelectsite.setOnClickListener {
+            val customPopUpDialogEditSite= CustomPopUpDialogEditSite(activity, siteList, this)
+            customPopUpDialogEditSite!!.show()
         }
+        editSiteBinding!!.tvSubmitSite.setOnClickListener {
+            if(checkblankvalidation())
+                cllApiforUpdateSite()
+        }
+    }
 
-        userdetails=AppSheardPreference(activity!!).getSelectedUser(PreferenceConstent.selectedUser)
-        editUserBinding!!.etnName.setText(userdetails!!.user_first_name)
-        editUserBinding!!.etnEmail.setText(userdetails!!.user_email_ID)
-        editUserBinding!!.etnContactno.setText(userdetails!!.user_contactno)
-        editUserBinding!!.etnAddress.setText(userdetails!!.user_address)
-        editUserBinding!!.tvDropdownSelectsite.setText(userdetails!!.site_name)
-        if (userdetails!!.user_profile_picture_path!=null) {
-            Glide.with(activity!!)
-                .load(userdetails!!.user_profile_picture_path)
-                .centerCrop()
-                .into(editUserBinding!!.imgSelectedImage);
+    private fun cllApiforUpdateSite() {
+
+        val customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!, "Please Wait..", false)
+        val apiInterface = Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
+        builder.addFormDataPart("company_id",userdata!!.company_id)
+        builder.addFormDataPart("site_id" , siteDetails!!.id)
+        builder.addFormDataPart("site_name", editSiteBinding!!.etSiteName.text.toString())
+        builder.addFormDataPart("site_address", editSiteBinding!!.etAddressSite.text.toString())
+        builder.addFormDataPart("site_postcode" , editSiteBinding!!.etPinCode.text.toString())
+        builder.addFormDataPart("status_id" , "1")
+        if (imgFile!=null)
+            builder.addFormDataPart("site_logo",imgFile!!.absolutePath , okhttp3.RequestBody.create(
+                MediaType.parse("image/jpeg"), imgFile))
+
+        val requestBody = builder.build()
+        var request: Request? = null
+        request = Request.Builder()
+            .addHeader("Authorization", userdata!!.token)
+            .addHeader("Content-Type","application/json")
+            .url(NetworkUtility.BASE_URL + NetworkUtility.EDIT_SITE)
+            .post(requestBody)
+            .build()
+
+        val client = okhttp3.OkHttpClient.Builder()
+            .connectTimeout(10, TimeUnit.SECONDS)
+            .writeTimeout(100, TimeUnit.SECONDS)
+            .readTimeout(100, TimeUnit.SECONDS)
+            .build()
+
+        val call = client.newCall(request)
+        call.enqueue(object : okhttp3.Callback {
+            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
+                customProgress.hideProgress()
+                try {
+                    var resStr :String=response.body()!!.string()
+                    var response_obj: JSONObject = JSONObject(resStr)
+                    activity!!.runOnUiThread {
+                        if (response_obj.getBoolean("status")){
+                            //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
+                            //callApiforfaultcreate(check_process_log_id);
+                            ToastAlert.CustomToastSuccess(activity!!, response_obj.getString("message"))
+                            activity!!.getSupportFragmentManager().popBackStack();
+                            // Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
+                        }else{
+                            ToastAlert.CustomToasterror(activity!!, response_obj.getString("message"))
+
+                        }
+                    }
+                    //val response_obj = JSONObject(response.body()!!.string())
+
+                }
+                catch (e: java.lang.Exception){
+                    e.printStackTrace()
+                    activity!!.runOnUiThread {
+                        ToastAlert.CustomToasterror(activity!!, "Try later. Something Wrong.")
+                    }
+
+
+                }
+            }
+
+            override fun onFailure(call: okhttp3.Call, e: IOException) {
+                customProgress.hideProgress()
+            }
+        })
+    }
+
+    private fun checkblankvalidation():Boolean{
+        if (editSiteBinding!!.etSiteName.text.toString().equals("")){
+            editSiteBinding!!.etSiteName.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter site name")
+            return false
         }
+        if (editSiteBinding!!.etAddressSite.text.toString().equals("")){
+            editSiteBinding!!.etAddressSite.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter site address")
+            return false
+        }
+        if (editSiteBinding!!.etPinCode.text.toString().equals("")){
+            editSiteBinding!!.etPinCode.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter site Post-code")
+            return false
+        }
+        if (selectedSiteId.equals("")){
+            ToastAlert.CustomToastwornning(activity!!,"Select site ")
+            return false
+        }
+        return true
 
     }
+
     private fun showAlertForChooseImage() {
         val alertDialog = Dialog(activity!!, R.style.Transparent)
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
@@ -166,16 +255,9 @@ class EditUserFragment : Fragment() {
         checkpermession()
     }
     fun checkpermession(){
-        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
-                activity!!,
-                Manifest.permission.WRITE_EXTERNAL_STORAGE
-            ) !== PackageManager.PERMISSION_GRANTED) {
+        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
             ActivityCompat.requestPermissions(
-                activity!!, arrayOf<String>(
-                    Manifest.permission.CAMERA,
-                    Manifest.permission.WRITE_EXTERNAL_STORAGE
-                ), 0
-            )
+                activity!!, arrayOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
         } else {
             if (image == "gallery")
                 galleryIntent()
@@ -184,11 +266,7 @@ class EditUserFragment : Fragment() {
         }
     }
 
-    override fun onRequestPermissionsResult(
-        requestCode: Int,
-        permissions: Array<String>,
-        grantResults: IntArray
-    ) {
+    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         if (requestCode == 0) {
             if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
@@ -232,12 +310,12 @@ class EditUserFragment : Fragment() {
                 // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
                 val root = Environment.getExternalStorageDirectory().toString()
-                val myDir = File("$root/mycomms/useredit")
+                val myDir = File("$root/mycomms/siteedit")
                 myDir.mkdirs()
                 /* val generator = Random()
                   var n = 100
                   n = generator.nextInt(n)*/
-                val fname ="useredit_image.jpg"
+                val fname ="siteedit_image.jpg"
                 val file = File(myDir, fname)
                 val fo: FileOutputStream
                 if (file.exists())
@@ -258,7 +336,7 @@ class EditUserFragment : Fragment() {
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
-                editUserBinding!!.imgSelectedImage.setImageBitmap(bm)
+               editSiteBinding!!.imgEditsiteImage.setImageBitmap(bm)
 
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -270,25 +348,15 @@ class EditUserFragment : Fragment() {
     }
     private fun onCaptureImageResult(data: Intent) {
         val thumbnail = data.extras!!.get("data") as Bitmap?
-        /* val bytes = ByteArrayOutputStream()
-         thumbnail!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-         val destination = File(Environment.getExternalStorageDirectory(), "fault_image"+ ".jpg")
-         val fo: FileOutputStream
- */
-        try {
-            // thumbnail = MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, data.data)
-            /*  val bytes = ByteArrayOutputStream()
-              bm!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-              val destination = File(Environment.getExternalStorageDirectory(), "fault_image"+ ".jpg")*/
-            // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
-            val root = Environment.getExternalStorageDirectory().toString()
-            val myDir = File("$root/mycomms/useredit")
-            myDir.mkdirs()
+        try {
+             val root = Environment.getExternalStorageDirectory().toString()
+             val myDir = File("$root/mycomms/siteedit")
+             myDir.mkdirs()
             /* val generator = Random()
               var n = 100
               n = generator.nextInt(n)*/
-            val fname ="useredit_image.jpg"
+            val fname ="uedit_image.jpg"
             val file = File(myDir, fname)
             val fo: FileOutputStream
             if (file.exists())
@@ -303,6 +371,7 @@ class EditUserFragment : Fragment() {
                 imgFile=file
                 out.flush()
                 out.close()
+                editSiteBinding!!.imgEditsiteImage.setImageBitmap(thumbnail)
             } catch (e: FileNotFoundException) {
                 e.printStackTrace()
             } catch (e: IOException) {
@@ -312,7 +381,7 @@ class EditUserFragment : Fragment() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        editUserBinding!!.imgSelectedImage.setImageBitmap(thumbnail)
+
         /* try {
              destination.createNewFile()
              fo = FileOutputStream(destination)
@@ -328,26 +397,26 @@ class EditUserFragment : Fragment() {
 
 
     }
+    override fun onResume() {
+        super.onResume()
+        activity!!.homeBinding!!.mainView.tvHeaderText.setText("Edit Site")
 
+
+    }
     companion object {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
-            EditUserFragment().apply {
+            EditSiteFragment().apply {
                 arguments = Bundle().apply {
                     putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
     }
-
-    override fun onResume() {
-        super.onResume()
-        activity!!.homeBinding!!.mainView.tvHeaderText.setText("Edit User")
-    }
     private fun callApiForSiteList() {
 
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
-        customProgress.showProgress(activity!!,"Please Wait..",false)
+        customProgress.showProgress(activity!!, "Please Wait..", false)
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
         try {
             val paramObject = JSONObject()
@@ -356,15 +425,17 @@ class EditUserFragment : Fragment() {
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
             var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
-            val callApi=apiInterface.callSiteListApi(userdata!!.token,gsonObject)
+            val callApi=apiInterface.callSiteListApi(userdata!!.token, gsonObject)
             callApi.enqueue(object : Callback<SiteListModel> {
                 override fun onResponse(call: Call<SiteListModel>, response: Response<SiteListModel>) {
                     customProgress.hideProgress()
-                    if(response.code()==200) {
+                    if (response.code() == 200) {
                         siteList = response.body()!!.row
+                      //  if (siteList.size == 0)
+                          //  Alert.showalert(activity!!, "No user found")
 
-                    }else if(response.code()==401){
-                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
+                    } else if (response.code() == 401) {
+                        Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
 
                     }
                 }
@@ -374,108 +445,8 @@ class EditUserFragment : Fragment() {
                 }
             })
 
-        }catch (e:Exception){
+        }catch (e: Exception){
             e.printStackTrace()
         }
     }
-
-    private fun checkValidation():Boolean{
-        if(editUserBinding!!.etnName.text.toString().equals("")){
-            editUserBinding!!.etnName.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user name")
-            return false
-        }
-        if(editUserBinding!!.etnEmail.text.toString().equals("")){
-            editUserBinding!!.etnEmail.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user email")
-            return false
-        }
-        if(editUserBinding!!.etnContactno.text.toString().equals("")){
-            editUserBinding!!.etnContactno.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user contact no")
-            return false
-        }
-        if(editUserBinding!!.etnAddress.text.toString().equals("")){
-            editUserBinding!!.etnAddress.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user Address")
-            return false
-        }
-        if (selectedSiteId.equals("")){
-            ToastAlert.CustomToastwornning(activity!!,"Select Site")
-            return false
-        }
-        return true
-
-    }
-
-    private fun callApiforUpdateUser() {
-        val customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
-        customProgress.showProgress(activity!!, "Please Wait..", false)
-        val apiInterface = Retrofit.retrofitInstance?.create(ApiInterface::class.java)
-        val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-        builder.addFormDataPart("user_id",userdetails!!.id)
-        builder.addFormDataPart("user_first_name" , editUserBinding!!.etnName.text.toString())
-        builder.addFormDataPart("user_email_ID", editUserBinding!!.etnEmail.text.toString())
-        builder.addFormDataPart("user_address", editUserBinding!!.etnAddress.text.toString())
-        builder.addFormDataPart("user_contactno" , editUserBinding!!.etnContactno.text.toString())
-        builder.addFormDataPart("company_id" , userdata!!.company_id)
-        builder.addFormDataPart("site_id" , selectedSiteId)
-        builder.addFormDataPart("status_id" , "1")
-        if (imgFile!=null)
-            builder.addFormDataPart("user_profile_picture",imgFile!!.absolutePath , okhttp3.RequestBody.create(
-                MediaType.parse("image/jpeg"), imgFile))
-
-        val requestBody = builder.build()
-        var request: Request? = null
-        request = Request.Builder()
-            .addHeader("Authorization", userdata!!.token)
-            .addHeader("Content-Type","application/json")
-            .url(NetworkUtility.BASE_URL + NetworkUtility.EDIT_USER)
-            .post(requestBody)
-            .build()
-
-        val client = okhttp3.OkHttpClient.Builder()
-            .connectTimeout(10, TimeUnit.SECONDS)
-            .writeTimeout(100, TimeUnit.SECONDS)
-            .readTimeout(100, TimeUnit.SECONDS)
-            .build()
-
-        val call = client.newCall(request)
-        call.enqueue(object : okhttp3.Callback {
-            override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
-                customProgress.hideProgress()
-                try {
-                    var resStr :String=response.body()!!.string()
-                    var response_obj:JSONObject= JSONObject(resStr)
-                    activity!!.runOnUiThread {
-                        if (response_obj.getBoolean("status")){
-                            //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
-                            //callApiforfaultcreate(check_process_log_id);
-                            ToastAlert.CustomToastSuccess(activity!!, response_obj.getString("message"))
-                            activity!!.getSupportFragmentManager().popBackStack();
-                            // Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                        }else{
-                            ToastAlert.CustomToasterror(activity!!, response_obj.getString("message"))
-
-                        }
-                    }
-                    //val response_obj = JSONObject(response.body()!!.string())
-
-                }
-                catch (e: java.lang.Exception){
-                    e.printStackTrace()
-                    activity!!.runOnUiThread {
-                        ToastAlert.CustomToasterror(activity!!, "Try later. Something Wrong.")
-                    }
-
-
-                }
-            }
-
-            override fun onFailure(call: okhttp3.Call, e: IOException) {
-                customProgress.hideProgress()
-            }
-        })
-    }
-
 }

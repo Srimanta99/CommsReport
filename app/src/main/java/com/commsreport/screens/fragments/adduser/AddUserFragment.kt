@@ -1,4 +1,4 @@
-package com.commsreport.screens.fragments.edituser
+package com.commsreport.screens.fragments.adduser
 
 import android.Manifest
 import android.app.Activity
@@ -9,7 +9,6 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -18,18 +17,16 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import com.bumptech.glide.Glide
+import androidx.fragment.app.Fragment
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
-import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForUser
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteListAddUser
-import com.commsreport.databinding.FragmentEditUserBinding
+import com.commsreport.databinding.FragmentAddUserBinding
 import com.commsreport.model.AddUserResponse
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
-import com.commsreport.model.SiteUserListModel
 import com.commsreport.screens.fragments.site.REQUEST_CAMERA
 import com.commsreport.screens.fragments.site.SELECT_FILE
 import com.commsreport.screens.home.HomeActivity
@@ -54,19 +51,21 @@ import java.io.FileOutputStream
 import java.io.IOException
 import java.util.concurrent.TimeUnit
 
+// TODO: Rename parameter arguments, choose names that match
+// the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class EditUserFragment : Fragment() {
+class AddUserFragment : Fragment() {
+
     private var param1: String? = null
     private var param2: String? = null
+   public var addUserBinding:FragmentAddUserBinding?=null
     var activity: HomeActivity?=null
-    var editUserBinding:FragmentEditUserBinding?=null
-    var userdetails:SiteUserListModel.UserList?=null
     var userdata: LoginResponseModel.Userdata? =null
     var siteList=ArrayList<SiteListModel.RowList>()
-    var selectedSiteId:String?=""
+    public  var selectedSiteId=""
     var image: String?=null
     var imgFile:File?=null
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -75,64 +74,61 @@ class EditUserFragment : Fragment() {
             param1 = it.getString(ARG_PARAM1)
             param2 = it.getString(ARG_PARAM2)
         }
-        activity=getActivity() as HomeActivity
-
+        activity=  getActivity() as HomeActivity
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        editUserBinding=FragmentEditUserBinding.inflate(inflater,container,false)
-        return editUserBinding!!.root
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        addUserBinding= FragmentAddUserBinding.inflate(inflater, container, false)
+        return addUserBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         if(userdata!!.user_type.equals("COMPANY_ADMIN")){
-            editUserBinding!!.llSelectsite.visibility=View.VISIBLE
+            addUserBinding!!.llSelectSite.visibility=View.VISIBLE
+
             callApiForSiteList()
-
         }else
-            selectedSiteId=userdetails!!.site_id
+            selectedSiteId=userdata!!.site_id
 
-        editUserBinding!!.tvNameAddUser.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.etnName.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvEmailAddUser.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.etnEmail.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvContactno.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.etnContactno.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvSelectsite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvDropdownSelectsite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.submitTvid.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvDropdownSelectsite.setOnClickListener {
-            val customPopUpDialogSiteList= CustomPopUpDialogSiteForUser(activity,siteList,this)
+        addUserBinding!!.tvNameAddUser.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.etnName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.tvEmailAddUser.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.etnEmail.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.tvContactno.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.etnContactno.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.submitTvid.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.tvBrowes.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        addUserBinding!!.tvUpload!!.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        addUserBinding!!.tvDropdownSelectsite.setOnClickListener {
+            val customPopUpDialogSiteList= CustomPopUpDialogSiteListAddUser(activity, siteList, this)
             customPopUpDialogSiteList!!.show()
         }
-        editUserBinding!!.tvBrowes.setOnClickListener {
+        addUserBinding!!.submitTvid.setOnClickListener {
+            if (checkValidation())
+                callApiforAddUser()
+
+        }
+        addUserBinding!!.tvBrowes.setOnClickListener {
             showAlertForChooseImage()
         }
-        editUserBinding!!.submitTvid.setOnClickListener {
-            if (checkValidation())
-                callApiforUpdateUser()
-        }
-
-        userdetails=AppSheardPreference(activity!!).getSelectedUser(PreferenceConstent.selectedUser)
-        editUserBinding!!.etnName.setText(userdetails!!.user_first_name)
-        editUserBinding!!.etnEmail.setText(userdetails!!.user_email_ID)
-        editUserBinding!!.etnContactno.setText(userdetails!!.user_contactno)
-        editUserBinding!!.etnAddress.setText(userdetails!!.user_address)
-        editUserBinding!!.tvDropdownSelectsite.setText(userdetails!!.site_name)
-        if (userdetails!!.user_profile_picture_path!=null) {
-            Glide.with(activity!!)
-                .load(userdetails!!.user_profile_picture_path)
-                .centerCrop()
-                .into(editUserBinding!!.imgSelectedImage);
-        }
-
     }
+
     private fun showAlertForChooseImage() {
         val alertDialog = Dialog(activity!!, R.style.Transparent)
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val view: View = LayoutInflater.from(activity).inflate(R.layout.alert_custom_imageselection, null)
+        val view: View = LayoutInflater.from(activity).inflate(
+            R.layout.alert_custom_imageselection,
+            null
+        )
         alertDialog.setContentView(view)
         alertDialog.setCancelable(false)
         val tv_message: TextView = view.findViewById(R.id.tv_message)
@@ -156,6 +152,7 @@ class EditUserFragment : Fragment() {
         }
         alertDialog.show()
     }
+
     private fun chooseInagefromCamera() {
         image = "camera"
         checkpermession()
@@ -232,12 +229,12 @@ class EditUserFragment : Fragment() {
                 // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
                 val root = Environment.getExternalStorageDirectory().toString()
-                val myDir = File("$root/mycomms/useredit")
+                val myDir = File("$root/mycomms/user")
                 myDir.mkdirs()
                 /* val generator = Random()
                   var n = 100
                   n = generator.nextInt(n)*/
-                val fname ="useredit_image.jpg"
+                val fname ="user_image.jpg"
                 val file = File(myDir, fname)
                 val fo: FileOutputStream
                 if (file.exists())
@@ -258,7 +255,7 @@ class EditUserFragment : Fragment() {
                 } catch (e: IOException) {
                     e.printStackTrace()
                 }
-                editUserBinding!!.imgSelectedImage.setImageBitmap(bm)
+                addUserBinding!!.imgSelectedImage.setImageBitmap(bm)
 
             } catch (e: IOException) {
                 e.printStackTrace()
@@ -283,12 +280,12 @@ class EditUserFragment : Fragment() {
             // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
 
             val root = Environment.getExternalStorageDirectory().toString()
-            val myDir = File("$root/mycomms/useredit")
+            val myDir = File("$root/mycomms/user")
             myDir.mkdirs()
             /* val generator = Random()
               var n = 100
               n = generator.nextInt(n)*/
-            val fname ="useredit_image.jpg"
+            val fname ="user_image.jpg"
             val file = File(myDir, fname)
             val fo: FileOutputStream
             if (file.exists())
@@ -312,7 +309,7 @@ class EditUserFragment : Fragment() {
         } catch (e: IOException) {
             e.printStackTrace()
         }
-        editUserBinding!!.imgSelectedImage.setImageBitmap(thumbnail)
+        addUserBinding!!.imgSelectedImage.setImageBitmap(thumbnail)
         /* try {
              destination.createNewFile()
              fo = FileOutputStream(destination)
@@ -329,108 +326,29 @@ class EditUserFragment : Fragment() {
 
     }
 
-    companion object {
-        @JvmStatic
-        fun newInstance(param1: String, param2: String) =
-            EditUserFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
-                    putString(ARG_PARAM2, param2)
-                }
-            }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        activity!!.homeBinding!!.mainView.tvHeaderText.setText("Edit User")
-    }
-    private fun callApiForSiteList() {
-
-        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
-        customProgress.showProgress(activity!!,"Please Wait..",false)
-        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
-        try {
-            val paramObject = JSONObject()
-            paramObject.put("company_id", userdata!!.company_id)
-
-            var obj: JSONObject = paramObject
-            var jsonParser: JsonParser = JsonParser()
-            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
-            val callApi=apiInterface.callSiteListApi(userdata!!.token,gsonObject)
-            callApi.enqueue(object : Callback<SiteListModel> {
-                override fun onResponse(call: Call<SiteListModel>, response: Response<SiteListModel>) {
-                    customProgress.hideProgress()
-                    if(response.code()==200) {
-                        siteList = response.body()!!.row
-
-                    }else if(response.code()==401){
-                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
-
-                    }
-                }
-
-                override fun onFailure(call: Call<SiteListModel>, t: Throwable) {
-                    customProgress.hideProgress()
-                }
-            })
-
-        }catch (e:Exception){
-            e.printStackTrace()
-        }
-    }
-
-    private fun checkValidation():Boolean{
-        if(editUserBinding!!.etnName.text.toString().equals("")){
-            editUserBinding!!.etnName.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user name")
-            return false
-        }
-        if(editUserBinding!!.etnEmail.text.toString().equals("")){
-            editUserBinding!!.etnEmail.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user email")
-            return false
-        }
-        if(editUserBinding!!.etnContactno.text.toString().equals("")){
-            editUserBinding!!.etnContactno.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user contact no")
-            return false
-        }
-        if(editUserBinding!!.etnAddress.text.toString().equals("")){
-            editUserBinding!!.etnAddress.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user Address")
-            return false
-        }
-        if (selectedSiteId.equals("")){
-            ToastAlert.CustomToastwornning(activity!!,"Select Site")
-            return false
-        }
-        return true
-
-    }
-
-    private fun callApiforUpdateUser() {
+    private fun callApiforAddUser() {
         val customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
         customProgress.showProgress(activity!!, "Please Wait..", false)
         val apiInterface = Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+
         val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-        builder.addFormDataPart("user_id",userdetails!!.id)
-        builder.addFormDataPart("user_first_name" , editUserBinding!!.etnName.text.toString())
-        builder.addFormDataPart("user_email_ID", editUserBinding!!.etnEmail.text.toString())
-        builder.addFormDataPart("user_address", editUserBinding!!.etnAddress.text.toString())
-        builder.addFormDataPart("user_contactno" , editUserBinding!!.etnContactno.text.toString())
+        builder.addFormDataPart("user_first_name" , addUserBinding!!.etnName.text.toString())
+        builder.addFormDataPart("user_email_ID", addUserBinding!!.etnEmail.text.toString())
+        builder.addFormDataPart("user_address", addUserBinding!!.etnAddress.text.toString())
+        builder.addFormDataPart("user_contactno" , addUserBinding!!.etnContactno.text.toString())
         builder.addFormDataPart("company_id" , userdata!!.company_id)
         builder.addFormDataPart("site_id" , selectedSiteId)
         builder.addFormDataPart("status_id" , "1")
         if (imgFile!=null)
-            builder.addFormDataPart("user_profile_picture",imgFile!!.absolutePath , okhttp3.RequestBody.create(
-                MediaType.parse("image/jpeg"), imgFile))
+        builder.addFormDataPart("user_profile_picture",imgFile!!.absolutePath , okhttp3.RequestBody.create(
+            MediaType.parse("image/jpeg"), imgFile))
 
         val requestBody = builder.build()
         var request: Request? = null
         request = Request.Builder()
             .addHeader("Authorization", userdata!!.token)
             .addHeader("Content-Type","application/json")
-            .url(NetworkUtility.BASE_URL + NetworkUtility.EDIT_USER)
+            .url(NetworkUtility.BASE_URL + NetworkUtility.CREATE_USER)
             .post(requestBody)
             .build()
 
@@ -476,6 +394,132 @@ class EditUserFragment : Fragment() {
                 customProgress.hideProgress()
             }
         })
+       /* try {
+            val paramObject = JSONObject()
+            paramObject.put("user_first_name", addUserBinding!!.etnName.text.toString())
+            paramObject.put("user_email_ID", addUserBinding!!.etnEmail.text.toString())
+            paramObject.put("user_address", addUserBinding!!.etnAddress.text.toString())
+            paramObject.put("user_contactno", addUserBinding!!.etnContactno.text.toString())
+            paramObject.put("company_id", userdata!!.company_id)
+            paramObject.put("site_id", selectedSiteId)
+            paramObject.put("status_id", "1")
+            paramObject.put("user_profile_picture", imgFile)
+
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi= apiInterface.caallCreateUserApi(userdata!!.token, gsonObject!!)
+            callApi.enqueue(object : Callback<AddUserResponse> {
+                override fun onResponse(call: Call<AddUserResponse>, response: Response<AddUserResponse>) {
+                    customProgress.hideProgress()
+                    if (response.isSuccessful) {
+                        if (response.body()!!.status) {
+                            Alert.showalert(activity!!, response!!.body()!!.message)
+                           *//* addUserBinding!!.etnName.setText("")
+                            addUserBinding!!.etnEmail.setText("")
+                            addUserBinding!!.etnContactno.setText("")
+                            addUserBinding!!.etnAddress.setText("")
+                            addUserBinding!!.imgSelectedImage.setImageResource(0);
+                            Alert.showalert(activity!!, response!!.body()!!.message)*//*
+                            activity!!.getSupportFragmentManager().popBackStack();
+                        } else
+                            Alert.showalert(activity!!, response!!.body()!!.message)
+
+                    } else
+                        Toast.makeText(activity, "Try later. Something Wrong.", Toast.LENGTH_LONG)
+                            .show()
+                }
+
+                override fun onFailure(call: Call<AddUserResponse>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e: java.lang.Exception){
+            e.printStackTrace()
+        }*/
     }
 
+    private fun checkValidation():Boolean{
+        if(addUserBinding!!.etnName.text.toString().equals("")){
+            addUserBinding!!.etnName.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter user name")
+            return false
+        }
+        if(addUserBinding!!.etnEmail.text.toString().equals("")){
+            addUserBinding!!.etnEmail.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter user E-mail")
+            return false
+        }
+        if(addUserBinding!!.etnContactno.text.toString().equals("")){
+            addUserBinding!!.etnContactno.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter user contact no")
+            return false
+        }
+        if(addUserBinding!!.etnAddress.text.toString().equals("")){
+            addUserBinding!!.etnAddress.requestFocus()
+            ToastAlert.CustomToastwornning(activity!!,"Enter user address")
+            return false
+        }
+        if (selectedSiteId.equals("")){
+            //Alert.showalert(activity!!, "Select Site")
+            ToastAlert.CustomToastwornning(activity!!,"Select site")
+            return false
+        }
+        return true
+
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity!!.homeBinding!!.mainView.tvHeaderText.setText("ADD USER")
+    }
+    companion object {
+
+        @JvmStatic
+        fun newInstance(param1: String, param2: String) =
+            AddUserFragment().apply {
+                arguments = Bundle().apply {
+                    putString(ARG_PARAM1, param1)
+                    putString(ARG_PARAM2, param2)
+                }
+            }
+    }
+
+    private fun callApiForSiteList() {
+
+        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!, "Please Wait..", false)
+        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        try {
+            val paramObject = JSONObject()
+            paramObject.put("company_id", userdata!!.company_id)
+
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi=apiInterface.callSiteListApi(userdata!!.token, gsonObject)
+            callApi.enqueue(object : Callback<SiteListModel> {
+                override fun onResponse(call: Call<SiteListModel>, response: Response<SiteListModel>) {
+                    customProgress.hideProgress()
+                    if (response.code() == 200) {
+                        siteList = response.body()!!.row
+                        if (siteList.size == 0)
+                            Alert.showalert(activity!!, "No user found")
+
+                    } else if (response.code() == 401) {
+                        Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<SiteListModel>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e: Exception){
+            e.printStackTrace()
+        }
+    }
 }
