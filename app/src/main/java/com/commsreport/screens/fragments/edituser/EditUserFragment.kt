@@ -94,15 +94,16 @@ class EditUserFragment : Fragment() {
         }else
             selectedSiteId=userdetails!!.site_id
 
-        editUserBinding!!.tvNameAddUser.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.etnName.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvEmailAddUser.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.etnEmail.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvContactno.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.etnContactno.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvSelectsite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.tvDropdownSelectsite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editUserBinding!!.submitTvid.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        editUserBinding!!.tvNameAddUser.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editUserBinding!!.etnName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editUserBinding!!.tvEmailAddUser.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editUserBinding!!.etnEmail.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editUserBinding!!.tvContactno.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editUserBinding!!.etnContactno.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editUserBinding!!.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editUserBinding!!.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editUserBinding!!.tvBrowes.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editUserBinding!!.submitTvid.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         editUserBinding!!.tvDropdownSelectsite.setOnClickListener {
             val customPopUpDialogSiteList= CustomPopUpDialogSiteForUser(activity,siteList,this)
             customPopUpDialogSiteList!!.show()

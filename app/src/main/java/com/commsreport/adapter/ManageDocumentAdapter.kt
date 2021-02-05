@@ -74,15 +74,17 @@ class ManageDocumentAdapter(
          //   callApiforRemoveDocument(docList.get(position).id, position)
         }
         itemManageDocumentBinding!!.tvDownload.setOnClickListener {
-           /* if (docList.get(position).document_file.size>0) {
-                for (i in 0 until docList.get(position).document_file.size) {
-                    val bits: List<String> = docList.get(position).document_file[i].split("/")
+            if (docList.get(position).document_file.size>0) {
+                if (manageDocumentFragment.checkpermession()) {
+                    // for (i in 0 until docList.get(position).document_file.size) {
+                    val bits: List<String> = docList.get(position).document_file[0].split("/")
                     manageDocumentFragment.downloadfromUrl(
-                        docList.get(position).document_file[i], bits.get(bits.size - 1)
+                        docList.get(position).document_file[0], bits.get(bits.size - 1)
                     )
+                    // }
                 }
             }else
-                ToastAlert.CustomToastwornning(activity,"No file for download.")*/
+                ToastAlert.CustomToastwornning(activity,"No file for download.")
         }
     }
 
@@ -157,4 +159,5 @@ class ManageDocumentAdapter(
         tv_message.setText("Are you want to remove this document?")
         alertDialog.show()
     }
+
 }

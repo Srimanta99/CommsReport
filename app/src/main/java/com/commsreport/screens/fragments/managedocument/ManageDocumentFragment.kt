@@ -1,8 +1,10 @@
 package com.commsreport.screens.fragments.managedocument
 
+import android.Manifest
 import android.app.ProgressDialog
 import android.content.ActivityNotFoundException
 import android.content.Intent
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
@@ -11,6 +13,8 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.app.ActivityCompat
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.commsreport.BuildConfig
 import com.commsreport.Utils.alert.Alert
@@ -105,7 +109,9 @@ class ManageDocumentFragment : Fragment() {
             callApi.enqueue(object : Callback<DocumentListModel> {
                 override fun onResponse(call: Call<DocumentListModel>, response: Response<DocumentListModel>) {
                     customProgress.hideProgress()
+
                     if (response.code() == 200) {
+                        docList.clear()
                         docList = response.body()!!.row
                         if (docList.size > 0){
                             setAdapter()
@@ -209,6 +215,26 @@ class ManageDocumentFragment : Fragment() {
             }
         }
         someTask().execute();
+    }
+
+    public fun checkpermession():Boolean {
+        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED){ ActivityCompat.requestPermissions(
+            activity!!, arrayOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+            return false
+        }else
+           return true
+
+    }
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray) {
+        if (requestCode == 0) {
+            if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
+                && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
+
+            }
+        }
     }
 
 }

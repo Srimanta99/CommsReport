@@ -50,6 +50,9 @@ interface ApiInterface {
     @POST(NetworkUtility.DOCUMENT_REMOVE)
     fun callApifordocumentremove(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.PROFILE_UPDATE)
+    fun callApifordochangepassword(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
     // @Headers("Content-Type: application/json")
     /*@POST(NetworkUtility.LOG_IN)

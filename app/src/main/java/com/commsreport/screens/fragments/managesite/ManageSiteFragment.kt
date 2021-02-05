@@ -78,7 +78,9 @@ class ManageSiteFragment : Fragment() {
             callApi.enqueue(object :Callback<SiteListModel>{
                 override fun onResponse(call: Call<SiteListModel>, response: Response<SiteListModel>) {
                     customProgress.hideProgress()
+
                     if(response.code()==200) {
+                        siteList.clear()
                         siteList = response.body()!!.row
                         if (siteList.size>=0) {
                             manageSiteAdapter = ManageSiteAdapter(activity!!, siteList)

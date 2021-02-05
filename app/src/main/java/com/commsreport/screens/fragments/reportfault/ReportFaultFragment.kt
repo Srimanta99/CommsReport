@@ -483,7 +483,7 @@ class ReportFaultFragment : Fragment() {
                         if (response_obj.getBoolean("status")) {
                             //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
                           //  Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                            ToastAlert.CustomToastwornning(activity!!,response_obj.getString("message"))
+                            ToastAlert.CustomToastSuccess(activity!!,response_obj.getString("message"))
                            // fragmentReportFaultBinding!!.etAddnote.setText("")
                              activity!!.getSupportFragmentManager().popBackStack()
 

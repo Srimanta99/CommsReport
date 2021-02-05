@@ -93,16 +93,16 @@ class EditSiteFragment : Fragment() {
 
         }else
             selectedSiteId=siteDetails!!.id
-        editSiteBinding!!.tvEmail.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editSiteBinding!!.etSiteName.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editSiteBinding!!.tvAddressSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editSiteBinding!!.etAddressSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editSiteBinding!!.tvPincode.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editSiteBinding!!.etPinCode.setTypeface(CustomTypeface.getwhitMedium(activity!!))
-        editSiteBinding!!.tvUpload.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        editSiteBinding!!.tvEmail.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editSiteBinding!!.etSiteName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editSiteBinding!!.tvAddressSite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editSiteBinding!!.etAddressSite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editSiteBinding!!.tvPincode.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editSiteBinding!!.etPinCode.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        editSiteBinding!!.tvUpload.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         // fragmentAddSiteBinding!!.etUpload.setTypeface(CustomTypeface.getWhitniBold(activity!!))
-        editSiteBinding!!.tvBrowes.setTypeface(CustomTypeface.getWhitniBold(activity!!))
-        editSiteBinding!!.tvSubmitSite.setTypeface(CustomTypeface.getwhitMedium(activity!!))
+        editSiteBinding!!.tvBrowes.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
+        editSiteBinding!!.tvSubmitSite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
 
         editSiteBinding!!.etSiteName.setText(siteDetails!!.site_name)
         editSiteBinding!!.etAddressSite.setText(siteDetails!!.site_address)

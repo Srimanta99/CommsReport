@@ -19,6 +19,7 @@ class NetworkUtility {
         const val DOCUMENT_REMOVE="api/document/remove"
         const val EDIT_USER="api/site/user/update"
         const val EDIT_SITE="api/site/update"
+        const val PROFILE_UPDATE="api/user/profile-update"
 
     }
 }

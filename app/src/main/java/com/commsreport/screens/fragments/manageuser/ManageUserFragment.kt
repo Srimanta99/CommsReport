@@ -88,8 +88,10 @@ class ManageUserFragment : Fragment() {
             callApi.enqueue(object : Callback<SiteUserListModel> {
                 override fun onResponse(call: Call<SiteUserListModel>, response: Response<SiteUserListModel>) {
                     customProgress.hideProgress()
+
                     if(response.code()==200) {
                         if (response.body()!!.status){
+                            userList.clear()
                             userList=response!!.body()!!.row
                             manaUserAdapter= ManageUserAdapter(activity!!,userList)
                             fragmentManageUserBinding!!.recManageUser.adapter=manaUserAdapter

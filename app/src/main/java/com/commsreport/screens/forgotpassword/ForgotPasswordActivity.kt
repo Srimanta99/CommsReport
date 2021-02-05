@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
+import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.databinding.ActivityForgotPasswordBinding
 
 class ForgotPasswordActivity : AppCompatActivity() {
@@ -24,7 +25,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
     }
 
     private fun callApiForForgotPassword() {
-
+         ToastAlert.CustomToastwornning(this,"Under development")
     }
 
     private fun setTypeface() {
