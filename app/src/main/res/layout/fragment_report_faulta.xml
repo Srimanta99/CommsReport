@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.commsreport.screens.fragments.reportfault.ReportFaultFragment"
     android:layout_height="match_parent"
+    android:background="@drawable/top_two_rounded_corner_white"
     android:layout_width="match_parent">
     <!--<data>
         <import type="android.view.View" />

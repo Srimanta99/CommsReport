@@ -473,6 +473,7 @@ class AddUserFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("ADD USER")
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.VISIBLE
     }
     companion object {
 

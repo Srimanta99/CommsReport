@@ -31,6 +31,8 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
         homeBinding.llFault.setOnClickListener(this)
         homeBinding.rlSettings.setOnClickListener(this)
         homeBinding.rlLogout.setOnClickListener(this)
+        //homeBinding!!.mainView.imgSearch.setOnClickListener(this)
+
 
     }
     override fun onClick(p0: View?) {
@@ -66,6 +68,10 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
                 homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
                 Alert.showYesNoAlert(homeActivity!!,"Are you want to logout?")
             }
+            R.id.img_Search->{
+                homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
+            }
+
         }
     }
 }

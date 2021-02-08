@@ -147,6 +147,7 @@ class ReportFaultFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Report Fault")
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.VISIBLE
     }
 
     companion object {

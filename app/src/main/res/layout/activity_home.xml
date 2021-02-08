@@ -10,6 +10,7 @@
 
     <include layout="@layout/home_page"
         android:id="@+id/mainView"></include>
+//    android:layout_gravity="start"
 
     <RelativeLayout
         android:layout_width="@dimen/_210sdp"
@@ -23,35 +24,63 @@
             android:layout_margin="@dimen/_15sdp"
             android:orientation="vertical">
         <ImageView
-            android:id="@+id/imgProfile"
+
             android:layout_width="@dimen/_70sdp"
             android:layout_height="@dimen/_70sdp"
             android:background="@drawable/logo"
             ></ImageView>
-        <TextView
-            android:id="@+id/tv_companyname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="@dimen/_16sdp"
-            android:layout_marginTop="@dimen/_10sdp"
-            android:textColor="@color/menu_text_color"
-            android:text="COMPANY NAME"></TextView>
-            <TextView
-                android:id="@+id/tv_username"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="@dimen/_13sdp"
-                android:layout_marginTop="@dimen/_5sdp"
-                android:textColor="@color/menu_text_color"
-                android:text="Priyam Ghosh"></TextView>
-            <TextView
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="@dimen/_70sdp">
+                <ImageView
+                    android:id="@+id/imgProfile"
+                    android:layout_width="@dimen/_45sdp"
+                    android:layout_height="@dimen/_45sdp"
+                    android:background="@drawable/profile"
+                    android:layout_centerVertical="true"></ImageView>
+
+                <TextView
+                    android:id="@+id/tv_username"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_15sdp"
+                    android:layout_marginTop="@dimen/_10sdp"
+                    android:textColor="@color/menu_text_color"
+                    android:layout_toRightOf="@id/imgProfile"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:text="Priyam Ghosh"></TextView>
+                <TextView
+                    android:id="@+id/tv_companyname"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textSize="@dimen/_13sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
+                    android:textColor="@color/menu_text_color"
+                    android:layout_toRightOf="@id/imgProfile"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_40sdp"
+                    android:layout_below="@+id/tv_username"
+                    android:text="COMPANY NAME "></TextView>
+                <ImageView
+                    android:id="@+id/imgedit"
+                    android:layout_width="@dimen/_25sdp"
+                    android:layout_height="@dimen/_25sdp"
+                    android:layout_alignParentBottom="true"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    android:background="@drawable/edit"
+                    android:layout_alignParentRight="true"></ImageView>
+            </RelativeLayout>
+
+
+           <!-- <TextView
                 android:id="@+id/tv_emaile"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="@dimen/_12sdp"
 
                 android:textColor="@color/menu_text_color"
-                android:text="priyamg.codopoliz@gmail.com"></TextView>
+                android:text="priyamg.codopoliz@gmail.com"></TextView>-->
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_1sdp"

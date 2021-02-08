@@ -366,6 +366,7 @@ class SiteFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Add Site")
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.VISIBLE
     }
     companion object {
         @JvmStatic

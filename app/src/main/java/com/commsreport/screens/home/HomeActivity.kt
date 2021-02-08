@@ -60,16 +60,16 @@ class HomeActivity : AppCompatActivity() {
                 }
 
             }
-        homeBinding!!.drawerLayout!!.addDrawerListener(actionBarDrawerToggle)
-        setTypeface();
-        setuserdata();
+         homeBinding!!.drawerLayout!!.addDrawerListener(actionBarDrawerToggle)
+         setTypeface();
+         setuserdata();
          openFragment(LeaderDashboardFragment())
     }
    public  fun setuserdata(){
        var userdata=AppSheardPreference(this).getUser(PreferenceConstent.userData)
        homeBinding!!.tvCompanyname.setText(userdata!!.company_name)
        homeBinding!!.tvUsername.setText(userdata!!.full_name)
-       homeBinding!!.tvEmaile.setText(userdata!!.email)
+      // homeBinding!!.tvEmaile.setText(userdata!!.email)
        val options = DisplayImageOptions.Builder()
            /* .showImageForEmptyUri(R.drawable.ic_empty)
                 .showImageOnFail(R.drawable.ic_error)*/
@@ -109,10 +109,10 @@ class HomeActivity : AppCompatActivity() {
 
     private fun setTypeface() {
         homeBinding!!.mainView!!.tvHeaderText!!.setTypeface(CustomTypeface.getRajdhaniBold(this))
-        homeBinding!!.tvCompanyname.setTypeface(CustomTypeface.getRajdhaniBold(this))
+        homeBinding!!.tvCompanyname.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvHome.setTypeface(CustomTypeface.getRajdhaniMedium(this))
-        homeBinding!!.tvUsername.setTypeface(CustomTypeface.gettitanuiumWebRegular(this))
-        homeBinding!!.tvEmaile.setTypeface(CustomTypeface.gettitanuiumWebRegular(this))
+        homeBinding!!.tvUsername.setTypeface(CustomTypeface.getRajdhaniBold(this))
+       // homeBinding!!.tvEmaile.setTypeface(CustomTypeface.gettitanuiumWebRegular(this))
         homeBinding!!.tvSites.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvUser.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvFault.setTypeface(CustomTypeface.getRajdhaniMedium(this))

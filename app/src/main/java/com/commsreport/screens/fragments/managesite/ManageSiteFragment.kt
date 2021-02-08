@@ -106,6 +106,7 @@ class ManageSiteFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Manage Sites")
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.VISIBLE
     }
 
     companion object {

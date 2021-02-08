@@ -1,13 +1,16 @@
 package com.commsreport.screens.fragments.manageuser
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.adapter.ManageUserAdapter
+import com.commsreport.databinding.ContentManageUserBinding
 import com.commsreport.databinding.FragmentManageUserBinding
 import com.commsreport.model.SiteUserListModel
 import com.commsreport.screens.fragments.adduser.AddUserFragment
@@ -33,6 +36,7 @@ class ManageUserFragment : Fragment() {
     private var param2: String? = null
     var activity:HomeActivity?=null
     var fragmentManageUserBinding:FragmentManageUserBinding?=null
+    var contentManageUserBinding:ContentManageUserBinding?=null
     var manaUserAdapter:ManageUserAdapter?=null
     var userList=ArrayList<SiteUserListModel.UserList>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -46,13 +50,21 @@ class ManageUserFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentManageUserBinding= FragmentManageUserBinding.inflate(inflater,container,false)
+        contentManageUserBinding=fragmentManageUserBinding!!.contentManageUser
         return fragmentManageUserBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        contentManageUserBinding!!.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        contentManageUserBinding!!.imgSearch.setOnClickListener {
+            fragmentManageUserBinding!!.drawerLayout.openDrawer(Gravity.RIGHT)
+        }
+        contentManageUserBinding!!.imgMenu.setOnClickListener {
+            activity!!.homeBinding!!.drawerLayout.openDrawer(Gravity.LEFT)
+        }
         callApiForSiteList()
-        fragmentManageUserBinding!!.tvAddUser.setOnClickListener {
+        contentManageUserBinding!!.tvAddUser.setOnClickListener {
             activity!!.openFragment(AddUserFragment())
         }
     }
@@ -60,6 +72,7 @@ class ManageUserFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Manage Users")
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.GONE
     }
     companion object {
         @JvmStatic
@@ -94,7 +107,7 @@ class ManageUserFragment : Fragment() {
                             userList.clear()
                             userList=response!!.body()!!.row
                             manaUserAdapter= ManageUserAdapter(activity!!,userList)
-                            fragmentManageUserBinding!!.recManageUser.adapter=manaUserAdapter
+                            contentManageUserBinding!!.recManageUser.adapter=manaUserAdapter
                         }else
                             ToastAlert.CustomToasterror(activity!!,"No User found")
                     }else if(response.code()==401){

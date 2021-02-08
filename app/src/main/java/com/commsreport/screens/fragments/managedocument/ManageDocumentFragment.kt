@@ -9,6 +9,7 @@ import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -17,9 +18,11 @@ import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.commsreport.BuildConfig
+import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.adapter.ManageDocumentAdapter
+import com.commsreport.databinding.ContentManageDocumentBinding
 import com.commsreport.databinding.FragmentManageDocumentBinding
 import com.commsreport.model.*
 
@@ -50,6 +53,7 @@ class ManageDocumentFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var manageDocumentBinding: FragmentManageDocumentBinding?=null
+    var contentManageDocumentBinding:ContentManageDocumentBinding?=null
     var manageDocumentAdapter:ManageDocumentAdapter?=null
     var activity:HomeActivity?=null
     var siteList=ArrayList<SiteListModel.RowList>()
@@ -68,13 +72,20 @@ class ManageDocumentFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         manageDocumentBinding= FragmentManageDocumentBinding.inflate(inflater,container,false)
+        contentManageDocumentBinding=manageDocumentBinding!!.contentManageDocument
         return manageDocumentBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-
+        manageDocumentBinding!!.contentManageDocument.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
+        contentManageDocumentBinding!!.imgMenu.setOnClickListener {
+            activity!!.homeBinding!!.drawerLayout!!.openDrawer(Gravity.LEFT)
+        }
+        contentManageDocumentBinding!!.imgSearch.setOnClickListener {
+            manageDocumentBinding!!.searchDrawer!!.openDrawer(Gravity.RIGHT)
+        }
         callApiForDocList()
 
 
@@ -82,7 +93,8 @@ class ManageDocumentFragment : Fragment() {
 
     override fun onResume() {
         super.onResume()
-        activity!!.homeBinding!!.mainView!!.tvHeaderText.setText("Manage Documents")
+       // activity!!.homeBinding!!.mainView!!.tvHeaderText.setText("Manage Documents")
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.GONE
     }
     companion object {
         @JvmStatic
@@ -137,7 +149,7 @@ class ManageDocumentFragment : Fragment() {
 
     public fun setAdapter() {
         manageDocumentAdapter= ManageDocumentAdapter(activity!!,docList,this)
-        manageDocumentBinding!!.recManageDocument.adapter=manageDocumentAdapter
+        manageDocumentBinding!!.contentManageDocument!!.recManageDocument.adapter=manageDocumentAdapter
     }
     public fun downloadfromUrl(quotationDownloadUrl: String, generatedQuotationFileName: String) {
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()

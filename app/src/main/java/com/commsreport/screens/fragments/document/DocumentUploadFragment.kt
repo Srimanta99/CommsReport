@@ -406,6 +406,7 @@ class DocumentUploadFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Upload Documents")
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.VISIBLE
     }
 
     fun datepickerdeStartDate() {

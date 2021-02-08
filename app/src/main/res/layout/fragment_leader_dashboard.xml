@@ -3,33 +3,41 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/top_two_rounded_corner_white"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
 <RelativeLayout
     android:id="@+id/rl_faultcount"
-    android:layout_width="@dimen/_175sdp"
-    android:layout_height="@dimen/_175sdp"
+    android:layout_width="match_parent"
+    android:layout_height="@dimen/_280sdp"
+    android:layout_margin="@dimen/_30sdp"
     android:layout_centerHorizontal="true"
-    android:layout_marginTop="@dimen/_30sdp"
-    android:background="@drawable/circle">
+    android:layout_marginTop="@dimen/_20sdp"
+    android:background="@drawable/dashboard_fault_count">
     <TextView
         android:id="@+id/tvfaultcount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_65sdp"
         android:textColor="@color/text_red"
         android:textSize="@dimen/_55sdp"
         android:text="0"></TextView>
+
     <TextView
         android:id="@+id/tv_faultereport"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
-        android:text="FAULTS \n REPORTED"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_60sdp"
+
+        android:layout_below="@+id/tvfaultcount"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentBottom="true"
+       android:paddingTop="@dimen/_60sdp"
+
         android:gravity="center"
-        android:textSize="@dimen/_16sdp"
-        android:layout_below="@+id/tvfaultcount"></TextView>
+        android:text="FAULTS REPORTED"
+        android:textColor="@color/black"
+        android:textSize="@dimen/_16sdp"></TextView>
 
 </RelativeLayout>
     <androidx.appcompat.widget.AppCompatTextView
@@ -37,7 +45,7 @@
         android:layout_width="@dimen/_170sdp"
         android:layout_height="@dimen/_44sdp"
 
-        android:layout_marginTop="@dimen/_25sdp"
+        android:layout_marginTop="@dimen/_15sdp"
         android:layout_below="@+id/rl_faultcount"
         android:background="@drawable/gradient_login_button"
         android:text="REPORT A FAULT"

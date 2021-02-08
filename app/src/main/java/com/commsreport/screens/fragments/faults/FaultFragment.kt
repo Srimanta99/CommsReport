@@ -1,6 +1,7 @@
 package com.commsreport.screens.fragments.faults
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +11,7 @@ import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForFault
 import com.commsreport.adapter.ManageFaultAdapter
+import com.commsreport.databinding.ContentManageFaultBinding
 import com.commsreport.databinding.FragmentFaultBinding
 import com.commsreport.model.FaultListModel
 import com.commsreport.model.LoginResponseModel
@@ -36,11 +38,13 @@ class FaultFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var faultBinding:FragmentFaultBinding?=null
+    var contentManageFaultBinding:ContentManageFaultBinding?=null
     var activity:HomeActivity?=null
     var manageFaultAdapter:ManageFaultAdapter?=null
     var userdata: LoginResponseModel.Userdata? =null
     var siteList=ArrayList<SiteListModel.RowList>()
     var faultList=ArrayList<FaultListModel.FaultList>()
+
     var selectedSiteId:String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -53,17 +57,19 @@ class FaultFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         faultBinding= FragmentFaultBinding.inflate(inflater,container,false)
+        contentManageFaultBinding=faultBinding!!.contentManageFault
         return faultBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
-        faultBinding!!.tvAddfault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        contentManageFaultBinding!!.tvAddfault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         faultBinding!!.tvSelectedsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.contentManageFault.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
 
         if(userdata!!.user_type.equals("COMPANY_ADMIN")){
-            faultBinding!!.tvSelectedsite.visibility=View.VISIBLE
+          //  faultBinding!!.tvSelectedsite.visibility=View.VISIBLE
             callApiForSiteList()
 
         }else {
@@ -71,10 +77,16 @@ class FaultFragment : Fragment() {
             callApiforFaultList(selectedSiteId!!)
         }
 
-        faultBinding!!.tvAddfault.setOnClickListener {
+        contentManageFaultBinding!!.tvAddfault.setOnClickListener {
             activity!!.openFragment(ReportFaultFragment())
         }
 
+        contentManageFaultBinding!!.imgMenu.setOnClickListener {
+            activity!!.homeBinding!!.drawerLayout.openDrawer(Gravity.LEFT)
+        }
+        faultBinding!!.contentManageFault.imgSearch.setOnClickListener {
+            faultBinding!!.drawerLayout.openDrawer(Gravity.RIGHT)
+        }
         faultBinding!!.tvSelectedsite.setOnClickListener {
             val customPopUpDialogSiteList= CustomPopUpDialogSiteForFault(activity,siteList,this)
             customPopUpDialogSiteList!!.show()
@@ -96,6 +108,7 @@ class FaultFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Manage Faults")
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.GONE
     }
     private fun callApiForSiteList() {
 
@@ -180,7 +193,7 @@ class FaultFragment : Fragment() {
 
     public fun setAdpterValue() {
         manageFaultAdapter = ManageFaultAdapter(activity,faultList!!,this)
-        faultBinding!!.recManagefault!!.adapter = manageFaultAdapter
+        contentManageFaultBinding!!.recManagefault!!.adapter = manageFaultAdapter
     }
 
 

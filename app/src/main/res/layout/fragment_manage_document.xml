@@ -1,21 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+   android:id="@+id/search_drawer"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
+    tools:openDrawer="right"
     tools:context=".screens.fragments.managedocument.ManageDocumentFragment">
 
-   <androidx.recyclerview.widget.RecyclerView
-       android:id="@+id/rec_manage_document"
-       android:layout_width="match_parent"
-       android:layout_height="wrap_content"
-       android:layout_margin="@dimen/_5sdp"
-       tools:itemCount="10"
-       app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-       tools:listitem="@layout/item_manage_document">
+  <LinearLayout
+       android:layout_gravity="end"
+       android:layout_width="wrap_content"
+       android:layout_height="match_parent">
+      <ImageView
+          android:id="@+id/img_navclose"
+          android:layout_marginTop="20dp"
+          android:layout_width="50dp"
+          android:layout_height="50dp"
+          android:src="@drawable/searchwithbg"
+          android:layout_alignParentRight="true"></ImageView>
 
-   </androidx.recyclerview.widget.RecyclerView>
+      <com.google.android.material.navigation.NavigationView
+          android:id="@+id/nav_view"
+          android:layout_width="@dimen/_200sdp"
+          android:layout_height="match_parent"
+          android:layout_gravity="end"
+          android:fitsSystemWindows="true">
+         <include layout="@layout/search_document_layout"/>
+      </com.google.android.material.navigation.NavigationView>
+   </LinearLayout>
+    <include
+        android:id="@+id/content_manage_document"
+        layout="@layout/content_manage_document"></include>
 
-</LinearLayout>
+
+
+</androidx.drawerlayout.widget.DrawerLayout>
