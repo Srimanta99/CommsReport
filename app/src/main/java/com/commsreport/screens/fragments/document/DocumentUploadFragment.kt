@@ -291,10 +291,7 @@ class DocumentUploadFragment : Fragment() {
                         e.printStackTrace()
                     }
 
-                    val view: View = LayoutInflater.from(activity).inflate(
-                        R.layout.item_attachment_view,
-                        null
-                    )
+                    val view: View = LayoutInflater.from(activity).inflate(R.layout.item_attachment_view, null)
                     val tvattachment:TextView=view.findViewById(R.id.tv_attachment1)
                     tvattachment.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
                     tvattachment.setText("Attachment " + docCount)

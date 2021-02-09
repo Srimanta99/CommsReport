@@ -28,11 +28,13 @@
 
                 <TextView
                     android:id="@+id/tv_name_add_user"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:text="Name"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:drawableRight="@drawable/star"
                     android:textColor="@color/text_color_blue"
                     android:textSize="@dimen/_12sdp">
 
@@ -55,15 +57,55 @@
                     >
 
                 </EditText>
+                <LinearLayout
+                    android:id="@+id/ll_select_site"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:visibility="visible"
+                    android:orientation="vertical">
 
+                    <TextView
+                        android:id="@+id/tv_selectsite"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginBottom="@dimen/_5sdp"
+                        android:drawablePadding="@dimen/_4sdp"
+                        android:drawableRight="@drawable/star"
+                        android:text="Select Site"
+                        android:textColor="@color/text_color_blue"
+                        android:textSize="@dimen/_12sdp">
 
+                    </TextView>
+
+                    <TextView
+                        android:id="@+id/tv_dropdown_selectsite"
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_40sdp"
+                        android:background="@drawable/asscolor_round"
+                        android:drawableRight="@drawable/down_arrow"
+                        android:drawablePadding="@dimen/_10sdp"
+                        android:gravity="center_vertical"
+                        android:hint="Please select site"
+                        android:paddingLeft="@dimen/_7sdp"
+                        android:paddingRight="@dimen/_10sdp"
+                        android:textSize="@dimen/_12sdp"></TextView>
+
+                </LinearLayout>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/divider"></TextView>
                 <TextView
                     android:id="@+id/tv_email_add_user"
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
-                    android:text="Email ID"
+                    android:layout_marginTop="@dimen/_9sdp"
+                    android:text="Email address"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:drawableRight="@drawable/star"
                     android:textColor="@color/text_color_blue"
                     android:textSize="@dimen/_12sdp">
 
@@ -121,15 +163,46 @@
                     >
 
                 </EditText>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/divider"></TextView>
+                <TextView
+                    android:id="@+id/tv_selectcountry"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:drawableRight="@drawable/star"
+                    android:text="Select Country"
+                    android:textColor="@color/text_color_blue"
+                    android:textSize="@dimen/_12sdp">
 
+                </TextView>
 
                 <TextView
-                    android:id="@+id/tv_address"
+                    android:id="@+id/tv_dropdown_selectcountry"
                     android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:background="@drawable/asscolor_round"
+                    android:drawableRight="@drawable/down_arrow"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:hint="Please select site"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:layout_marginBottom="@dimen/_9sdp"
+                    android:textSize="@dimen/_12sdp"></TextView>
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="@dimen/_5sdp"
                     android:layout_marginBottom="@dimen/_5sdp"
                     android:text="Address"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:drawableRight="@drawable/star"
                     android:textColor="@color/text_color_blue"
                     android:textSize="@dimen/_12sdp">
 
@@ -155,7 +228,44 @@
                     android:textStyle="normal">
 
                 </EditText>
+                <TextView
+                    android:id="@+id/tv_postcode"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:text="Post code"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:drawableRight="@drawable/star"
+                    android:textColor="@color/text_color_blue"
+                    android:textSize="@dimen/_12sdp">
 
+                </TextView>
+
+
+                <EditText
+
+                    android:id="@+id/etn_postcode"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:layout_marginBottom="@dimen/_10sdp"
+                    android:background="@drawable/asscolor_round"
+                    android:inputType="number"
+                    android:paddingLeft="@dimen/_9sdp"
+                    android:paddingTop="@dimen/_10sdp"
+                    android:paddingRight="@dimen/_9sdp"
+                    android:paddingBottom="@dimen/_10sdp"
+                    android:textSize="@dimen/_12sdp"
+
+                    android:textStyle="normal"
+
+                    >
+
+                </EditText>
+                <TextView
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_30sdp"
+                    android:background="@drawable/divider"></TextView>
                 <TextView
                     android:id="@+id/tv_upload"
                     android:layout_width="match_parent"
@@ -172,6 +282,7 @@
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_50sdp"
+                    android:layout_marginBottom="@dimen/_9sdp"
                     android:background="@drawable/asscolor_round"
                     >
 
@@ -234,40 +345,32 @@
 
                 </LinearLayout>
 
-                <LinearLayout
-                    android:id="@+id/ll_select_site"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tv_selectstatus"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:visibility="gone"
-                    android:orientation="vertical">
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginBottom="@dimen/_5sdp"
+                    android:drawablePadding="@dimen/_4sdp"
+                    android:drawableRight="@drawable/star"
+                    android:text="Select Status"
+                    android:textColor="@color/text_color_blue"
+                    android:textSize="@dimen/_12sdp">
 
-                    <TextView
-                        android:id="@+id/tv_selectsite"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
-                        android:layout_marginBottom="@dimen/_5sdp"
-                        android:layout_marginTop="@dimen/_5sdp"
-                        android:text="Select Site"
-                        android:textColor="@color/text_color_blue"
-                        android:textSize="@dimen/_12sdp">
+                </TextView>
 
-                    </TextView>
-
-                    <TextView
-                        android:id="@+id/tv_dropdown_selectsite"
-                        android:layout_width="match_parent"
-                        android:layout_height="@dimen/_40sdp"
-                        android:background="@drawable/asscolor_round"
-                        android:drawableRight="@drawable/down_arrow"
-                        android:drawablePadding="@dimen/_10sdp"
-                        android:gravity="center_vertical"
-                        android:hint="Please select site"
-                        android:paddingLeft="@dimen/_7sdp"
-                        android:paddingRight="@dimen/_10sdp"
-                        android:textSize="@dimen/_12sdp"></TextView>
-
-                </LinearLayout>
+                <TextView
+                    android:id="@+id/tv_dropdown_selectstatus"
+                    android:layout_width="match_parent"
+                    android:layout_height="@dimen/_40sdp"
+                    android:background="@drawable/asscolor_round"
+                    android:drawableRight="@drawable/down_arrow"
+                    android:drawablePadding="@dimen/_10sdp"
+                    android:gravity="center_vertical"
+                    android:hint="Please select status"
+                    android:paddingLeft="@dimen/_7sdp"
+                    android:paddingRight="@dimen/_10sdp"
+                    android:textSize="@dimen/_12sdp"></TextView>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

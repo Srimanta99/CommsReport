@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:paddingBottom="@dimen/_15sdp"
     android:orientation="vertical">
 
 
@@ -35,28 +35,37 @@
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
-                        android:layout_margin="@dimen/_10sdp"
+
                         android:layout_weight="0.4"
                         android:orientation="vertical"
 
                         >
 
-                        <LinearLayout
+                        <RelativeLayout
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:background="@drawable/grey_bg"
+                            android:layout_marginLeft="@dimen/_10sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
+
                             android:orientation="vertical">
 
                             <ImageView
                                 android:id="@+id/img_user"
                                 android:layout_width="match_parent"
                                 android:layout_height="match_parent"
-                                android:padding="@dimen/_8sdp"
+                             android:padding="@dimen/_2sdp"
                                 android:scaleType="fitXY"
                                 android:background="@drawable/no_image">
 
                             </ImageView>
-
+                            <ImageView
+                                android:id="@+id/img_status"
+                                android:layout_width="@dimen/_20sdp"
+                                android:layout_height="@dimen/_20sdp"
+                                android:layout_alignParentRight="true"
+                                android:background="@drawable/active"
+                                android:layout_margin="@dimen/_5sdp"></ImageView>
                            <!-- <TextView
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
@@ -68,14 +77,14 @@
                                 android:textSize="8sp">
 
                             </TextView>-->
-                        </LinearLayout>
+                        </RelativeLayout>
 
                     </LinearLayout>
 
                     <LinearLayout
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
-                        android:layout_marginLeft="@dimen/_5sdp"
+                        android:layout_marginLeft="@dimen/_10sdp"
                         android:layout_marginRight="@dimen/_5sdp"
                         android:layout_weight="1"
                         android:orientation="vertical">
@@ -154,6 +163,7 @@
                 <View
                     android:layout_width="match_parent"
                     android:layout_height="1.5dp"
+                    android:layout_margin="@dimen/_10sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:background="#32000000">
@@ -189,21 +199,105 @@
 
         </LinearLayout>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="right">
 
-            <ImageView
-                android:id="@+id/img_edit"
-                android:layout_width="@dimen/_50sdp"
-                android:layout_height="@dimen/_25sdp"
-                android:src="@drawable/edit">
-
-            </ImageView>
-        </LinearLayout>
 
     </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/lltop"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginRight="@dimen/_5sdp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"></TextView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:background="@drawable/rectangular_rounded_shape_fix_fault"
+                android:textSize="@dimen/_12sdp">
+
+                <ImageView
+                    android:id="@+id/img_edit"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@drawable/edit_site"></ImageView>
+
+                <TextView
+                    android:id="@+id/tv_remove"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_toRightOf="@+id/img_fixfault"
+                    android:gravity="center"
+                    android:text="EDIT"
+                    android:textSize="@dimen/_11sdp">
+
+                </TextView>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:background="@drawable/rectangular_rounded_shape_move_trash">
+
+                <ImageView
+                    android:id="@+id/imgtrash"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@drawable/fault_trash"></ImageView>
+
+                <TextView
+                    android:id="@+id/tv_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_toRightOf="@+id/imgtrash"
+                    android:gravity="center_vertical"
+                    android:text="DELETE"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/_11sdp">
+
+                </TextView>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
 
 
 </LinearLayout>

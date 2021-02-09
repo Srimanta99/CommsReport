@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-
+    android:paddingBottom="@dimen/_17sdp"
     android:orientation="vertical">
 
 
@@ -15,17 +15,17 @@
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:layout_marginLeft="@dimen/_10sdp"
-            android:layout_marginRight="@dimen/_10sdp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/_6sdp"
+            android:layout_marginRight="@dimen/_6sdp"
 
             android:orientation="vertical">
 
 
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/asscolor_round"
+                android:layout_height="@dimen/_100sdp"
+
 
                 >
 
@@ -33,25 +33,26 @@
                 <LinearLayout
                     android:id="@+id/ll_image"
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_weight="0.5"
                     android:background="@drawable/grey_bg"
                     android:orientation="vertical">
 
                     <RelativeLayout
                         android:layout_width="match_parent"
-                        android:layout_height="@dimen/_60sdp"
-                        android:layout_margin="@dimen/_5sdp"
+                        android:layout_height="match_parent"
+
                         android:orientation="vertical">
+
 
                         <ImageView
                             android:id="@+id/img_company"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
-                            android:padding="@dimen/_5sdp"
-                            android:visibility="gone"
+                           android:padding="@dimen/_2sdp"
                             android:scaleType="fitXY"
-                            android:src="@drawable/camera">
+                            android:src="@drawable/no_image"
+                            android:visibility="gone">
 
                         </ImageView>
 
@@ -59,26 +60,59 @@
                             android:id="@+id/tv_no_image"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_centerInParent="true"
                             android:layout_gravity="center"
                             android:layout_marginTop="@dimen/_5sdp"
-                            android:layout_centerInParent="true"
                             android:text="No Image"
-                            android:visibility="visible"
-                            android:textSize="@dimen/_14sdp">
+                            android:textSize="@dimen/_14sdp"
+                            android:visibility="visible">
 
                         </TextView>
+                        <ImageView
+                            android:layout_width="@dimen/_20sdp"
+                            android:layout_height="@dimen/_20sdp"
+                            android:layout_alignParentRight="true"
+                            android:background="@drawable/active"
+                            android:layout_margin="@dimen/_5sdp"></ImageView>
                     </RelativeLayout>
 
                 </LinearLayout>
 
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="match_parent"
+                    android:layout_weight=".05"></TextView>
+
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/_5sdp"
-                    android:layout_marginRight="@dimen/_15sdp"
+                    android:layout_marginRight="@dimen/_5sdp"
                     android:layout_weight="1"
-                    android:orientation="vertical">
+                    android:background="@drawable/asscolor_round"
+                    android:orientation="vertical"
+                    android:paddingLeft="@dimen/_5sdp">
 
+                    <LinearLayout
+                        android:layout_width="match_parent"
+                        android:layout_height="@dimen/_25sdp">
+
+                        <ImageView
+                            android:id="@+id/img_flag"
+                            android:layout_width="@dimen/_35sdp"
+                            android:layout_height="@dimen/_25sdp"
+                            android:background="@drawable/flag"
+                            android:layout_margin="@dimen/_5sdp"></ImageView>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="match_parent"
+                            android:text="United kindom"
+                            android:gravity="center_vertical"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:textColor="@color/black"
+                            android:padding="@dimen/_3sdp"></TextView>
+
+                    </LinearLayout>
                     <TextView
                         android:id="@+id/tv_companyname"
                         android:layout_width="match_parent"
@@ -124,7 +158,7 @@
         </LinearLayout>-->
 
     </RelativeLayout>
-    <ImageView
+    <!--<ImageView
         android:id="@+id/img_edit"
         android:layout_width="@dimen/_50sdp"
         android:layout_height="@dimen/_25sdp"
@@ -133,6 +167,104 @@
         android:layout_alignParentRight="true"
         android:src="@drawable/edit">
 
-    </ImageView>
+    </ImageView>-->
 
-</RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_below="@+id/lltop"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentBottom="true"
+        android:layout_marginTop="@dimen/_8sdp"
+        android:layout_marginRight="@dimen/_5sdp">
+
+        <TextView
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1.2"></TextView>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginRight="@dimen/_5sdp"
+                android:background="@drawable/rectangular_rounded_shape_fix_fault"
+                android:textSize="@dimen/_12sdp">
+
+                <ImageView
+                    android:id="@+id/img_edit"
+                    android:layout_width="@dimen/_20sdp"
+                    android:layout_height="@dimen/_20sdp"
+                    android:layout_centerVertical="true"
+
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@drawable/edit_site"></ImageView>
+
+                <TextView
+                    android:id="@+id/tv_remove"
+
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerInParent="true"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_toRightOf="@+id/img_fixfault"
+                    android:gravity="center"
+                    android:text="EDIT"
+                    android:textSize="@dimen/_11sdp">
+
+                </TextView>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="0dp"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_weight="1">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_marginLeft="@dimen/_5sdp"
+                android:background="@drawable/rectangular_rounded_shape_move_trash">
+
+                <ImageView
+                    android:id="@+id/imgtrash"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:background="@drawable/fault_trash"></ImageView>
+
+                <TextView
+                    android:id="@+id/tv_close"
+                    android:layout_width="wrap_content"
+                    android:layout_height="match_parent"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_toRightOf="@+id/imgtrash"
+                    android:gravity="center_vertical"
+                    android:text="DELETE"
+                    android:textColor="#fff"
+                    android:textSize="@dimen/_11sdp">
+
+                </TextView>
+
+
+            </RelativeLayout>
+
+        </LinearLayout>
+
+
+    </LinearLayout>
+
+
+</LinearLayout>
