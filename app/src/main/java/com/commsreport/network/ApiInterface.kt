@@ -54,6 +54,11 @@ interface ApiInterface {
     @POST(NetworkUtility.PROFILE_UPDATE)
     fun callApifordochangepassword(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.COUNTRYLIST)
+    fun callApiforcountrylist(@Header("Authorization") token:String, @Body body: JsonObject): Call<CountryListModel>
+
+
     // @Headers("Content-Type: application/json")
     /*@POST(NetworkUtility.LOG_IN)
     fun callLogInApi(@Field("user_email") email:String,

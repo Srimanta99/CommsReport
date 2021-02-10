@@ -9,11 +9,8 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.view.*
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
-import android.view.View
-import android.view.ViewGroup
-import android.view.Window
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
@@ -24,6 +21,7 @@ import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteList
 import com.commsreport.adapter.ManageSiteAdapter
+import com.commsreport.databinding.ContentReportFaultBinding
 import com.commsreport.databinding.FragmentReportFaultaBinding
 import com.commsreport.model.LoginResponseModel
 
@@ -71,6 +69,7 @@ class ReportFaultFragment : Fragment() {
     var ImageSelectposition:Int = 0
     var formattedDate:String?=null
     public  var selectedSiteId=""
+    var contentReportFaultBinding:ContentReportFaultBinding?=null
      var userdata:LoginResponseModel.Userdata? =null
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -84,70 +83,80 @@ class ReportFaultFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentReportFaultBinding=FragmentReportFaultaBinding.inflate(inflater,container,false)
+        contentReportFaultBinding=fragmentReportFaultBinding!!.contentReportfault
         return fragmentReportFaultBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragmentReportFaultBinding!!.tvaddNote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        fragmentReportFaultBinding!!.etAddnote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        fragmentReportFaultBinding!!.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        fragmentReportFaultBinding!!.tvSelectedsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        fragmentReportFaultBinding!!.tvImg1.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
-        fragmentReportFaultBinding!!.tvImg2.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
-        fragmentReportFaultBinding!!.tvImg3.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
-        fragmentReportFaultBinding!!.tvImg4.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
-        fragmentReportFaultBinding!!.tvAddfault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault!!.tvaddNote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.etAddnote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvSelectedsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvImg1.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvImg2.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvImg3.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvImg4.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvAddfault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
         val c = Calendar.getInstance()
         val df = SimpleDateFormat("dd/MM/yyyy")
         formattedDate = df.format(c.time)
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         if(userdata!!.user_type.equals("COMPANY_ADMIN")){
-            fragmentReportFaultBinding!!.llSelectsite.visibility=View.VISIBLE
+            fragmentReportFaultBinding!!.contentReportfault.llSelectsite.visibility=View.VISIBLE
             callApiForSiteList()
         }else
             selectedSiteId=userdata!!.site_id
 
-        fragmentReportFaultBinding!!.tvSelectedsite.setOnClickListener {
+        fragmentReportFaultBinding!!.contentReportfault.tvSelectedsite.setOnClickListener {
            val customPopUpDialogSiteList= CustomPopUpDialogSiteList(activity,siteList,this)
             customPopUpDialogSiteList!!.show()
         }
-        fragmentReportFaultBinding!!.rlImg1.setOnClickListener {
+        fragmentReportFaultBinding!!.contentReportfault.rlImg1.setOnClickListener {
             ImageSelectposition=1
             showAlertForChooseImage()
            // val customPopUpDialogSiteList= CustomPopUpDialogSiteList(activity,siteList,this)
            // customPopUpDialogSiteList!!.show()
         }
-        fragmentReportFaultBinding!!.rlImg2.setOnClickListener {
+        fragmentReportFaultBinding!!.contentReportfault.rlImg2.setOnClickListener {
             ImageSelectposition=2
             showAlertForChooseImage()
         }
-        fragmentReportFaultBinding!!.rlImg3.setOnClickListener {
+        fragmentReportFaultBinding!!.contentReportfault.rlImg3.setOnClickListener {
             ImageSelectposition=3
             showAlertForChooseImage()
         }
-        fragmentReportFaultBinding!!.rlImg4.setOnClickListener {
+        fragmentReportFaultBinding!!.contentReportfault.rlImg4.setOnClickListener {
             ImageSelectposition=4
             showAlertForChooseImage()
         }
-        fragmentReportFaultBinding!!.tvAddfault.setOnClickListener {
+        fragmentReportFaultBinding!!.contentReportfault.tvAddfault.setOnClickListener {
             if (!selectedSiteId.equals("")) {
-                if (!fragmentReportFaultBinding!!.etAddnote.text.toString().equals("")) {
+                if (!fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString().equals("")) {
                     submitfalutusingmultipartBulider()
                 }else {
-                    fragmentReportFaultBinding!!.etAddnote.requestFocus()
+                    fragmentReportFaultBinding!!.contentReportfault.etAddnote.requestFocus()
                    ToastAlert.CustomToastwornning(activity!!,"Enter note")
                 }
             }else
                 ToastAlert.CustomToastwornning(activity!!,"Please select site")
         }
+        fragmentReportFaultBinding!!.contentReportfault.tvNotify.setOnClickListener {
+            fragmentReportFaultBinding!!.drawerLayout.openDrawer(Gravity.RIGHT)
+        }
+
+        fragmentReportFaultBinding!!.contentReportfault.imgMenu.setOnClickListener {
+            activity!!.homeBinding!!.drawerLayout!!.openDrawer(Gravity.LEFT)
+        }
+
 
     }
 
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Report Fault")
-        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.VISIBLE
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.GONE
     }
 
     companion object {
@@ -311,31 +320,31 @@ class ReportFaultFragment : Fragment() {
                     e.printStackTrace()
                 }
                 if (ImageSelectposition==1){
-                    fragmentReportFaultBinding!!.imgFault1.visibility=View.VISIBLE
-                    fragmentReportFaultBinding!!.imgCamera1.visibility=View.GONE
-                    fragmentReportFaultBinding!!.tvImg1.visibility=View.GONE
-                    fragmentReportFaultBinding!!.imgFault1.setImageBitmap(bm)
+                    fragmentReportFaultBinding!!.contentReportfault.imgFault1.visibility=View.VISIBLE
+                    fragmentReportFaultBinding!!.contentReportfault.imgCamera1.visibility=View.GONE
+                    fragmentReportFaultBinding!!.contentReportfault.tvImg1.visibility=View.GONE
+                    fragmentReportFaultBinding!!.contentReportfault.imgFault1.setImageBitmap(bm)
 
                 }
                 else if (ImageSelectposition==2){
-                    fragmentReportFaultBinding!!.imgFault2.visibility=View.VISIBLE
-                    fragmentReportFaultBinding!!.imgCamera2.visibility=View.GONE
-                    fragmentReportFaultBinding!!.tvImg2.visibility=View.GONE
-                    fragmentReportFaultBinding!!.imgFault2.setImageBitmap(bm)
+                    fragmentReportFaultBinding!!.contentReportfault.imgFault2.visibility=View.VISIBLE
+                    fragmentReportFaultBinding!!.contentReportfault.imgCamera2.visibility=View.GONE
+                    fragmentReportFaultBinding!!.contentReportfault.tvImg2.visibility=View.GONE
+                    fragmentReportFaultBinding!!.contentReportfault.imgFault2.setImageBitmap(bm)
                     //imagearraylist!!.add(imgFile!!)
                 }
                 else if (ImageSelectposition==3){
-                    fragmentReportFaultBinding!!.imgFault3.visibility=View.VISIBLE
-                    fragmentReportFaultBinding!!.imgCamera3.visibility=View.GONE
-                    fragmentReportFaultBinding!!.tvImg3.visibility=View.GONE
-                    fragmentReportFaultBinding!!.imgFault3.setImageBitmap(bm)
+                    fragmentReportFaultBinding!!.contentReportfault.imgFault3.visibility=View.VISIBLE
+                    fragmentReportFaultBinding!!.contentReportfault.imgCamera3.visibility=View.GONE
+                    fragmentReportFaultBinding!!.contentReportfault.tvImg3.visibility=View.GONE
+                    fragmentReportFaultBinding!!.contentReportfault.imgFault3.setImageBitmap(bm)
                   //  imagearraylist.add(imgFile!!)
                 }
                 else if (ImageSelectposition==4){
-                    fragmentReportFaultBinding!!.imgFault4.visibility=View.VISIBLE
-                    fragmentReportFaultBinding!!.imgCamera4.visibility=View.GONE
-                    fragmentReportFaultBinding!!.tvImg4.visibility=View.GONE
-                    fragmentReportFaultBinding!!.imgFault4.setImageBitmap(bm)
+                    fragmentReportFaultBinding!!.contentReportfault.imgFault4.visibility=View.VISIBLE
+                    fragmentReportFaultBinding!!.contentReportfault.imgCamera4.visibility=View.GONE
+                    fragmentReportFaultBinding!!.contentReportfault.tvImg4.visibility=View.GONE
+                    fragmentReportFaultBinding!!.contentReportfault.imgFault4.setImageBitmap(bm)
                    // imagearraylist.add(imgFile!!)
                 }
                 //fragmentAddSiteBinding!!.imgSelectedImage.setImageBitmap(bm)
@@ -391,31 +400,31 @@ class ReportFaultFragment : Fragment() {
             }
 
             if (ImageSelectposition==1){
-                fragmentReportFaultBinding!!.imgFault1.visibility=View.VISIBLE
-                fragmentReportFaultBinding!!.imgCamera1.visibility=View.GONE
-                fragmentReportFaultBinding!!.tvImg1.visibility=View.GONE
-                fragmentReportFaultBinding!!.imgFault1.setImageBitmap(thumbnail)
+                fragmentReportFaultBinding!!.contentReportfault.imgFault1.visibility=View.VISIBLE
+                fragmentReportFaultBinding!!.contentReportfault.imgCamera1.visibility=View.GONE
+                fragmentReportFaultBinding!!.contentReportfault.tvImg1.visibility=View.GONE
+                fragmentReportFaultBinding!!.contentReportfault.imgFault1.setImageBitmap(thumbnail)
               //  imagearraylist.add(imgFile!!)
             }
             else if (ImageSelectposition==2){
-                fragmentReportFaultBinding!!.imgFault2.visibility=View.VISIBLE
-                fragmentReportFaultBinding!!.imgCamera2.visibility=View.GONE
-                fragmentReportFaultBinding!!.tvImg2.visibility=View.GONE
-                fragmentReportFaultBinding!!.imgFault2.setImageBitmap(thumbnail)
+                fragmentReportFaultBinding!!.contentReportfault.imgFault2.visibility=View.VISIBLE
+                fragmentReportFaultBinding!!.contentReportfault.imgCamera2.visibility=View.GONE
+                fragmentReportFaultBinding!!.contentReportfault.tvImg2.visibility=View.GONE
+                fragmentReportFaultBinding!!.contentReportfault.imgFault2.setImageBitmap(thumbnail)
               //  imagearraylist.add(imgFile!!)
             }
             else if (ImageSelectposition==3){
-                fragmentReportFaultBinding!!.imgFault3.visibility=View.VISIBLE
-                fragmentReportFaultBinding!!.imgCamera3.visibility=View.GONE
-                fragmentReportFaultBinding!!.tvImg3.visibility=View.GONE
-                fragmentReportFaultBinding!!.imgFault3.setImageBitmap(thumbnail)
+                fragmentReportFaultBinding!!.contentReportfault.imgFault3.visibility=View.VISIBLE
+                fragmentReportFaultBinding!!.contentReportfault.imgCamera3.visibility=View.GONE
+                fragmentReportFaultBinding!!.contentReportfault.tvImg3.visibility=View.GONE
+                fragmentReportFaultBinding!!.contentReportfault.imgFault3.setImageBitmap(thumbnail)
                // imagearraylist.add(imgFile!!)
             }
             else if (ImageSelectposition==4){
-                fragmentReportFaultBinding!!.imgFault4.visibility=View.VISIBLE
-                fragmentReportFaultBinding!!.imgCamera4.visibility=View.GONE
-                fragmentReportFaultBinding!!.tvImg4.visibility=View.GONE
-                fragmentReportFaultBinding!!.imgFault4.setImageBitmap(thumbnail)
+                fragmentReportFaultBinding!!.contentReportfault.imgFault4.visibility=View.VISIBLE
+                fragmentReportFaultBinding!!.contentReportfault.imgCamera4.visibility=View.GONE
+                fragmentReportFaultBinding!!.contentReportfault.tvImg4.visibility=View.GONE
+                fragmentReportFaultBinding!!.contentReportfault.imgFault4.setImageBitmap(thumbnail)
                // imagearraylist.add(imgFile!!)
             }
 
@@ -446,7 +455,7 @@ class ReportFaultFragment : Fragment() {
         val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
         builder.addFormDataPart("site_id" ,selectedSiteId)
         builder.addFormDataPart("check_process_type", "checks")
-        builder.addFormDataPart("fault_description", fragmentReportFaultBinding!!.etAddnote.text.toString())
+        builder.addFormDataPart("fault_description", fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString())
         builder.addFormDataPart("status_id","1")
         builder.addFormDataPart("fault_entry_date",formattedDate)
 

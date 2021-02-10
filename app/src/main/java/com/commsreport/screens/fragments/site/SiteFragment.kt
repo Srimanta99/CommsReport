@@ -14,19 +14,27 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
-import android.widget.Button
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import com.bumptech.glide.Glide
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
+import com.commsreport.Utils.FullscreenCountryDialog
+import com.commsreport.Utils.FullscreenCountryDialogSite
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.databinding.FragmentAddSiteBinding
+import com.commsreport.model.CountryListModel
+import com.commsreport.model.LoginResponseModel
 import com.commsreport.screens.home.HomeActivity
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
 import com.sculptee.utils.customprogress.CustomProgressDialog
+import com.wecompli.network.ApiInterface
 import com.wecompli.network.NetworkUtility
+import com.wecompli.network.Retrofit
+import com.wecompli.utils.onitemclickinterface.CountryClickInterface
 import com.wecompli.utils.sheardpreference.AppSheardPreference
 import com.wecompli.utils.sheardpreference.PreferenceConstent
 import okhttp3.*
@@ -44,13 +52,16 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 var REQUEST_CAMERA = 111
 var SELECT_FILE = 112
-class SiteFragment : Fragment() {
+class SiteFragment : Fragment(),CountryClickInterface {
     private var param1: String? = null
     private var param2: String? = null
     var activity: HomeActivity?=null
     var image: String?=null
     var fragmentAddSiteBinding:FragmentAddSiteBinding?=null
     var imgFile:File?=null
+    var userdata: LoginResponseModel.Userdata? =null
+    var countrylist= ArrayList<CountryListModel.CountryList>()
+    var fullScreenDialog : FullscreenCountryDialogSite?=null
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -67,6 +78,7 @@ class SiteFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         fragmentAddSiteBinding!!.tvEmail.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentAddSiteBinding!!.etSiteName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentAddSiteBinding!!.tvAddressSite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
@@ -84,6 +96,52 @@ class SiteFragment : Fragment() {
 
             if(checkValidation())
              CallApiForAddSite()
+        }
+        fragmentAddSiteBinding!!.llCountry.setOnClickListener {
+            val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+            customProgress.showProgress(activity!!, "Please Wait..", false)
+            val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+            try {
+                val paramObject = JSONObject()
+                paramObject.put("status_id", "1")
+                var obj: JSONObject = paramObject
+                var jsonParser: JsonParser = JsonParser()
+                var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+                val callApi=apiInterface.callApiforcountrylist(userdata!!.token, gsonObject)
+                callApi.enqueue(object : retrofit2.Callback<CountryListModel> {
+                    override fun onResponse(call: retrofit2.Call<CountryListModel>, response: retrofit2.Response<CountryListModel>) {
+                        customProgress.hideProgress()
+
+                        if (response.code() == 200) {
+
+                            if (response.body()!!.status){
+                                countrylist= response!!.body()!!.row
+                                 fullScreenDialog = FullscreenCountryDialogSite(countrylist!!,activity!!,this@SiteFragment)
+                                fullScreenDialog!!.isCancelable = false
+                                fullScreenDialog!!.show(activity!!.supportFragmentManager,"")
+                                /* val builder = AlertDialog.Builder(context, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+                                 val dialog = builder.create()
+                                 dialog.setContentView(R.layout.country_alert_layout)
+                                 dialog.show()*/
+                            }
+                            else
+                                ToastAlert.CustomToasterror(activity!!, response!!.body()!!.message)
+
+                        } else if (response.code() == 401) {
+                            Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
+
+                        }
+                    }
+
+                    override fun onFailure(call: retrofit2.Call<CountryListModel>, t: Throwable) {
+                        customProgress.hideProgress()
+                    }
+                })
+
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
+
         }
     }
 
@@ -377,5 +435,15 @@ class SiteFragment : Fragment() {
                         putString(ARG_PARAM2, param2)
                     }
                 }
+    }
+
+    override fun OnItemClick(position: Int) {
+        fullScreenDialog!!.dismiss()
+        fragmentAddSiteBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
+        if (countrylist.get(position).country_flag_path!=null) {
+            Glide.with(activity!!)
+                .load(countrylist.get(position).country_flag_path)
+                .into(fragmentAddSiteBinding!!.imgCountry);
+        }
     }
 }

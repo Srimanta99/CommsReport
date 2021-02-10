@@ -55,7 +55,7 @@ class CustomPopUpDialogSiteList(context: HomeActivity?, val siteList: List<SiteL
 
         customPopupListAdapter = CustomPopupListAdapter(homeActivity!!,siteList!!,object :OnItemClickInterface{
             override fun OnItemClick(position: Int) {
-                faultReport.fragmentReportFaultBinding!!.tvSelectedsite.setText(faultReport.siteList.get(position).site_name)
+                faultReport.fragmentReportFaultBinding!!.contentReportfault.tvSelectedsite.setText(faultReport.siteList.get(position).site_name)
                 faultReport.selectedSiteId=faultReport.siteList.get(position).id
                 dismiss()
 

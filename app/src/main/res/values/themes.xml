@@ -102,4 +102,17 @@
     <style name="DialogButtonStyled" parent="Theme.MaterialComponents.Light.Dialog.MinWidth">
         <item name="android:textColor">@color/purple_700</item>
     </style>
+
+
+    <style name="FullScreenDialogStyle" parent="Theme.AppCompat.Dialog">
+        <item name="android:windowNoTitle">true</item>
+        <item name="colorPrimary">@color/purple_500</item>
+        <item name="colorPrimaryVariant">@color/purple_700</item>
+        <!-- Set this to true if you want Full Screen without status bar -->
+        <item name="android:windowFullscreen">true</item>
+        <item name="android:windowIsFloating">false</item>
+        <!-- This is important! Don't forget to set window background -->
+        <item name="android:windowBackground">@null</item>
+
+    </style>
 </resources>

@@ -12,6 +12,7 @@ import com.commsreport.screens.fragments.adduser.AddUserFragment
 
 
 import com.commsreport.screens.fragments.document.DocumentUploadFragment
+import com.commsreport.screens.fragments.email.EmailFragment
 import com.commsreport.screens.fragments.faults.FaultFragment
 import com.commsreport.screens.fragments.leaderdashboard.LeaderDashboardFragment
 import com.commsreport.screens.fragments.managedocument.ManageDocumentFragment
@@ -31,6 +32,7 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
         homeBinding.llFault.setOnClickListener(this)
         homeBinding.rlSettings.setOnClickListener(this)
         homeBinding.rlLogout.setOnClickListener(this)
+        homeBinding!!.llEmail.setOnClickListener(this)
         //homeBinding!!.mainView.imgSearch.setOnClickListener(this)
 
 
@@ -70,6 +72,11 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
             }
             R.id.img_Search->{
                 homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
+            }
+            R.id.ll_email->{
+                homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
+                homeActivity.openFragment(EmailFragment())
+
             }
 
         }

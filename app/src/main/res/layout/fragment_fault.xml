@@ -27,7 +27,7 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:fitsSystemWindows="true">
-            <include layout="@layout/search_document_layout"/>
+            <include layout="@layout/search_fault_layout"/>
         </com.google.android.material.navigation.NavigationView>
     </LinearLayout>
     <include

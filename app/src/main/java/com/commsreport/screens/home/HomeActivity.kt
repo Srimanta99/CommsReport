@@ -94,6 +94,7 @@ class HomeActivity : AppCompatActivity() {
        if(userdata.user_type.equals("COMPANY_ADMIN")){
            homeBinding!!.llSite.visibility=View.VISIBLE
            homeBinding!!.llUser.visibility=View.VISIBLE
+           homeBinding!!.llEmail.visibility=View.VISIBLE
 
        }
    }
@@ -117,6 +118,7 @@ class HomeActivity : AppCompatActivity() {
         homeBinding!!.tvUser.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvFault.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvDocument.setTypeface(CustomTypeface.getRajdhaniMedium(this))
+        homeBinding!!.tvEmail.setTypeface(CustomTypeface.getRajdhaniMedium(this))
 
     }
     /*override fun onBackPressed() {

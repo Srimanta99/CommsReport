@@ -14,17 +14,19 @@ import android.view.View
 import android.view.ViewGroup
 import android.view.Window
 import android.widget.TextView
-import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
+import com.commsreport.Utils.FullscreenCountryDialog
+import com.commsreport.Utils.FullscreenCountryDialogSite
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteListAddUser
 import com.commsreport.databinding.FragmentAddUserBinding
-import com.commsreport.model.AddUserResponse
+import com.commsreport.model.CountryListModel
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
 import com.commsreport.screens.fragments.site.REQUEST_CAMERA
@@ -36,6 +38,7 @@ import com.sculptee.utils.customprogress.CustomProgressDialog
 import com.wecompli.network.ApiInterface
 import com.wecompli.network.NetworkUtility
 import com.wecompli.network.Retrofit
+import com.wecompli.utils.onitemclickinterface.CountryClickInterface
 import com.wecompli.utils.sheardpreference.AppSheardPreference
 import com.wecompli.utils.sheardpreference.PreferenceConstent
 import okhttp3.MediaType
@@ -57,7 +60,7 @@ private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
 
-class AddUserFragment : Fragment() {
+class AddUserFragment : Fragment(), CountryClickInterface {
 
     private var param1: String? = null
     private var param2: String? = null
@@ -68,6 +71,9 @@ class AddUserFragment : Fragment() {
     public  var selectedSiteId=""
     var image: String?=null
     var imgFile:File?=null
+    var countrylist= ArrayList<CountryListModel.CountryList>()
+    var fullScreenDialog : FullscreenCountryDialog?=null
+   // var countryClickInterface=CountryClickInterface()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -78,10 +84,7 @@ class AddUserFragment : Fragment() {
     }
 
     override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         addUserBinding= FragmentAddUserBinding.inflate(inflater, container, false)
         return addUserBinding!!.root
     }
@@ -120,15 +123,59 @@ class AddUserFragment : Fragment() {
         addUserBinding!!.tvBrowes.setOnClickListener {
             showAlertForChooseImage()
         }
+
+        addUserBinding!!.llCountry.setOnClickListener {
+            val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+            customProgress.showProgress(activity!!, "Please Wait..", false)
+            val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+            try {
+                val paramObject = JSONObject()
+                paramObject.put("status_id", "1")
+                var obj: JSONObject = paramObject
+                var jsonParser: JsonParser = JsonParser()
+                var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+                val callApi=apiInterface.callApiforcountrylist(userdata!!.token, gsonObject)
+                callApi.enqueue(object : Callback<CountryListModel> {
+                    override fun onResponse(call: Call<CountryListModel>, response: Response<CountryListModel>) {
+                        customProgress.hideProgress()
+
+                        if (response.code() == 200) {
+
+                            if (response.body()!!.status){
+                                countrylist= response!!.body()!!.row
+                                 fullScreenDialog = FullscreenCountryDialog(countrylist!!,activity!!,this@AddUserFragment)
+                                fullScreenDialog!!.isCancelable = false
+                                fullScreenDialog!!.show(activity!!.supportFragmentManager,"")
+                               /* val builder = AlertDialog.Builder(context, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+                                val dialog = builder.create()
+                                dialog.setContentView(R.layout.country_alert_layout)
+                                dialog.show()*/
+                            }
+                            else
+                                ToastAlert.CustomToasterror(activity!!, response!!.body()!!.message)
+
+                        } else if (response.code() == 401) {
+                            Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<CountryListModel>, t: Throwable) {
+                        customProgress.hideProgress()
+                    }
+                })
+
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
+
+        }
     }
 
     private fun showAlertForChooseImage() {
         val alertDialog = Dialog(activity!!, R.style.Transparent)
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val view: View = LayoutInflater.from(activity).inflate(
-            R.layout.alert_custom_imageselection,
-            null
-        )
+        val view: View = LayoutInflater.from(activity).inflate(R.layout.alert_custom_imageselection, null)
         alertDialog.setContentView(view)
         alertDialog.setCancelable(false)
         val tv_message: TextView = view.findViewById(R.id.tv_message)
@@ -470,6 +517,7 @@ class AddUserFragment : Fragment() {
 
     }
 
+
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("ADD USER")
@@ -521,6 +569,16 @@ class AddUserFragment : Fragment() {
 
         }catch (e: Exception){
             e.printStackTrace()
+        }
+    }
+
+    override fun OnItemClick(position: Int) {
+        fullScreenDialog!!.dismiss()
+        addUserBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
+        if (countrylist.get(position).country_flag_path!=null) {
+            Glide.with(activity!!)
+                .load(countrylist.get(position).country_flag_path)
+                .into(addUserBinding!!.countryImage);
         }
     }
 }

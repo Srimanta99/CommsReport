@@ -20,6 +20,7 @@ class NetworkUtility {
         const val EDIT_USER="api/site/user/update"
         const val EDIT_SITE="api/site/update"
         const val PROFILE_UPDATE="api/user/profile-update"
+        const val COUNTRYLIST="api/country/list"
 
     }
 }
