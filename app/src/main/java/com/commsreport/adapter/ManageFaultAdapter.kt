@@ -60,7 +60,6 @@ class ManageFaultAdapter(
         itemManageFaultsBinding!!.tvClose.setOnClickListener {
             closeFaultAlert(faultList.get(position),position)
             //callApiforCloseFault(faultList.get(position),position)
-
         }
         itemManageFaultsBinding!!.tvRemove.setOnClickListener {
             fixFaultAlert(faultList.get(position),position)

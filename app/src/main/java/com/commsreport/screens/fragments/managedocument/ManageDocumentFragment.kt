@@ -1,31 +1,28 @@
 package com.commsreport.screens.fragments.managedocument
 
 import android.Manifest
-import android.app.ProgressDialog
-import android.content.ActivityNotFoundException
-import android.content.Intent
 import android.content.pm.PackageManager
-import android.net.Uri
 import android.os.AsyncTask
 import android.os.Bundle
 import android.os.Environment
 import android.view.Gravity
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
-import androidx.core.content.FileProvider
-import com.commsreport.BuildConfig
+import androidx.fragment.app.Fragment
+import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.adapter.ManageDocumentAdapter
 import com.commsreport.databinding.ContentManageDocumentBinding
 import com.commsreport.databinding.FragmentManageDocumentBinding
-import com.commsreport.model.*
-
+import com.commsreport.model.DocumentListModel
+import com.commsreport.model.LoginResponseModel
+import com.commsreport.model.SiteListModel
 import com.commsreport.screens.home.HomeActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -42,12 +39,10 @@ import java.io.File
 import java.io.FileOutputStream
 import java.io.InputStream
 import java.net.HttpURLConnection
-import java.util.*
-import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
-
+var actionBarDrawerToggle: ActionBarDrawerToggle? = null
 class ManageDocumentFragment : Fragment() {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
@@ -71,13 +66,20 @@ class ManageDocumentFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        manageDocumentBinding= FragmentManageDocumentBinding.inflate(inflater,container,false)
+        manageDocumentBinding= FragmentManageDocumentBinding.inflate(inflater, container, false)
         contentManageDocumentBinding=manageDocumentBinding!!.contentManageDocument
         return manageDocumentBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        manageDocumentBinding!!.navDocSearch.tvSearch.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        manageDocumentBinding!!.navDocSearch.tvSearchByName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        manageDocumentBinding!!.navDocSearch.etsherchName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        manageDocumentBinding!!.navDocSearch.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        manageDocumentBinding!!.navDocSearch.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        manageDocumentBinding!!.navDocSearch.Search.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+
         manageDocumentBinding!!.contentManageDocument.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         contentManageDocumentBinding!!.imgMenu.setOnClickListener {
@@ -86,6 +88,28 @@ class ManageDocumentFragment : Fragment() {
         contentManageDocumentBinding!!.imgSearch.setOnClickListener {
             manageDocumentBinding!!.searchDrawer!!.openDrawer(Gravity.RIGHT)
         }
+        manageDocumentBinding!!.imgNavclose.setOnClickListener {
+            manageDocumentBinding!!.searchDrawer!!.closeDrawer(Gravity.RIGHT)
+        }
+        manageDocumentBinding!!.navDocSearch.Search.setOnClickListener {
+            if (!manageDocumentBinding!!.navDocSearch.etsherchName.text.toString().equals("") || !manageDocumentBinding!!.navDocSearch.tvDropdownSelectsite.text.toString().equals("")){
+
+            }else
+                ToastAlert.CustomToastwornning(activity!!,"Please enter some value")
+        }
+
+        //manageDocumentBinding!!.navView.bringToFront()
+       /* actionBarDrawerToggle = ActionBarDrawerToggle(
+            activity,
+            manageDocumentBinding!!.searchDrawer!!,
+            R.string.app_name,
+            R.string.app_name
+        )
+
+        manageDocumentBinding!!.searchDrawer!!.addDrawerListener(actionBarDrawerToggle!!)
+        actionBarDrawerToggle!!.syncState()
+
+        */
         callApiForDocList()
 
 
@@ -119,16 +143,19 @@ class ManageDocumentFragment : Fragment() {
             var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
             val callApi=apiInterface.calldocumetList(userdata!!.token, gsonObject)
             callApi.enqueue(object : Callback<DocumentListModel> {
-                override fun onResponse(call: Call<DocumentListModel>, response: Response<DocumentListModel>) {
+                override fun onResponse(
+                    call: Call<DocumentListModel>,
+                    response: Response<DocumentListModel>
+                ) {
                     customProgress.hideProgress()
 
                     if (response.code() == 200) {
                         docList.clear()
                         docList = response.body()!!.row
-                        if (docList.size > 0){
+                        if (docList.size > 0) {
                             setAdapter()
 
-                        }else
+                        } else
                             ToastAlert.CustomToasterror(activity!!, "No Document found")
 
                     } else if (response.code() == 401) {
@@ -148,7 +175,7 @@ class ManageDocumentFragment : Fragment() {
     }
 
     public fun setAdapter() {
-        manageDocumentAdapter= ManageDocumentAdapter(activity!!,docList,this)
+        manageDocumentAdapter= ManageDocumentAdapter(activity!!, docList, this)
         manageDocumentBinding!!.contentManageDocument!!.recManageDocument.adapter=manageDocumentAdapter
     }
     public fun downloadfromUrl(quotationDownloadUrl: String, generatedQuotationFileName: String) {
@@ -181,7 +208,10 @@ class ManageDocumentFragment : Fragment() {
                     fos.close()
                     `is`.close()
                     activity!!.runOnUiThread {
-                        ToastAlert.CustomToastSuccess(activity!!,"A new file successfully downloaded in your internal storage comms folder")
+                        ToastAlert.CustomToastSuccess(
+                            activity!!,
+                            "A new file successfully downloaded in your internal storage comms folder"
+                        )
                     }
 
                    /* activity!!.runOnUiThread {
@@ -230,8 +260,15 @@ class ManageDocumentFragment : Fragment() {
     }
 
     public fun checkpermession():Boolean {
-        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED){ ActivityCompat.requestPermissions(
-            activity!!, arrayOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+        if (ContextCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) !== PackageManager.PERMISSION_GRANTED){ ActivityCompat.requestPermissions(
+            activity!!, arrayOf<String>(
+                Manifest.permission.CAMERA,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ), 0
+        )
             return false
         }else
            return true
@@ -240,7 +277,8 @@ class ManageDocumentFragment : Fragment() {
     override fun onRequestPermissionsResult(
         requestCode: Int,
         permissions: Array<String>,
-        grantResults: IntArray) {
+        grantResults: IntArray
+    ) {
         if (requestCode == 0) {
             if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {

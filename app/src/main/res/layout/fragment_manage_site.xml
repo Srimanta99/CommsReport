@@ -1,56 +1,41 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:id="@+id/drawer_layout"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/top_two_rounded_corner_white"
+    android:orientation="vertical"
+    tools:openDrawer="right"
     tools:context=".screens.fragments.managesite.ManageSiteFragment">
+    <include android:id="@+id/content_managesite"
+        layout="@layout/content_manage_site"></include>
     <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginBottom="@dimen/_70sdp"
-        android:orientation="vertical">
-        <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/rec_managesite"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/_4sdp"
-            tools:itemCount="10"
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/img_navopen"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/searchwithbg"
+            android:layout_alignParentRight="true"></ImageView>
 
-            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            tools:listitem="@layout/item_manage_sites"
-            android:layout_marginBottom="@dimen/_100sdp"
-            >
-
-        </androidx.recyclerview.widget.RecyclerView>
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:fitsSystemWindows="true">
+            <include android:id="@+id/nav_site_search"
+                layout="@layout/search_site_layout"/>
+        </com.google.android.material.navigation.NavigationView>
     </LinearLayout>
 
 
 
-    <RelativeLayout
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_70sdp"
-        android:layout_gravity="bottom"
-        android:gravity="bottom"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="@dimen/_10sdp">
-
-            <TextView
-                android:id="@+id/tv_addSite"
-                android:layout_width="@dimen/_175sdp"
-                android:layout_height="@dimen/_44sdp"
-                android:text="ADD SITES"
-                android:textColor="#fff"
-                android:textSize="@dimen/_12sdp"
-                android:layout_gravity="center"
-                android:layout_centerInParent="true"
-                android:background="@drawable/gradient_login_button"
-                android:gravity="center">
-
-            </TextView>
 
 
-
-    </RelativeLayout>
-</RelativeLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -45,26 +45,17 @@ class ManageDocumentAdapter(
     }
 
     override fun onBindViewHolder(holder: viewHolder, position: Int) {
-        itemManageDocumentBinding!!.tvDocname.setTypeface(
-            CustomTypeface.getRajdhaniSemiBold(
-                activity
-            )
-        )
+        itemManageDocumentBinding!!.tvDocname.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity))
 
-        itemManageDocumentBinding!!.startDate.setTypeface(
-            CustomTypeface.getRajdhaniSemiBold(
-                activity
-            )
-        )
+        itemManageDocumentBinding!!.startDate.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity))
         itemManageDocumentBinding!!.endDate.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity))
-        itemManageDocumentBinding!!.tvStartDate.setTypeface(
-            CustomTypeface.getRajdhaniMedium(
-                activity
-            )
-        )
+        itemManageDocumentBinding!!.tvStartDate.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
         itemManageDocumentBinding!!.tvEndDate.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
-        itemManageDocumentBinding!!.tvDownload.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
+        itemManageDocumentBinding!!.tvDownload1.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
         itemManageDocumentBinding!!.tvRemove.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
+        itemManageDocumentBinding!!.tvDownload2.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
+        itemManageDocumentBinding!!.tvDownload3.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
+        itemManageDocumentBinding!!.tvDownload4.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
 
         itemManageDocumentBinding!!.tvDocname.setText(docList.get(position).document_name)
         itemManageDocumentBinding!!.tvStartDate.setText(docList.get(position).affected_date)
@@ -73,18 +64,54 @@ class ManageDocumentAdapter(
             documentClose(docList.get(position).id, position)
          //   callApiforRemoveDocument(docList.get(position).id, position)
         }
-        itemManageDocumentBinding!!.tvDownload.setOnClickListener {
-            if (docList.get(position).document_file.size>0) {
-                if (manageDocumentFragment.checkpermession()) {
-                    // for (i in 0 until docList.get(position).document_file.size) {
+        if(docList.get(position).document_file.size==1){
+            itemManageDocumentBinding!!.rlDownload1.visibility=View.VISIBLE
+        }
+        if(docList.get(position).document_file.size==2){
+            itemManageDocumentBinding!!.rlDownload1.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.rlDownload2.visibility=View.VISIBLE
+
+        }
+        if(docList.get(position).document_file.size==3){
+            itemManageDocumentBinding!!.rlDownload1.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.rlDownload2.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.rlDownload3.visibility=View.VISIBLE
+
+        }
+        if(docList.get(position).document_file.size==4){
+            itemManageDocumentBinding!!.rlDownload1.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.rlDownload2.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.rlDownload3.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.rlDownload4.visibility=View.VISIBLE
+        }
+
+        itemManageDocumentBinding!!.rlDownload1.setOnClickListener {
+                if (manageDocumentFragment.checkpermession()) { // for (i in 0 until docList.get(position).document_file.size) {
                     val bits: List<String> = docList.get(position).document_file[0].split("/")
-                    manageDocumentFragment.downloadfromUrl(
-                        docList.get(position).document_file[0], bits.get(bits.size - 1)
-                    )
+                    manageDocumentFragment.downloadfromUrl(docList.get(position).document_file[0], bits.get(bits.size - 1))
+                }
+
+        }
+        itemManageDocumentBinding!!.rlDownload2.setOnClickListener {
+                if (manageDocumentFragment.checkpermession()) { // for (i in 0 until docList.get(position).document_file.size) {
+                    val bits: List<String> = docList.get(position).document_file[1].split("/")
+                    manageDocumentFragment.downloadfromUrl(docList.get(position).document_file[1], bits.get(bits.size - 1))
                     // }
                 }
-            }else
-                ToastAlert.CustomToastwornning(activity,"No file for download.")
+        }
+        itemManageDocumentBinding!!.rlDownload3.setOnClickListener {
+            if (manageDocumentFragment.checkpermession()) { // for (i in 0 until docList.get(position).document_file.size) {
+                val bits: List<String> = docList.get(position).document_file[2].split("/")
+                manageDocumentFragment.downloadfromUrl(docList.get(position).document_file[2], bits.get(bits.size - 1))
+                // }
+            }
+        }
+        itemManageDocumentBinding!!.rlDownload4.setOnClickListener {
+            if (manageDocumentFragment.checkpermession()) { // for (i in 0 until docList.get(position).document_file.size) {
+                val bits: List<String> = docList.get(position).document_file[3].split("/")
+                manageDocumentFragment.downloadfromUrl(docList.get(position).document_file[3], bits.get(bits.size - 1))
+                // }
+            }
         }
     }
 

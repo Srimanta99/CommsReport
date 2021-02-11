@@ -4,6 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+
     android:background="@drawable/top_two_rounded_corner_white"
     android:orientation="vertical">
 
@@ -47,12 +48,14 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/whitebg"
+    android:paddingBottom="@dimen/_20sdp"
     android:orientation="vertical">
 
     <ScrollView
         android:fillViewport="true"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+       >
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -60,7 +63,7 @@
        android:layout_marginTop="@dimen/_25sdp"
         android:layout_marginLeft="@dimen/_20sdp"
         android:layout_marginRight="@dimen/_20sdp"
-        android:layout_marginBottom="@dimen/_15sdp"
+
         android:orientation="vertical">
 
     <LinearLayout
@@ -332,8 +335,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:layout_marginTop="@dimen/_15sdp"
-
-            android:layout_marginBottom="@dimen/_20sdp">
+            android:layout_marginBottom="@dimen/_40sdp">
 
 
             <TextView

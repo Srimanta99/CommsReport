@@ -55,10 +55,10 @@ class CustomPopUpDialogSiteForFault(context: HomeActivity?, val siteList: List<S
         })
     }
     private fun setreclyerview() {
-
         customPopupListAdapter = CustomPopupListAdapter(homeActivity!!,siteList!!,object :OnItemClickInterface{
             override fun OnItemClick(position: Int) {
-                faultFragment!!.faultBinding!!.tvSelectedsite.setText(faultFragment.siteList.get(position).site_name)
+                faultFragment!!.faultBinding!!.contentManageFault.tvSelectedsite.setText(faultFragment.siteList.get(position).site_name)
+               // faultFragment!!.faultBinding!!.navFaultSearch!!.tvDropdownSelectsite.setText(faultFragment.siteList.get(position).site_name)
                 faultFragment.selectedSiteId=faultFragment.siteList.get(position).id
                 faultFragment.callApiforFaultList(faultFragment.siteList.get(position).id)
                 dismiss()
@@ -78,7 +78,6 @@ class CustomPopUpDialogSiteForFault(context: HomeActivity?, val siteList: List<S
         for (s in siteList!!) {
             //if the existing elements contains the search input
             if (s.site_name!!.toLowerCase().contains(text.toLowerCase())) {
-
                 //adding the element to filtered list
                 filterdNames.add(s)
 

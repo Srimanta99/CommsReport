@@ -1,13 +1,16 @@
 package com.commsreport.screens.fragments.managesite
 
 import android.os.Bundle
+import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.adapter.ManageSiteAdapter
+import com.commsreport.databinding.ContentManageSiteBinding
 import com.commsreport.databinding.FragmentManageSiteBinding
 import com.commsreport.model.SiteListModel
 import com.commsreport.screens.fragments.site.SiteFragment
@@ -37,6 +40,7 @@ class ManageSiteFragment : Fragment() {
     var manageSiteAdapter:ManageSiteAdapter?=null
     var activity:HomeActivity?=null
     var siteList=ArrayList<SiteListModel.RowList>()
+    var contentManageSiteBinding:ContentManageSiteBinding?=null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,18 +53,38 @@ class ManageSiteFragment : Fragment() {
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentManageSiteBinding=FragmentManageSiteBinding.inflate(inflater,container,false)
+        contentManageSiteBinding=fragmentManageSiteBinding!!.contentManagesite
         return fragmentManageSiteBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        manageSiteAdapter= ManageSiteAdapter(activity!!,siteList)
-        fragmentManageSiteBinding!!.recManagesite.adapter=manageSiteAdapter
+      //  manageSiteAdapter= ManageSiteAdapter(activity!!,siteList)
+       //contentManageSiteBinding!!.recManagesite.adapter=manageSiteAdapter
+        contentManageSiteBinding!!.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
+        fragmentManageSiteBinding!!.navSiteSearch.tvSearch.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentManageSiteBinding!!.navSiteSearch.tvSitename.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentManageSiteBinding!!.navSiteSearch.etsherchName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentManageSiteBinding!!.navSiteSearch.Searchsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        contentManageSiteBinding!!.imgMenu.setOnClickListener {
+            activity!!.homeBinding!!.drawerLayout.openDrawer(Gravity.LEFT)
+        }
+
+        fragmentManageSiteBinding!!.imgNavopen.setOnClickListener {
+            fragmentManageSiteBinding!!.drawerLayout!!.closeDrawer(Gravity.RIGHT)
+        }
+
+        fragmentManageSiteBinding!!.contentManagesite.imgSearch.setOnClickListener {
+            fragmentManageSiteBinding!!.drawerLayout!!.openDrawer(Gravity.RIGHT)
+        }
+
         callApiForSiteList()
-        fragmentManageSiteBinding!!.tvAddSite.setOnClickListener {
+        contentManageSiteBinding!!.tvAddSite.setOnClickListener {
             activity!!.openFragment(SiteFragment())
         }
+
     }
+
 
     private fun callApiForSiteList() {
         var userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
@@ -84,7 +108,7 @@ class ManageSiteFragment : Fragment() {
                         siteList = response.body()!!.row
                         if (siteList.size>=0) {
                             manageSiteAdapter = ManageSiteAdapter(activity!!, siteList)
-                            fragmentManageSiteBinding!!.recManagesite.adapter = manageSiteAdapter
+                            contentManageSiteBinding!!.recManagesite.adapter = manageSiteAdapter
                         }else
                             ToastAlert.CustomToasterror(activity!!, "No Site Found")
                     }else if(response.code()==401){
@@ -106,7 +130,7 @@ class ManageSiteFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Manage Sites")
-        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.VISIBLE
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.GONE
     }
 
     companion object {

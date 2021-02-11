@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_margin="@dimen/_4sdp"
+    android:background="@drawable/rectangular_shape_white_round_corner_lightgrey_broder"
+    android:layout_height="wrap_content">
+    <LinearLayout
+        android:id="@+id/llactive"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:background="@drawable/active"></ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Active"
+            android:textSize="@dimen/_13sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:gravity="center_vertical"></TextView>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="@drawable/grey_bg"></TextView>
+    <LinearLayout
+        android:id="@+id/ll_inactive"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        >
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:background="@drawable/inactive"></ImageView>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="In-Active"
+            android:textSize="@dimen/_13sdp"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:gravity="center_vertical"></TextView>
+
+    </LinearLayout>
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_2sdp"
+        android:background="@drawable/grey_bg"></TextView>
+</LinearLayout>

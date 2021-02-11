@@ -3,24 +3,26 @@ package com.commsreport.screens.fragments.site
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
-import com.commsreport.Utils.FullscreenCountryDialog
 import com.commsreport.Utils.FullscreenCountryDialogSite
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
@@ -43,7 +45,6 @@ import java.io.File
 import java.io.FileNotFoundException
 import java.io.FileOutputStream
 import java.io.IOException
-import java.lang.Exception
 import java.util.concurrent.TimeUnit
 
 // TODO: Rename parameter arguments, choose names that match
@@ -71,8 +72,12 @@ class SiteFragment : Fragment(),CountryClickInterface {
         activity=  getActivity() as HomeActivity
     }
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?,savedInstanceState: Bundle?): View? {
-        fragmentAddSiteBinding= FragmentAddSiteBinding.inflate(inflater,container,false)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        fragmentAddSiteBinding= FragmentAddSiteBinding.inflate(inflater, container, false)
         return fragmentAddSiteBinding!!.root
     }
 
@@ -89,6 +94,23 @@ class SiteFragment : Fragment(),CountryClickInterface {
        // fragmentAddSiteBinding!!.etUpload.setTypeface(CustomTypeface.getWhitniBold(activity!!))
         fragmentAddSiteBinding!!.tvBrowes.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
         fragmentAddSiteBinding!!.tvSubmitSite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentAddSiteBinding!!.tvstatus.setOnClickListener {
+            val mPopupwindow: PopupWindow
+            val inflater:LayoutInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view = inflater.inflate(R.layout.status_popup_layout, null)
+             mPopupwindow = PopupWindow(view, 800, 300, true)
+             mPopupwindow.showAsDropDown(fragmentAddSiteBinding!!.tvstatus, 0, 5)
+            val active = view.findViewById<View>(R.id.llactive) as LinearLayout
+            val inactive = view.findViewById<View>(R.id.ll_inactive) as LinearLayout
+            active.setOnClickListener {
+                fragmentAddSiteBinding!!.tvstatus.setText("Active")
+                mPopupwindow.dismiss()
+            }
+            inactive.setOnClickListener {
+                fragmentAddSiteBinding!!.tvstatus.setText("In-active")
+                mPopupwindow.dismiss()
+            }
+        }
         fragmentAddSiteBinding!!.tvBrowes.setOnClickListener {
            showAlertForChooseImage()
         }
@@ -109,22 +131,28 @@ class SiteFragment : Fragment(),CountryClickInterface {
                 var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
                 val callApi=apiInterface.callApiforcountrylist(userdata!!.token, gsonObject)
                 callApi.enqueue(object : retrofit2.Callback<CountryListModel> {
-                    override fun onResponse(call: retrofit2.Call<CountryListModel>, response: retrofit2.Response<CountryListModel>) {
+                    override fun onResponse(
+                        call: retrofit2.Call<CountryListModel>,
+                        response: retrofit2.Response<CountryListModel>
+                    ) {
                         customProgress.hideProgress()
 
                         if (response.code() == 200) {
 
-                            if (response.body()!!.status){
-                                countrylist= response!!.body()!!.row
-                                 fullScreenDialog = FullscreenCountryDialogSite(countrylist!!,activity!!,this@SiteFragment)
+                            if (response.body()!!.status) {
+                                countrylist = response!!.body()!!.row
+                                fullScreenDialog = FullscreenCountryDialogSite(
+                                    countrylist!!,
+                                    activity!!,
+                                    this@SiteFragment
+                                )
                                 fullScreenDialog!!.isCancelable = false
-                                fullScreenDialog!!.show(activity!!.supportFragmentManager,"")
+                                fullScreenDialog!!.show(activity!!.supportFragmentManager, "")
                                 /* val builder = AlertDialog.Builder(context, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
                                  val dialog = builder.create()
                                  dialog.setContentView(R.layout.country_alert_layout)
                                  dialog.show()*/
-                            }
-                            else
+                            } else
                                 ToastAlert.CustomToasterror(activity!!, response!!.body()!!.message)
 
                         } else if (response.code() == 401) {
@@ -148,17 +176,17 @@ class SiteFragment : Fragment(),CountryClickInterface {
     private fun checkValidation():Boolean{
         if(fragmentAddSiteBinding!!.etSiteName.text.toString().equals("")){
             fragmentAddSiteBinding!!.etSiteName.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter Site name")
+            ToastAlert.CustomToastwornning(activity!!, "Enter Site name")
             return false
         }
         if(fragmentAddSiteBinding!!.etAddressSite.text.toString().equals("")){
             fragmentAddSiteBinding!!.etAddressSite.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter Site address")
+            ToastAlert.CustomToastwornning(activity!!, "Enter Site address")
             return false
         }
         if(fragmentAddSiteBinding!!.etPinCode.text.toString().equals("")){
             fragmentAddSiteBinding!!.etPinCode.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter Site postcode")
+            ToastAlert.CustomToastwornning(activity!!, "Enter Site postcode")
             return false
         }
 
@@ -170,20 +198,26 @@ class SiteFragment : Fragment(),CountryClickInterface {
         val customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
         customProgress.showProgress(activity!!, "Please Wait..", false)
         val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-        builder.addFormDataPart("company_id" ,userdata!!.company_id)
+        builder.addFormDataPart("company_id", userdata!!.company_id)
         builder.addFormDataPart("site_name", fragmentAddSiteBinding!!.etSiteName.text.toString())
-        builder.addFormDataPart("site_address", fragmentAddSiteBinding!!.etAddressSite.text.toString())
-        builder.addFormDataPart("site_postcode",fragmentAddSiteBinding!!.etPinCode.text.toString())
+        builder.addFormDataPart(
+            "site_address",
+            fragmentAddSiteBinding!!.etAddressSite.text.toString()
+        )
+        builder.addFormDataPart("site_postcode", fragmentAddSiteBinding!!.etPinCode.text.toString())
         if (imgFile!=null)
-        builder.addFormDataPart("site_logo",imgFile!!.absolutePath , okhttp3.RequestBody.create(
-            MediaType.parse("image/jpeg"), imgFile))
+        builder.addFormDataPart(
+            "site_logo", imgFile!!.absolutePath, okhttp3.RequestBody.create(
+                MediaType.parse("image/jpeg"), imgFile
+            )
+        )
 
-        builder.addFormDataPart("status_id" ,"1")
+        builder.addFormDataPart("status_id", "1")
         val requestBody = builder.build()
         var request: Request? = null
         request = Request.Builder()
             .addHeader("Authorization", userdata.token)
-            .addHeader("Content-Type","application/json")
+            .addHeader("Content-Type", "application/json")
             .url(NetworkUtility.BASE_URL + NetworkUtility.CREATE_SITE)
             .post(requestBody)
             .build()
@@ -195,27 +229,32 @@ class SiteFragment : Fragment(),CountryClickInterface {
             .build()
 
         val call = client.newCall(request)
-        call.enqueue(object :Callback{
+        call.enqueue(object : Callback {
             override fun onResponse(call: Call, response: Response) {
                 customProgress.hideProgress()
                 try {
-                    var resStr :String=response.body()!!.string()
-                    var response_obj= JSONObject(resStr)
+                    var resStr: String = response.body()!!.string()
+                    var response_obj = JSONObject(resStr)
                     //val response_obj = JSONObject(response.body()!!.string())
                     activity!!.runOnUiThread {
-                        if (response_obj.getBoolean("status")){
+                        if (response_obj.getBoolean("status")) {
                             //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
                             //callApiforfaultcreate(check_process_log_id);
-                            ToastAlert.CustomToastSuccess(activity!!,response_obj.getString("message"))
+                            ToastAlert.CustomToastSuccess(
+                                activity!!,
+                                response_obj.getString("message")
+                            )
                             activity!!.getSupportFragmentManager().popBackStack();
-                        }else{
-                            ToastAlert.CustomToasterror(activity!!,response_obj.getString("message"))
+                        } else {
+                            ToastAlert.CustomToasterror(
+                                activity!!,
+                                response_obj.getString("message")
+                            )
 
                         }
                     }
 
-                }
-                catch (e: Exception){
+                } catch (e: Exception) {
                     e.printStackTrace()
                     activity!!.runOnUiThread {
                         ToastAlert.CustomToasterror(activity!!, "Try later. Something Wrong.")
@@ -236,7 +275,10 @@ class SiteFragment : Fragment(),CountryClickInterface {
     private fun showAlertForChooseImage() {
         val alertDialog = Dialog(activity!!, R.style.Transparent)
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val view: View = LayoutInflater.from(activity).inflate(R.layout.alert_custom_imageselection, null)
+        val view: View = LayoutInflater.from(activity).inflate(
+            R.layout.alert_custom_imageselection,
+            null
+        )
         alertDialog.setContentView(view)
         alertDialog.setCancelable(false)
         val tv_message: TextView = view.findViewById(R.id.tv_message)
@@ -271,8 +313,16 @@ class SiteFragment : Fragment(),CountryClickInterface {
         checkpermession()
     }
     fun checkpermession(){
-        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity!!, arrayOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) !== PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                activity!!, arrayOf<String>(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ), 0
+            )
         } else {
             if (image == "gallery")
                 galleryIntent()
@@ -281,7 +331,11 @@ class SiteFragment : Fragment(),CountryClickInterface {
         }
     }
 
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         if (requestCode == 0) {
             if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {

@@ -9,9 +9,13 @@ import android.view.ViewGroup
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
+import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForFaultSearch
+import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForUserSearch
 import com.commsreport.adapter.ManageUserAdapter
 import com.commsreport.databinding.ContentManageUserBinding
 import com.commsreport.databinding.FragmentManageUserBinding
+import com.commsreport.model.LoginResponseModel
+import com.commsreport.model.SiteListModel
 import com.commsreport.model.SiteUserListModel
 import com.commsreport.screens.fragments.adduser.AddUserFragment
 import com.commsreport.screens.home.HomeActivity
@@ -39,6 +43,9 @@ class ManageUserFragment : Fragment() {
     var contentManageUserBinding:ContentManageUserBinding?=null
     var manaUserAdapter:ManageUserAdapter?=null
     var userList=ArrayList<SiteUserListModel.UserList>()
+    var userdata:LoginResponseModel.Userdata?=null
+    var siteList=ArrayList<SiteListModel.RowList>()
+    var selectedSiteId:String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -56,7 +63,24 @@ class ManageUserFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         contentManageUserBinding!!.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentManageUserBinding!!.navFaultSearch.Search.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentManageUserBinding!!.navFaultSearch.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentManageUserBinding!!.navFaultSearch.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentManageUserBinding!!.navFaultSearch.tvSearchByName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentManageUserBinding!!.navFaultSearch.etsherchName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentManageUserBinding!!.navFaultSearch.tvSearch.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+
+       fragmentManageUserBinding!!.navFaultSearch.Search.setOnClickListener {
+
+       }
+        fragmentManageUserBinding!!.navFaultSearch.tvDropdownSelectsite.setOnClickListener {
+                val customPopUpDialogSiteList= CustomPopUpDialogSiteForUserSearch(activity,siteList,this)
+                customPopUpDialogSiteList!!.show()
+        }
+
+
         contentManageUserBinding!!.imgSearch.setOnClickListener {
             fragmentManageUserBinding!!.drawerLayout.openDrawer(Gravity.RIGHT)
         }
@@ -64,8 +88,13 @@ class ManageUserFragment : Fragment() {
             activity!!.homeBinding!!.drawerLayout.openDrawer(Gravity.LEFT)
         }
         callApiForSiteList()
+        callApiForUserList()
+
         contentManageUserBinding!!.tvAddUser.setOnClickListener {
             activity!!.openFragment(AddUserFragment())
+        }
+        fragmentManageUserBinding!!.navClose.setOnClickListener {
+            fragmentManageUserBinding!!.drawerLayout.closeDrawer(Gravity.RIGHT)
         }
     }
 
@@ -84,9 +113,8 @@ class ManageUserFragment : Fragment() {
                 }
             }
     }
+    public fun callApiForSiteList() {
 
-    private fun callApiForSiteList() {
-        var userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
         customProgress.showProgress(activity!!,"Please Wait..",false)
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
@@ -97,7 +125,43 @@ class ManageUserFragment : Fragment() {
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
             var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
-            val callApi=apiInterface.callSiteUserListApi(userdata.token,gsonObject)
+            val callApi=apiInterface.callSiteListApi(userdata!!.token,gsonObject)
+            callApi.enqueue(object : Callback<SiteListModel> {
+                override fun onResponse(call: Call<SiteListModel>, response: Response<SiteListModel>) {
+                    customProgress.hideProgress()
+                    if(response.code()==200) {
+                        siteList = response.body()!!.row
+
+
+                    }else if(response.code()==401){
+                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<SiteListModel>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+    }
+
+    private fun callApiForUserList() {
+
+        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!,"Please Wait..",false)
+        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        try {
+            val paramObject = JSONObject()
+            paramObject.put("company_id", userdata!!.company_id)
+
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi=apiInterface.callSiteUserListApi(userdata!!.token,gsonObject)
             callApi.enqueue(object : Callback<SiteUserListModel> {
                 override fun onResponse(call: Call<SiteUserListModel>, response: Response<SiteUserListModel>) {
                     customProgress.hideProgress()

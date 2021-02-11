@@ -34,7 +34,7 @@
                     android:id="@+id/fault_decription"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginTop="@dimen/_10sdp"
+                    android:layout_marginTop="@dimen/_12sdp"
                     android:text="Fault note"
                     android:textColor="#1E3F6C"
                     android:textSize="@dimen/_13sdp"
@@ -48,7 +48,7 @@
                     android:layout_alignParentRight="true"
 
                     android:background="@drawable/date_bg"
-                    android:layout_marginTop="@dimen/_7sdp"
+                    android:layout_marginTop="@dimen/_5sdp"
                     android:orientation="horizontal">
 
                     <ImageView
@@ -72,7 +72,6 @@
                         android:textSize="@dimen/_12sdp"
                         android:textStyle="bold">
 
-
                     </TextView>
 
                     <TextView
@@ -85,7 +84,6 @@
                         android:layout_marginRight="@dimen/_10sdp"
                         android:textSize="@dimen/_12sdp"
                         android:textColor="#ffffff">
-
 
                     </TextView>
 
@@ -117,6 +115,7 @@
                         android:layout_width="0dp"
                         android:layout_weight="1"
                         android:scaleType="fitXY"
+                        android:padding="@dimen/_2sdp"
                         android:layout_height="@dimen/_50sdp"
                         android:layout_marginLeft="@dimen/_7sdp"
                         android:layout_marginRight="@dimen/_10sdp"
@@ -130,6 +129,7 @@
                         android:layout_weight="1"
                         android:layout_height="@dimen/_50sdp"
                         android:scaleType="fitXY"
+                        android:padding="@dimen/_2sdp"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:background="@drawable/no_image">
 
@@ -141,6 +141,7 @@
                         android:layout_weight="1"
                         android:layout_height="@dimen/_50sdp"
                         android:scaleType="fitXY"
+                        android:padding="@dimen/_2sdp"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:background="@drawable/no_image">
 
@@ -152,6 +153,7 @@
                         android:layout_weight="1"
                         android:layout_height="@dimen/_50sdp"
                         android:scaleType="fitXY"
+                        android:padding="@dimen/_2sdp"
                         android:layout_marginRight="@dimen/_10sdp"
                         android:background="@drawable/no_image">
 
@@ -168,7 +170,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-
         android:layout_alignParentRight="true"
         android:layout_marginTop="@dimen/_5sdp"
         android:layout_below="@+id/lltop">
@@ -194,19 +195,17 @@
                     android:layout_centerVertical="true"
 
                     android:layout_marginLeft="@dimen/_5sdp"
-                    android:background="@drawable/fix"
-                    ></ImageView>
+                    android:background="@drawable/fix"></ImageView>
+
                 <TextView
                     android:id="@+id/tv_remove"
-
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                android:layout_marginLeft="@dimen/_7sdp"
+                    android:layout_marginLeft="@dimen/_7sdp"
                     android:layout_toRightOf="@+id/img_fixfault"
                     android:gravity="center_vertical"
                     android:text="FAULT FIXED"
-                    android:textSize="@dimen/_11sdp"
-                  >
+                    android:textSize="@dimen/_11sdp">
 
                 </TextView>
 

@@ -150,10 +150,12 @@
                 android:layout_marginTop="@dimen/_10sdp">
 
                 <RelativeLayout
+                    android:id="@+id/rl_download1"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:layout_weight="1"
+                    android:visibility="invisible"
                     android:background="@drawable/download_bg_round">
 
                     <ImageView
@@ -162,12 +164,13 @@
                         android:background="@drawable/download_attachment"></ImageView>
 
                     <TextView
-                        android:id="@+id/tv_download"
+                        android:id="@+id/tv_download1"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_centerInParent="true"
                         android:gravity="center"
                         android:text="DOWNLOAD"
+
                         android:textSize="@dimen/_10sdp"
                         >
 
@@ -184,10 +187,12 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rl_download2"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_weight="1"
+                    android:visibility="invisible"
                     android:background="@drawable/download_bg_round">
 
                     <ImageView
@@ -196,7 +201,7 @@
                         android:background="@drawable/download_attachment"></ImageView>
 
                     <TextView
-
+                        android:id="@+id/tv_download2"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"
@@ -224,10 +229,12 @@
                 android:layout_marginTop="@dimen/_7sdp">
 
                 <RelativeLayout
-                    android:layout_width="0dp"
+                    android:id="@+id/rl_download3"
+                    android:layout_width="@dimen/_120sdp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginRight="@dimen/_10sdp"
-                    android:layout_weight="1"
+
+                    android:visibility="invisible"
                     android:background="@drawable/download_bg_round">
 
                     <ImageView
@@ -257,11 +264,13 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/download4"
+
+                    android:id="@+id/rl_download4"
                     android:layout_width="0dp"
                     android:layout_height="@dimen/_30sdp"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:layout_weight="1"
+                    android:visibility="invisible"
                     android:background="@drawable/download_bg_round">
 
                     <ImageView
@@ -270,7 +279,7 @@
                         android:background="@drawable/download_attachment"></ImageView>
 
                     <TextView
-
+                        android:id="@+id/tv_download4"
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
                         android:layout_gravity="center"

@@ -9,15 +9,18 @@
     android:background="@drawable/top_two_rounded_corner_white"
     android:layout_gravity="right"
     android:orientation="vertical">
+    <include
+        android:id="@+id/content_manage_fault"
+        layout="@layout/content_manage_fault"></include>
     <LinearLayout
         android:layout_gravity="end"
         android:layout_width="wrap_content"
         android:layout_height="match_parent">
         <ImageView
-            android:id="@+id/img_navopen"
-            android:layout_marginTop="20dp"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
+            android:id="@+id/img_navclose"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
             android:src="@drawable/searchwithbg"
             android:layout_alignParentRight="true"></ImageView>
 
@@ -27,31 +30,13 @@
             android:layout_height="match_parent"
             android:layout_gravity="end"
             android:fitsSystemWindows="true">
-            <include layout="@layout/search_fault_layout"/>
+
+            <include layout="@layout/search_fault_layout"
+                android:id="@+id/nav_fault_search"/>
         </com.google.android.material.navigation.NavigationView>
     </LinearLayout>
-    <include
-        android:id="@+id/content_manage_fault"
-        layout="@layout/content_manage_fault"></include>
-    <TextView
-        android:id="@+id/tv_selectedsite"
-        android:layout_width="match_parent"
-        android:layout_height="@dimen/_40sdp"
 
-        android:layout_marginBottom="@dimen/_5sdp"
-        android:background="@drawable/asscolor_round"
-        android:gravity="center_vertical"
-        android:paddingLeft="@dimen/_9sdp"
-        android:paddingTop="@dimen/_5sdp"
-        android:paddingRight="@dimen/_10sdp"
-        android:textSize="@dimen/_12sdp"
-        android:layout_margin="@dimen/_10sdp"
-        android:drawableRight="@drawable/down_arrow"
-       android:visibility="gone"
-        android:hint="Please select site"
-        >
 
-    </TextView>
 
 
 </androidx.drawerlayout.widget.DrawerLayout>

@@ -8,6 +8,9 @@
     android:orientation="vertical"
     tools:openDrawer="right"
     tools:context=".screens.fragments.managedocument.ManageDocumentFragment">
+    <include
+        android:id="@+id/content_manage_document"
+        layout="@layout/content_manage_document"></include>
 
   <LinearLayout
        android:layout_gravity="end"
@@ -15,9 +18,9 @@
        android:layout_height="match_parent">
       <ImageView
           android:id="@+id/img_navclose"
-          android:layout_marginTop="20dp"
-          android:layout_width="50dp"
-          android:layout_height="50dp"
+          android:layout_marginTop="@dimen/_10sdp"
+          android:layout_width="@dimen/_40sdp"
+          android:layout_height="@dimen/_40sdp"
           android:src="@drawable/searchwithbg"
           android:layout_alignParentRight="true"></ImageView>
 
@@ -27,12 +30,10 @@
           android:layout_height="match_parent"
           android:layout_gravity="end"
           android:fitsSystemWindows="true">
-         <include layout="@layout/search_document_layout"/>
+         <include android:id="@+id/nav_doc_search"
+             layout="@layout/search_document_layout"/>
       </com.google.android.material.navigation.NavigationView>
    </LinearLayout>
-    <include
-        android:id="@+id/content_manage_document"
-        layout="@layout/content_manage_document"></include>
 
 
 

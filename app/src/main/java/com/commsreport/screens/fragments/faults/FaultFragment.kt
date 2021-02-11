@@ -1,15 +1,18 @@
 package com.commsreport.screens.fragments.faults
 
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForFault
+import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForFaultSearch
 import com.commsreport.adapter.ManageFaultAdapter
 import com.commsreport.databinding.ContentManageFaultBinding
 import com.commsreport.databinding.FragmentFaultBinding
@@ -29,6 +32,8 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.util.*
+import kotlin.collections.ArrayList
 
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
@@ -65,11 +70,25 @@ class FaultFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         contentManageFaultBinding!!.tvAddfault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        faultBinding!!.tvSelectedsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.contentManageFault!!.tvSelectedsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         faultBinding!!.contentManageFault.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.navFaultSearch.tvSearch.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        faultBinding!!.navFaultSearch.tvScarchByDate.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.navFaultSearch.tvDate.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.navFaultSearch.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.navFaultSearch.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.navFaultSearch.searchFault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.navFaultSearch.tvDate.setOnClickListener {
+            datepickerdeStartDate()
+        }
+        faultBinding!!.navFaultSearch.searchFault.setOnClickListener {
+            if (!faultBinding!!.navFaultSearch!!.tvDate.text.toString().equals("") || !faultBinding!!.navFaultSearch.tvDropdownSelectsite.text.toString().equals("")){
 
+            }else
+                ToastAlert.CustomToastwornning(activity!!,"Please enter some value")
+        }
         if(userdata!!.user_type.equals("COMPANY_ADMIN")){
-          //  faultBinding!!.tvSelectedsite.visibility=View.VISIBLE
+          //  faultBinding!!.contentManageFault.tvSelectedsite.visibility=View.VISIBLE
             callApiForSiteList()
 
         }else {
@@ -87,9 +106,19 @@ class FaultFragment : Fragment() {
         faultBinding!!.contentManageFault.imgSearch.setOnClickListener {
             faultBinding!!.drawerLayout.openDrawer(Gravity.RIGHT)
         }
-        faultBinding!!.tvSelectedsite.setOnClickListener {
+        faultBinding!!.imgNavclose.setOnClickListener {
+            faultBinding!!.drawerLayout!!.closeDrawer(Gravity.RIGHT)
+        }
+        faultBinding!!.contentManageFault.tvSelectedsite.setOnClickListener {
             val customPopUpDialogSiteList= CustomPopUpDialogSiteForFault(activity,siteList,this)
             customPopUpDialogSiteList!!.show()
+        }
+        faultBinding!!.navFaultSearch.tvDropdownSelectsite.setOnClickListener {
+            val customPopUpDialogSiteList= CustomPopUpDialogSiteForFaultSearch(activity,siteList,this)
+            customPopUpDialogSiteList!!.show()
+        }
+        faultBinding!!.navFaultSearch.searchFault.setOnClickListener {
+            callApiforFaultList(selectedSiteId!!)
         }
 
     }
@@ -98,8 +127,7 @@ class FaultFragment : Fragment() {
         @JvmStatic
         fun newInstance(param1: String, param2: String) =
             FaultFragment().apply {
-                arguments = Bundle().apply {
-                    putString(ARG_PARAM1, param1)
+                arguments = Bundle().apply { putString(ARG_PARAM1, param1)
                     putString(ARG_PARAM2, param2)
                 }
             }
@@ -109,6 +137,37 @@ class FaultFragment : Fragment() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Manage Faults")
         activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.GONE
+    }
+
+    fun datepickerdeStartDate() {
+        val c = Calendar.getInstance()
+        val mYear = c.get(Calendar.YEAR)
+        val mMonth = c.get(Calendar.MONTH)
+        val mDay = c.get(Calendar.DAY_OF_MONTH)
+
+
+        val datePickerDialog = DatePickerDialog(
+            activity!!, R.style.AppDatepickerDilogtheam,
+            DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
+                val choosedate =
+                    padnumber(dayOfMonth) + "/" + padnumber(monthOfYear + 1) + "/" + year.toString()
+                // val checkdate = year.toString() + "-" + padnumber(monthOfYear + 1) + "-" + padnumber(dayOfMonth)
+                //  val listcheckdate = padnumber(monthOfYear + 1) + "/" + padnumber(dayOfMonth) + "/" + year.toString()
+                faultBinding!!.navFaultSearch.tvDate.setText(choosedate)
+
+            }, mYear, mMonth, mDay
+        )
+        //  datePickerDialog.getDatePicker().setMaxDate(System.currentTimeMillis());
+        datePickerDialog.show()
+
+    }
+    fun padnumber(n: Int): String {
+        val num: String
+        if (n > 10 || n == 10)
+            num = n.toString()
+        else
+            num = "0$n"
+        return num
     }
     private fun callApiForSiteList() {
 
