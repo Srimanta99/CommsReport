@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+
+    android:background="@drawable/whitebg">
+    <ImageView
+        android:id="@+id/img_back"
+        android:layout_width="@dimen/_17sdp"
+        android:layout_height="@dimen/_12sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:background="@drawable/back"></ImageView>
+    <EditText
+        android:id="@+id/et_site_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginRight="@dimen/_10sdp"
+        android:textStyle="normal"
+        android:paddingLeft="@dimen/_9sdp"
+        android:paddingRight="@dimen/_9sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+         android:background="@drawable/asscolor_round"
+         android:drawableLeft="@drawable/search"
+         android:hint="Search country by name"
+        android:drawablePadding="@dimen/_10sdp"
+        android:textColor="@color/black"
+        android:textColorHint="@color/black"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:inputType="textEmailAddress">
+    </EditText>
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_country"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_10sdp"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="10"
+        tools:listitem="@layout/country_list_item">
+
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>

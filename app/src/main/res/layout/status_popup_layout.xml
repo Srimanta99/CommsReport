@@ -17,10 +17,11 @@
             android:background="@drawable/active"></ImageView>
 
         <TextView
+            android:id="@+id/tvactive"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Active"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_12sdp"
             android:layout_marginLeft="@dimen/_15sdp"
             android:gravity="center_vertical"></TextView>
 
@@ -42,10 +43,11 @@
             android:background="@drawable/inactive"></ImageView>
 
         <TextView
+            android:id="@+id/tvinactive"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="In-Active"
-            android:textSize="@dimen/_13sdp"
+            android:textSize="@dimen/_12sdp"
             android:layout_marginLeft="@dimen/_15sdp"
             android:gravity="center_vertical"></TextView>
 

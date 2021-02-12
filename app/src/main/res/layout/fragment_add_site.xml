@@ -84,23 +84,16 @@
 
         </TextView>
 
-
             <EditText
                 android:id="@+id/et_site_name"
                 android:layout_width="match_parent"
                 android:layout_height="@dimen/_40sdp"
-
-                android:textStyle="normal"
-                android:paddingLeft="@dimen/_9sdp"
+                android:paddingLeft="@dimen/_10sdp"
                 android:paddingRight="@dimen/_9sdp"
                 android:paddingTop="@dimen/_10sdp"
                 android:paddingBottom="@dimen/_10sdp"
                 android:textSize="@dimen/_12sdp"
-                android:background="@drawable/asscolor_round"
-
-                android:inputType="textEmailAddress"
-
-                >
+                android:background="@drawable/asscolor_round">
 
             </EditText>
         <TextView
@@ -131,6 +124,7 @@
             <ImageView
                 android:id="@+id/img_country"
                 android:layout_width="@dimen/_40sdp"
+                android:visibility="gone"
                 android:layout_height="@dimen/_40sdp"></ImageView>
 
             <TextView
@@ -140,6 +134,7 @@
                 android:layout_marginLeft="@dimen/_7sdp"
                 android:padding="@dimen/_5sdp"
                 android:gravity="center_vertical"
+                android:hint="Please select country"
                 android:textSize="@dimen/_11sdp"
                 android:drawableRight="@drawable/down_arrow"></TextView>
         </LinearLayout>
@@ -297,7 +292,7 @@
         </LinearLayout>
 
         <TextView
-            android:id="@+id/tv_status"
+            android:id="@+id/tv_status1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Status"
@@ -311,6 +306,17 @@
 
         </TextView>
 
+        <LinearLayout
+            android:id="@+id/ll_status"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/asscolor_round">
+            <ImageView
+                android:id="@+id/img_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_gravity="center_vertical"></ImageView>
 
         <TextView
             android:id="@+id/tvstatus"
@@ -318,19 +324,17 @@
             android:layout_height="@dimen/_40sdp"
 
             android:textStyle="normal"
-            android:paddingLeft="@dimen/_9sdp"
+            android:paddingLeft="@dimen/_10sdp"
             android:paddingRight="@dimen/_9sdp"
             android:paddingTop="@dimen/_10sdp"
             android:paddingBottom="@dimen/_10sdp"
             android:textSize="@dimen/_12sdp"
-            android:background="@drawable/asscolor_round"
+           android:hint="Please select status"
             android:layout_marginBottom="@dimen/_10sdp"
-            android:inputType="textEmailAddress"
             android:drawableRight="@drawable/down_arrow"
-
             >
-
         </TextView>
+        </LinearLayout>
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent"

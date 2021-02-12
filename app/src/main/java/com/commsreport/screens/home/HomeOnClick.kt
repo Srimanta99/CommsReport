@@ -33,6 +33,7 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
         homeBinding.rlSettings.setOnClickListener(this)
         homeBinding.rlLogout.setOnClickListener(this)
         homeBinding!!.llEmail.setOnClickListener(this)
+        homeBinding!!.imgedit.setOnClickListener(this)
         //homeBinding!!.mainView.imgSearch.setOnClickListener(this)
 
 
@@ -77,6 +78,10 @@ class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeB
                 homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
                 homeActivity.openFragment(EmailFragment())
 
+            }
+            R.id.imgedit->{
+                homeBinding!!.drawerLayout!!.closeDrawer(GravityCompat.START)
+                homeActivity.openFragment(SettingFragment())
             }
 
         }

@@ -9,22 +9,22 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Html
 import android.view.*
-import androidx.fragment.app.Fragment
 import android.widget.TextView
 import android.widget.Toast
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
+import androidx.fragment.app.Fragment
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteList
-import com.commsreport.adapter.ManageSiteAdapter
+import com.commsreport.adapter.NotifyEmailAdapter
 import com.commsreport.databinding.ContentReportFaultBinding
 import com.commsreport.databinding.FragmentReportFaultaBinding
 import com.commsreport.model.LoginResponseModel
-
 import com.commsreport.model.SiteListModel
 import com.commsreport.screens.fragments.site.REQUEST_CAMERA
 import com.commsreport.screens.fragments.site.SELECT_FILE
@@ -82,23 +82,76 @@ class ReportFaultFragment : Fragment() {
     }
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        fragmentReportFaultBinding=FragmentReportFaultaBinding.inflate(inflater,container,false)
+        fragmentReportFaultBinding=FragmentReportFaultaBinding.inflate(inflater, container, false)
         contentReportFaultBinding=fragmentReportFaultBinding!!.contentReportfault
         return fragmentReportFaultBinding!!.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragmentReportFaultBinding!!.contentReportfault!!.tvaddNote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        fragmentReportFaultBinding!!.contentReportfault.etAddnote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        fragmentReportFaultBinding!!.contentReportfault.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        fragmentReportFaultBinding!!.contentReportfault.tvSelectedsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        fragmentReportFaultBinding!!.contentReportfault.tvImg1.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
-        fragmentReportFaultBinding!!.contentReportfault.tvImg2.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
-        fragmentReportFaultBinding!!.contentReportfault.tvImg3.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
-        fragmentReportFaultBinding!!.contentReportfault.tvImg4.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
-        fragmentReportFaultBinding!!.contentReportfault.tvAddfault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        fragmentReportFaultBinding!!.contentReportfault.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault!!.tvaddNote.setTypeface(
+            CustomTypeface.getRajdhaniMedium(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.contentReportfault.etAddnote.setTypeface(
+            CustomTypeface.getRajdhaniMedium(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.contentReportfault.tvSelectsite.setTypeface(
+            CustomTypeface.getRajdhaniMedium(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.contentReportfault.tvSelectedsite.setTypeface(
+            CustomTypeface.getRajdhaniMedium(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.contentReportfault.tvImg1.setTypeface(
+            CustomTypeface.getRajdhaniSemiBold(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.contentReportfault.tvImg2.setTypeface(
+            CustomTypeface.getRajdhaniSemiBold(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.contentReportfault.tvImg3.setTypeface(
+            CustomTypeface.getRajdhaniSemiBold(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.contentReportfault.tvImg4.setTypeface(
+            CustomTypeface.getRajdhaniSemiBold(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.contentReportfault.tvAddfault.setTypeface(
+            CustomTypeface.getRajdhaniMedium(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.contentReportfault.tvHeaderText.setTypeface(
+            CustomTypeface.getRajdhaniBold(
+                activity!!
+            )
+        )
+        fragmentReportFaultBinding!!.navnotifyEmail.tvNotifywho.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        fragmentReportFaultBinding!!.navnotifyEmail.tvNoteNotifywho.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.navnotifyEmail.submitNotifywho.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvNote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvMendatory.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        val notetext= "<font color=#FE0100>Note: </font> <font color=#1E3F6C>Please enter your complete fault details in the above section</font>"
+        fragmentReportFaultBinding!!.contentReportfault.tvNote.setText(Html.fromHtml(notetext))
+        val notemendatory= "<font color=#FE0100>Note: </font> <font color=#1E3F6C>[*] feilds are all mandatory fields</font>"
+        fragmentReportFaultBinding!!.contentReportfault.tvMendatory.setText(Html.fromHtml(notemendatory))
+        val text = "<font color=#FE0100>Note: </font> <font color=#1E3F6C>Please select the email address you want to notify</font>"
+        fragmentReportFaultBinding!!.navnotifyEmail.tvNoteNotifywho.setText(Html.fromHtml(text))
+
+
         val c = Calendar.getInstance()
         val df = SimpleDateFormat("dd/MM/yyyy")
         formattedDate = df.format(c.time)
@@ -110,7 +163,7 @@ class ReportFaultFragment : Fragment() {
             selectedSiteId=userdata!!.site_id
 
         fragmentReportFaultBinding!!.contentReportfault.tvSelectedsite.setOnClickListener {
-           val customPopUpDialogSiteList= CustomPopUpDialogSiteList(activity,siteList,this)
+           val customPopUpDialogSiteList= CustomPopUpDialogSiteList(activity, siteList, this)
             customPopUpDialogSiteList!!.show()
         }
         fragmentReportFaultBinding!!.contentReportfault.rlImg1.setOnClickListener {
@@ -133,14 +186,16 @@ class ReportFaultFragment : Fragment() {
         }
         fragmentReportFaultBinding!!.contentReportfault.tvAddfault.setOnClickListener {
             if (!selectedSiteId.equals("")) {
-                if (!fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString().equals("")) {
+                if (!fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString().equals(
+                        ""
+                    )) {
                     submitfalutusingmultipartBulider()
                 }else {
                     fragmentReportFaultBinding!!.contentReportfault.etAddnote.requestFocus()
-                   ToastAlert.CustomToastwornning(activity!!,"Enter note")
+                   ToastAlert.CustomToastwornning(activity!!, "Enter note")
                 }
             }else
-                ToastAlert.CustomToastwornning(activity!!,"Please select site")
+                ToastAlert.CustomToastwornning(activity!!, "Please select site")
         }
         fragmentReportFaultBinding!!.contentReportfault.tvNotify.setOnClickListener {
             fragmentReportFaultBinding!!.drawerLayout.openDrawer(Gravity.RIGHT)
@@ -149,7 +204,8 @@ class ReportFaultFragment : Fragment() {
         fragmentReportFaultBinding!!.contentReportfault.imgMenu.setOnClickListener {
             activity!!.homeBinding!!.drawerLayout!!.openDrawer(Gravity.LEFT)
         }
-
+        val notifyEmailAdapter=NotifyEmailAdapter(activity!!)
+        fragmentReportFaultBinding!!.navnotifyEmail.recNotifywho.adapter=notifyEmailAdapter
 
     }
 
@@ -173,7 +229,7 @@ class ReportFaultFragment : Fragment() {
     private fun callApiForSiteList() {
 
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
-        customProgress.showProgress(activity!!,"Please Wait..",false)
+        customProgress.showProgress(activity!!, "Please Wait..", false)
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
         try {
             val paramObject = JSONObject()
@@ -182,15 +238,18 @@ class ReportFaultFragment : Fragment() {
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
             var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
-            val callApi=apiInterface.callSiteListApi(userdata!!.token,gsonObject)
+            val callApi=apiInterface.callSiteListApi(userdata!!.token, gsonObject)
             callApi.enqueue(object : Callback<SiteListModel> {
-                override fun onResponse(call: Call<SiteListModel>, response: Response<SiteListModel>) {
+                override fun onResponse(
+                    call: Call<SiteListModel>,
+                    response: Response<SiteListModel>
+                ) {
                     customProgress.hideProgress()
-                    if(response.code()==200) {
+                    if (response.code() == 200) {
                         siteList = response.body()!!.row
 
-                    }else if(response.code()==401){
-                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
+                    } else if (response.code() == 401) {
+                        Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
 
                     }
                 }
@@ -200,14 +259,17 @@ class ReportFaultFragment : Fragment() {
                 }
             })
 
-        }catch (e:Exception){
+        }catch (e: Exception){
             e.printStackTrace()
         }
     }
     private fun showAlertForChooseImage() {
         val alertDialog = Dialog(activity!!, R.style.Transparent)
         alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
-        val view: View = LayoutInflater.from(activity).inflate(R.layout.alert_custom_imageselection, null)
+        val view: View = LayoutInflater.from(activity).inflate(
+            R.layout.alert_custom_imageselection,
+            null
+        )
         alertDialog.setContentView(view)
         alertDialog.setCancelable(false)
         val tv_message: TextView = view.findViewById(R.id.tv_message)
@@ -241,8 +303,16 @@ class ReportFaultFragment : Fragment() {
         checkpermession()
     }
     fun checkpermession(){
-        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(activity!!, Manifest.permission.WRITE_EXTERNAL_STORAGE) !== PackageManager.PERMISSION_GRANTED) {
-            ActivityCompat.requestPermissions(activity!!, arrayOf<String>(Manifest.permission.CAMERA, Manifest.permission.WRITE_EXTERNAL_STORAGE), 0)
+        if (ContextCompat.checkSelfPermission(activity!!, Manifest.permission.CAMERA) !== PackageManager.PERMISSION_GRANTED || ContextCompat.checkSelfPermission(
+                activity!!,
+                Manifest.permission.WRITE_EXTERNAL_STORAGE
+            ) !== PackageManager.PERMISSION_GRANTED) {
+            ActivityCompat.requestPermissions(
+                activity!!, arrayOf<String>(
+                    Manifest.permission.CAMERA,
+                    Manifest.permission.WRITE_EXTERNAL_STORAGE
+                ), 0
+            )
         } else {
             if (image == "gallery")
                 galleryIntent()
@@ -250,7 +320,11 @@ class ReportFaultFragment : Fragment() {
                 takePhotoFromCamera()
         }
     }
-    override fun onRequestPermissionsResult(requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
+    override fun onRequestPermissionsResult(
+        requestCode: Int,
+        permissions: Array<String>,
+        grantResults: IntArray
+    ) {
         if (requestCode == 0) {
             if (grantResults.size > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED
                 && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
@@ -453,15 +527,21 @@ class ReportFaultFragment : Fragment() {
         val customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
         customProgress.showProgress(activity!!, "Please Wait..", false)
         val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
-        builder.addFormDataPart("site_id" ,selectedSiteId)
+        builder.addFormDataPart("site_id", selectedSiteId)
         builder.addFormDataPart("check_process_type", "checks")
-        builder.addFormDataPart("fault_description", fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString())
-        builder.addFormDataPart("status_id","1")
-        builder.addFormDataPart("fault_entry_date",formattedDate)
+        builder.addFormDataPart(
+            "fault_description",
+            fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString()
+        )
+        builder.addFormDataPart("status_id", "1")
+        builder.addFormDataPart("fault_entry_date", formattedDate)
 
         for (i in imagearraylist.indices) {
-            builder.addFormDataPart("fault_image[]", imagearraylist.get(i).name, okhttp3.RequestBody.create(
-                MediaType.parse("image/jpeg"), imagearraylist.get(i)))
+            builder.addFormDataPart(
+                "fault_image[]", imagearraylist.get(i).name, okhttp3.RequestBody.create(
+                    MediaType.parse("image/jpeg"), imagearraylist.get(i)
+                )
+            )
         }
         //builder.addFormDataPart("fault_image", imagearraylist.get(0).name, okhttp3.RequestBody.create(MediaType.parse("image/jpeg"), imagearraylist.get(0)))
 
@@ -469,7 +549,7 @@ class ReportFaultFragment : Fragment() {
         var request: Request? = null
         request = Request.Builder()
             .addHeader("Authorization", userdata!!.token)
-            .addHeader("Content-Type","application/json")
+            .addHeader("Content-Type", "application/json")
             .url(NetworkUtility.BASE_URL + NetworkUtility.CREATE_FAULT)
             .post(requestBody)
             .build()
@@ -481,34 +561,40 @@ class ReportFaultFragment : Fragment() {
             .build()
 
         val call = client.newCall(request)
-        call.enqueue(object :okhttp3.Callback{
+        call.enqueue(object : okhttp3.Callback {
             override fun onResponse(call: okhttp3.Call, response: okhttp3.Response) {
                 customProgress.hideProgress()
-                System.out.println("response"+response)
+                System.out.println("response" + response)
                 try {
-                    var resStr :String=response.body()!!.string()
-                    var response_obj= JSONObject(resStr)
+                    var resStr: String = response.body()!!.string()
+                    var response_obj = JSONObject(resStr)
                     //val response_obj = JSONObject(response.body()!!.string())
                     activity!!.runOnUiThread {
                         if (response_obj.getBoolean("status")) {
                             //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
-                          //  Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                            ToastAlert.CustomToastSuccess(activity!!,response_obj.getString("message"))
-                           // fragmentReportFaultBinding!!.etAddnote.setText("")
-                             activity!!.getSupportFragmentManager().popBackStack()
+                            //  Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
+                            ToastAlert.CustomToastSuccess(
+                                activity!!,
+                                response_obj.getString("message")
+                            )
+                            // fragmentReportFaultBinding!!.etAddnote.setText("")
+                            activity!!.getSupportFragmentManager().popBackStack()
 
                         } else {
-                           // Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
-                            ToastAlert.CustomToasterror(activity!!,response_obj.getString("message"))
+                            // Toast.makeText(activity, response_obj.getString("message"), Toast.LENGTH_LONG).show()
+                            ToastAlert.CustomToasterror(
+                                activity!!,
+                                response_obj.getString("message")
+                            )
                         }
                     }
-                }
-                catch (e: java.lang.Exception){
+                } catch (e: java.lang.Exception) {
                     e.printStackTrace()
                     activity!!.runOnUiThread {
-                        Toast.makeText(activity!!, "Try later. Something Wrong.", Toast.LENGTH_LONG).show()
+                        Toast.makeText(activity!!, "Try later. Something Wrong.", Toast.LENGTH_LONG)
+                            .show()
                     }
-                   // Toast.makeText(activity!!, "Try later. Something Wrong.", Toast.LENGTH_LONG).show()
+                    // Toast.makeText(activity!!, "Try later. Something Wrong.", Toast.LENGTH_LONG).show()
 
                 }
             }

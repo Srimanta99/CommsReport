@@ -7,12 +7,13 @@ import com.bumptech.glide.Glide
 import com.commsreport.Utils.FullscreenCountryDialog
 import com.commsreport.databinding.CountryListItemBinding
 import com.commsreport.model.CountryListModel
+import com.commsreport.model.SiteListModel
 import com.commsreport.screens.home.HomeActivity
 import com.wecompli.utils.onitemclickinterface.CountryClickInterface
 
 class CountryAdapter(
     val activity: HomeActivity,
-    val countrylist: ArrayList<CountryListModel.CountryList>,
+    var countrylist: ArrayList<CountryListModel.CountryList>,
     val countryClickInterface: CountryClickInterface?
 
 ): RecyclerView.Adapter<CountryAdapter.ViewHolder>() {
@@ -31,6 +32,7 @@ class CountryAdapter(
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         itemView!!.tvCountryname.setText(countrylist.get(position).country_name)
         if (countrylist.get(position).country_flag_path!=null) {
+
             Glide.with(activity)
                 .load(countrylist.get(position).country_flag_path)
                 .into(itemView!!.imgFlag);
@@ -45,5 +47,9 @@ class CountryAdapter(
 
     override fun getItemCount(): Int {
         return  countrylist.size;
+    }
+    fun filterList(filterdNames: ArrayList<CountryListModel.CountryList>) {
+        this.countrylist = filterdNames
+        notifyDataSetChanged()
     }
 }

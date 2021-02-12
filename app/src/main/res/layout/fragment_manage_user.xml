@@ -30,7 +30,7 @@
             android:layout_gravity="end"
             android:fitsSystemWindows="true">
             <include android:id="@+id/nav_fault_search"
-                layout="@layout/search_document_layout"/>
+                layout="@layout/search_user_layout"/>
         </com.google.android.material.navigation.NavigationView>
     </LinearLayout>
 

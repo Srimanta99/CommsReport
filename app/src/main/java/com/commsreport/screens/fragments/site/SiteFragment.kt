@@ -10,6 +10,8 @@ import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -63,6 +65,7 @@ class SiteFragment : Fragment(),CountryClickInterface {
     var userdata: LoginResponseModel.Userdata? =null
     var countrylist= ArrayList<CountryListModel.CountryList>()
     var fullScreenDialog : FullscreenCountryDialogSite?=null
+    var selectedStatus=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -91,7 +94,7 @@ class SiteFragment : Fragment(),CountryClickInterface {
         fragmentAddSiteBinding!!.tvPincode.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentAddSiteBinding!!.etPinCode.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentAddSiteBinding!!.tvUpload.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-       // fragmentAddSiteBinding!!.etUpload.setTypeface(CustomTypeface.getWhitniBold(activity!!))
+        fragmentAddSiteBinding!!.tvstatus.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentAddSiteBinding!!.tvBrowes.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
         fragmentAddSiteBinding!!.tvSubmitSite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentAddSiteBinding!!.tvstatus.setOnClickListener {
@@ -102,12 +105,22 @@ class SiteFragment : Fragment(),CountryClickInterface {
              mPopupwindow.showAsDropDown(fragmentAddSiteBinding!!.tvstatus, 0, 5)
             val active = view.findViewById<View>(R.id.llactive) as LinearLayout
             val inactive = view.findViewById<View>(R.id.ll_inactive) as LinearLayout
+            val tvactive = view.findViewById<View>(R.id.tvactive) as TextView
+            val tvinactive = view.findViewById<View>(R.id.tvinactive) as TextView
+            tvactive.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+            tvinactive.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
             active.setOnClickListener {
                 fragmentAddSiteBinding!!.tvstatus.setText("Active")
+                fragmentAddSiteBinding!!.imgStatus.setBackgroundResource(R.drawable.active)
+                fragmentAddSiteBinding!!.llStatus.setBackgroundResource(R.drawable.asscolor_round)
+                fragmentAddSiteBinding!!.tvStatus1.setTextColor(activity!!.resources.getColor(R.color.textColor))
                 mPopupwindow.dismiss()
             }
             inactive.setOnClickListener {
                 fragmentAddSiteBinding!!.tvstatus.setText("In-active")
+                fragmentAddSiteBinding!!.imgStatus.setBackgroundResource(R.drawable.inactive)
+                fragmentAddSiteBinding!!.llStatus.setBackgroundResource(R.drawable.asscolor_round)
+                fragmentAddSiteBinding!!.tvStatus1.setTextColor(activity!!.resources.getColor(R.color.textColor))
                 mPopupwindow.dismiss()
             }
         }
@@ -131,21 +144,12 @@ class SiteFragment : Fragment(),CountryClickInterface {
                 var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
                 val callApi=apiInterface.callApiforcountrylist(userdata!!.token, gsonObject)
                 callApi.enqueue(object : retrofit2.Callback<CountryListModel> {
-                    override fun onResponse(
-                        call: retrofit2.Call<CountryListModel>,
-                        response: retrofit2.Response<CountryListModel>
-                    ) {
+                    override fun onResponse(call: retrofit2.Call<CountryListModel>, response: retrofit2.Response<CountryListModel>) {
                         customProgress.hideProgress()
-
                         if (response.code() == 200) {
-
                             if (response.body()!!.status) {
                                 countrylist = response!!.body()!!.row
-                                fullScreenDialog = FullscreenCountryDialogSite(
-                                    countrylist!!,
-                                    activity!!,
-                                    this@SiteFragment
-                                )
+                                fullScreenDialog = FullscreenCountryDialogSite(countrylist!!, activity!!, this@SiteFragment)
                                 fullScreenDialog!!.isCancelable = false
                                 fullScreenDialog!!.show(activity!!.supportFragmentManager, "")
                                 /* val builder = AlertDialog.Builder(context, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
@@ -171,22 +175,97 @@ class SiteFragment : Fragment(),CountryClickInterface {
             }
 
         }
+        fragmentAddSiteBinding!!.etSiteName.addTextChangedListener(object :TextWatcher{
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0!!.length>0){
+                  //
+                    fragmentAddSiteBinding!!.tvEmail.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                    fragmentAddSiteBinding!!.etSiteName.setBackgroundResource(R.drawable.asscolor_round)
+                    fragmentAddSiteBinding!!.etSiteName.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+        fragmentAddSiteBinding!!.etAddressSite.addTextChangedListener(object :TextWatcher{
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0!!.length>0){
+                    fragmentAddSiteBinding!!.tvAddressSite.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                    fragmentAddSiteBinding!!.etAddressSite.setBackgroundResource(R.drawable.asscolor_round)
+                    fragmentAddSiteBinding!!.etAddressSite.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+        fragmentAddSiteBinding!!.etPinCode.addTextChangedListener(object :TextWatcher{
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                if (p0!!.length>0){
+                    //
+                    fragmentAddSiteBinding!!.tvPincode.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                    fragmentAddSiteBinding!!.etPinCode.setBackgroundResource(R.drawable.asscolor_round)
+                    fragmentAddSiteBinding!!.etPinCode.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+                }
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+
+            }
+        })
+
     }
 
     private fun checkValidation():Boolean{
         if(fragmentAddSiteBinding!!.etSiteName.text.toString().equals("")){
             fragmentAddSiteBinding!!.etSiteName.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!, "Enter Site name")
+            fragmentAddSiteBinding!!.tvEmail.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            fragmentAddSiteBinding!!.etSiteName.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            fragmentAddSiteBinding!!.etSiteName.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+            ToastAlert.CustomToasterror(activity!!, "Please provide your Site name")
+            return false
+        }
+        if(fragmentAddSiteBinding!!.tvCountryname.text.toString().equals("")){
+            fragmentAddSiteBinding!!.tvCounrty.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            fragmentAddSiteBinding!!.llCountry.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            ToastAlert.CustomToasterror(activity!!, "Please select country name")
             return false
         }
         if(fragmentAddSiteBinding!!.etAddressSite.text.toString().equals("")){
             fragmentAddSiteBinding!!.etAddressSite.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!, "Enter Site address")
+            fragmentAddSiteBinding!!.tvAddressSite.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            fragmentAddSiteBinding!!.etAddressSite.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            fragmentAddSiteBinding!!.etAddressSite.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+            ToastAlert.CustomToasterror(activity!!, "Please provide site address")
             return false
         }
         if(fragmentAddSiteBinding!!.etPinCode.text.toString().equals("")){
             fragmentAddSiteBinding!!.etPinCode.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!, "Enter Site postcode")
+            fragmentAddSiteBinding!!.tvPincode.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            fragmentAddSiteBinding!!.etPinCode.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            fragmentAddSiteBinding!!.etPinCode.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+            ToastAlert.CustomToasterror(activity!!, "Please provide postcode")
+            return false
+        }
+        if(fragmentAddSiteBinding!!.tvstatus.text.toString().equals("")){
+            fragmentAddSiteBinding!!.tvStatus1.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            fragmentAddSiteBinding!!.llStatus.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            ToastAlert.CustomToasterror(activity!!, "Please select status")
             return false
         }
 
@@ -200,18 +279,10 @@ class SiteFragment : Fragment(),CountryClickInterface {
         val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
         builder.addFormDataPart("company_id", userdata!!.company_id)
         builder.addFormDataPart("site_name", fragmentAddSiteBinding!!.etSiteName.text.toString())
-        builder.addFormDataPart(
-            "site_address",
-            fragmentAddSiteBinding!!.etAddressSite.text.toString()
-        )
+        builder.addFormDataPart("site_address", fragmentAddSiteBinding!!.etAddressSite.text.toString())
         builder.addFormDataPart("site_postcode", fragmentAddSiteBinding!!.etPinCode.text.toString())
         if (imgFile!=null)
-        builder.addFormDataPart(
-            "site_logo", imgFile!!.absolutePath, okhttp3.RequestBody.create(
-                MediaType.parse("image/jpeg"), imgFile
-            )
-        )
-
+        builder.addFormDataPart("site_logo", imgFile!!.absolutePath, okhttp3.RequestBody.create(MediaType.parse("image/jpeg"), imgFile))
         builder.addFormDataPart("status_id", "1")
         val requestBody = builder.build()
         var request: Request? = null
@@ -240,16 +311,10 @@ class SiteFragment : Fragment(),CountryClickInterface {
                         if (response_obj.getBoolean("status")) {
                             //   val check_process_log_id:String=response_obj.getInt("check_process_log_id").toString()
                             //callApiforfaultcreate(check_process_log_id);
-                            ToastAlert.CustomToastSuccess(
-                                activity!!,
-                                response_obj.getString("message")
-                            )
+                            ToastAlert.CustomToastSuccess(activity!!, response_obj.getString("message"))
                             activity!!.getSupportFragmentManager().popBackStack();
                         } else {
-                            ToastAlert.CustomToasterror(
-                                activity!!,
-                                response_obj.getString("message")
-                            )
+                            ToastAlert.CustomToasterror(activity!!, response_obj.getString("message"))
 
                         }
                     }
@@ -494,7 +559,10 @@ class SiteFragment : Fragment(),CountryClickInterface {
     override fun OnItemClick(position: Int) {
         fullScreenDialog!!.dismiss()
         fragmentAddSiteBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
+        fragmentAddSiteBinding!!.llCountry.setBackgroundResource(R.drawable.asscolor_round)
+        fragmentAddSiteBinding!!.tvCounrty.setTextColor(activity!!.resources.getColor(R.color.textColor))
         if (countrylist.get(position).country_flag_path!=null) {
+            fragmentAddSiteBinding!!.imgCountry.visibility=View.VISIBLE
             Glide.with(activity!!)
                 .load(countrylist.get(position).country_flag_path)
                 .into(fragmentAddSiteBinding!!.imgCountry);

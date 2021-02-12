@@ -5,7 +5,10 @@
     <corners
         android:radius="10dp"
         />
-
+    <padding
+        android:left="@dimen/_10sdp"
+        android:right="@dimen/_10sdp"
+        />
     <solid
       android:color="#e5eaf0"/>
 

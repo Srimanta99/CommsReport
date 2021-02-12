@@ -192,6 +192,7 @@
                         android:id="@+id/country_image"
                         android:layout_width="@dimen/_40sdp"
                         android:layout_height="@dimen/_40sdp"
+                        android:visibility="gone"
                       ></ImageView>
 
                     <TextView
@@ -201,6 +202,7 @@
                         android:layout_marginLeft="@dimen/_7sdp"
                         android:padding="@dimen/_5sdp"
                        android:gravity="center_vertical"
+                        android:hint="Please select country"
                         android:textSize="@dimen/_12sdp"
                         android:drawableRight="@drawable/down_arrow"></TextView>
                 </LinearLayout>
@@ -369,12 +371,21 @@
                     android:textSize="@dimen/_12sdp">
 
                 </TextView>
-
+ <LinearLayout
+        android:id="@+id/llselect_status"
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_40sdp"
+            android:background="@drawable/asscolor_round">
+            <ImageView
+                android:id="@+id/img_status"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/_5sdp"
+                android:layout_gravity="center_vertical"></ImageView>
                 <TextView
                     android:id="@+id/tv_dropdown_selectstatus"
                     android:layout_width="match_parent"
                     android:layout_height="@dimen/_40sdp"
-                    android:background="@drawable/asscolor_round"
                     android:drawableRight="@drawable/down_arrow"
                     android:drawablePadding="@dimen/_10sdp"
                     android:gravity="center_vertical"
@@ -382,6 +393,7 @@
                     android:paddingLeft="@dimen/_7sdp"
                     android:paddingRight="@dimen/_10sdp"
                     android:textSize="@dimen/_12sdp"></TextView>
+                </LinearLayout>
 
                 <RelativeLayout
                     android:layout_width="match_parent"

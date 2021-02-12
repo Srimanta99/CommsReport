@@ -23,4 +23,5 @@
     <color name="login_bg_header">#032c71</color>
     <color name="dialog_grey_color">#aaaaaa</color>
     <color name="homehearbg">#042376</color>
+    <color name="textColor">#1E3F6C</color>
 </resources>

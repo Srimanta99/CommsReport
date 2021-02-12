@@ -13,7 +13,6 @@ import androidx.appcompat.app.ActionBarDrawerToggle
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
-import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
@@ -54,6 +53,7 @@ class ManageDocumentFragment : Fragment() {
     var siteList=ArrayList<SiteListModel.RowList>()
     var docList=ArrayList<DocumentListModel.DocumentItem>()
     var userdata: LoginResponseModel.Userdata? =null
+    var documentname=""
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,8 +76,8 @@ class ManageDocumentFragment : Fragment() {
         manageDocumentBinding!!.navDocSearch.tvSearch.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
         manageDocumentBinding!!.navDocSearch.tvSearchByName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         manageDocumentBinding!!.navDocSearch.etsherchName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        manageDocumentBinding!!.navDocSearch.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        manageDocumentBinding!!.navDocSearch.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+       // manageDocumentBinding!!.navDocSearch.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+      //  manageDocumentBinding!!.navDocSearch.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         manageDocumentBinding!!.navDocSearch.Search.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
 
         manageDocumentBinding!!.contentManageDocument.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
@@ -92,8 +92,8 @@ class ManageDocumentFragment : Fragment() {
             manageDocumentBinding!!.searchDrawer!!.closeDrawer(Gravity.RIGHT)
         }
         manageDocumentBinding!!.navDocSearch.Search.setOnClickListener {
-            if (!manageDocumentBinding!!.navDocSearch.etsherchName.text.toString().equals("") || !manageDocumentBinding!!.navDocSearch.tvDropdownSelectsite.text.toString().equals("")){
-
+            if (!manageDocumentBinding!!.navDocSearch.etsherchName.text.toString().equals("")){
+                callApiForDocList(manageDocumentBinding!!.navDocSearch.etsherchName.text.toString())
             }else
                 ToastAlert.CustomToastwornning(activity!!,"Please enter some value")
         }
@@ -110,7 +110,7 @@ class ManageDocumentFragment : Fragment() {
         actionBarDrawerToggle!!.syncState()
 
         */
-        callApiForDocList()
+        callApiForDocList(documentname)
 
 
     }
@@ -131,13 +131,16 @@ class ManageDocumentFragment : Fragment() {
             }
     }
 
-    private fun callApiForDocList() {
+    public fun callApiForDocList(documentname: String) {
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
         customProgress.showProgress(activity!!, "Please Wait..", false)
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
         try {
             val paramObject = JSONObject()
             paramObject.put("company_id", userdata!!.company_id)
+           // paramObject.put("site_id", userdata!!.site_id)
+            paramObject.put("document_name", documentname)
+            paramObject.put("status_id", "1")
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
             var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;

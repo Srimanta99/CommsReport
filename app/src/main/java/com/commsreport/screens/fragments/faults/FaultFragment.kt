@@ -49,6 +49,7 @@ class FaultFragment : Fragment() {
     var userdata: LoginResponseModel.Userdata? =null
     var siteList=ArrayList<SiteListModel.RowList>()
     var faultList=ArrayList<FaultListModel.FaultList>()
+    var selecteddate=""
 
     var selectedSiteId:String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -89,9 +90,12 @@ class FaultFragment : Fragment() {
         }
         if(userdata!!.user_type.equals("COMPANY_ADMIN")){
           //  faultBinding!!.contentManageFault.tvSelectedsite.visibility=View.VISIBLE
+
             callApiForSiteList()
 
         }else {
+            faultBinding!!.navFaultSearch.tvDropdownSelectsite.setText(userdata!!.site_name)
+            faultBinding!!.navFaultSearch.tvDropdownSelectsite.isEnabled=false
             selectedSiteId = userdata!!.site_id
             callApiforFaultList(selectedSiteId!!)
         }
@@ -149,11 +153,11 @@ class FaultFragment : Fragment() {
         val datePickerDialog = DatePickerDialog(
             activity!!, R.style.AppDatepickerDilogtheam,
             DatePickerDialog.OnDateSetListener { view, year, monthOfYear, dayOfMonth ->
-                val choosedate =
-                    padnumber(dayOfMonth) + "/" + padnumber(monthOfYear + 1) + "/" + year.toString()
+                val choosedate = padnumber(dayOfMonth) + "/" + padnumber(monthOfYear + 1) + "/" + year.toString()
                 // val checkdate = year.toString() + "-" + padnumber(monthOfYear + 1) + "-" + padnumber(dayOfMonth)
                 //  val listcheckdate = padnumber(monthOfYear + 1) + "/" + padnumber(dayOfMonth) + "/" + year.toString()
                 faultBinding!!.navFaultSearch.tvDate.setText(choosedate)
+                selecteddate=choosedate
 
             }, mYear, mMonth, mDay
         )
@@ -213,6 +217,8 @@ class FaultFragment : Fragment() {
            paramObject.put("site_id", siteId)
            paramObject.put("check_process_type", "checks")
            paramObject.put("status_id", "1")
+           paramObject.put("from_date",selecteddate)
+           paramObject.put("to_date",selecteddate)
            paramObject.put("company_id", userdata!!.company_id)
 
            var obj: JSONObject = paramObject

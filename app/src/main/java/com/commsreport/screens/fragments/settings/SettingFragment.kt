@@ -67,12 +67,15 @@ class SettingFragment : Fragment() {
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         settingsBinding!!.etName.setText(userdata!!.full_name)
         settingsBinding!!.etEmail.setText(userdata!!.email)
+        settingsBinding!!.etCompanyname.setText(userdata!!.company_name)
         settingsBinding!!.submitTvid.setOnClickListener {
             if(checkvalidation()){
             callApiforCallChangePassword()
             }
         }
-
+        if(userdata!!.user_type.equals("COMPANY_ADMIN")){
+            settingsBinding!!.etCompanyname.isEnabled=true
+        }
     }
 
     private fun callApiforCallChangePassword() {
@@ -81,8 +84,6 @@ class SettingFragment : Fragment() {
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
         try {
             val paramObject = JSONObject()
-
-
             paramObject.put("user_id", userdata!!.user_id)
             paramObject.put("user_first_name",settingsBinding!!.etName.text.toString())
             paramObject.put("user_email_ID",settingsBinding!!.etEmail.text.toString())

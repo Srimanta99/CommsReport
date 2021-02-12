@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/home_bg"
+    xmlns:tools="http://schemas.android.com/tools">
+    <RelativeLayout
+        android:id="@+id/rlheader"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_55sdp"
+        >
+        <ImageView
+            android:id="@+id/img_menu"
+            android:layout_width="@dimen/_19sdp"
+            android:layout_height="@dimen/_17sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:background="@drawable/menu"/>
+        <TextView
+            android:id="@+id/tv_header_text"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:text="Manage Documents"
+            android:textSize="@dimen/_16sdp"
+            android:textColor="@color/white"
+            android:gravity="center"
+            android:textAllCaps="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_centerHorizontal="true"/>
+
+        <ImageView
+            android:id="@+id/img_Search"
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_35sdp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/_5sdp"
+            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginBottom="@dimen/_5sdp"
+            android:background="@drawable/searchwithbg"
+            android:visibility="visible"></ImageView>
+    </RelativeLayout>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/top_two_rounded_corner_white">
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_manage_document"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_5sdp"
+        tools:itemCount="10"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:listitem="@layout/item_manage_document">
+
+    </androidx.recyclerview.widget.RecyclerView>
+    </LinearLayout>
+</LinearLayout>

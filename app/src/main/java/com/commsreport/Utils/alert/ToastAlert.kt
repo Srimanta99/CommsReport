@@ -51,10 +51,10 @@ class ToastAlert {
             // ll_toast
             toastTextView.setText(message)
             toastTextView.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
-            lltoast.setBackgroundResource(R.drawable.rectangular_rounded_shape_toast_blue)
+            lltoast.setBackgroundResource(R.drawable.rectangular_rounded_shape_toast_green)
             val mToast = Toast(activity)
             mToast.setView(view)
-            mToast.setGravity(Gravity.BOTTOM, 0, 0)
+            mToast.setGravity(Gravity.CENTER_HORIZONTAL, 0, 0)
             mToast.duration = Toast.LENGTH_LONG
             mToast.show()
 

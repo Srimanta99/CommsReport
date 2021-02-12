@@ -3,16 +3,21 @@ package com.commsreport.screens.fragments.adduser
 import android.Manifest
 import android.app.Activity
 import android.app.Dialog
+import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.view.Window
+import android.widget.LinearLayout
+import android.widget.PopupWindow
 import android.widget.TextView
 import androidx.core.app.ActivityCompat
 import androidx.core.content.ContextCompat
@@ -122,6 +127,113 @@ class AddUserFragment : Fragment(), CountryClickInterface {
         }
         addUserBinding!!.tvBrowes.setOnClickListener {
             showAlertForChooseImage()
+        }
+          addUserBinding!!.etnName.addTextChangedListener(object : TextWatcher {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (p0!!.length>0){
+                        addUserBinding!!.tvNameAddUser.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                        addUserBinding!!.etnName.setBackgroundResource(R.drawable.asscolor_round)
+                        addUserBinding!!.etnName.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+                    }
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+
+                }
+            })
+            addUserBinding!!.etnEmail.addTextChangedListener(object : TextWatcher {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (p0!!.length>0){
+                        addUserBinding!!.tvEmailAddUser.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                        addUserBinding!!.etnEmail.setBackgroundResource(R.drawable.asscolor_round)
+                        addUserBinding!!.etnEmail.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+                    }
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                }
+            })
+            addUserBinding!!.etnContactno.addTextChangedListener(object : TextWatcher {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (p0!!.length>0){
+                        addUserBinding!!.tvContactno.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                        addUserBinding!!.etnContactno.setBackgroundResource(R.drawable.asscolor_round)
+                        addUserBinding!!.etnContactno.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+                    }
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                }
+            })
+            addUserBinding!!.etnAddress.addTextChangedListener(object : TextWatcher {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (p0!!.length>0){
+                        addUserBinding!!.tvAddress.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                        addUserBinding!!.etnAddress.setBackgroundResource(R.drawable.asscolor_round)
+                        addUserBinding!!.etnAddress.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+                    }
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                }
+            })
+            addUserBinding!!.etnPostcode.addTextChangedListener(object : TextWatcher {
+                override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                    if (p0!!.length>0){
+                        addUserBinding!!.tvPostcode.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                        addUserBinding!!.etnPostcode.setBackgroundResource(R.drawable.asscolor_round)
+                        addUserBinding!!.etnPostcode.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+                    }
+                }
+
+                override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                }
+
+                override fun afterTextChanged(p0: Editable?) {
+                }
+            })
+        addUserBinding!!.tvDropdownSelectstatus.setOnClickListener {
+            val mPopupwindow: PopupWindow
+            val inflater:LayoutInflater = activity!!.getSystemService(Context.LAYOUT_INFLATER_SERVICE) as LayoutInflater
+            val view = inflater.inflate(R.layout.status_popup_layout, null)
+            mPopupwindow = PopupWindow(view, 800, 300, true)
+            mPopupwindow.showAsDropDown(addUserBinding!!.tvDropdownSelectstatus, 0, 5)
+            val active = view.findViewById<View>(R.id.llactive) as LinearLayout
+            val inactive = view.findViewById<View>(R.id.ll_inactive) as LinearLayout
+            val tvactive = view.findViewById<View>(R.id.tvactive) as TextView
+            val tvinactive = view.findViewById<View>(R.id.tvinactive) as TextView
+            tvactive.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+            tvinactive.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+            active.setOnClickListener {
+                addUserBinding!!.tvDropdownSelectstatus.setText("Active")
+                addUserBinding!!.imgStatus.setBackgroundResource(R.drawable.active)
+                addUserBinding!!.llselectStatus.setBackgroundResource(R.drawable.asscolor_round)
+                addUserBinding!!.tvSelectstatus.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                mPopupwindow.dismiss()
+            }
+            inactive.setOnClickListener {
+                addUserBinding!!.tvDropdownSelectstatus.setText("In-active")
+                addUserBinding!!.imgStatus.setBackgroundResource(R.drawable.inactive)
+                addUserBinding!!.llselectStatus.setBackgroundResource(R.drawable.asscolor_round)
+                addUserBinding!!.llselectStatus.setBackgroundResource(R.drawable.asscolor_round)
+                addUserBinding!!.tvSelectstatus.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                mPopupwindow.dismiss()
+            }
+
+
         }
 
         addUserBinding!!.llCountry.setOnClickListener {
@@ -320,12 +432,6 @@ class AddUserFragment : Fragment(), CountryClickInterface {
          val fo: FileOutputStream
  */
         try {
-            // thumbnail = MediaStore.Images.Media.getBitmap(applicationContext.contentResolver, data.data)
-            /*  val bytes = ByteArrayOutputStream()
-              bm!!.compress(Bitmap.CompressFormat.JPEG, 90, bytes)
-              val destination = File(Environment.getExternalStorageDirectory(), "fault_image"+ ".jpg")*/
-            // val destination = File(Environment.getExternalStorageDirectory(), System.currentTimeMillis().toString() + ".jpg")
-
             val root = Environment.getExternalStorageDirectory().toString()
             val myDir = File("$root/mycomms/user")
             myDir.mkdirs()
@@ -490,27 +596,62 @@ class AddUserFragment : Fragment(), CountryClickInterface {
     private fun checkValidation():Boolean{
         if(addUserBinding!!.etnName.text.toString().equals("")){
             addUserBinding!!.etnName.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user name")
+            addUserBinding!!.tvNameAddUser.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            addUserBinding!!.etnName.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            addUserBinding!!.etnName.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+            ToastAlert.CustomToasterror(activity!!,"Please Provide user name")
+            return false
+        }
+        if (selectedSiteId.equals("")){
+            addUserBinding!!.tvSelectsite.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            addUserBinding!!.tvDropdownSelectsite.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            addUserBinding!!.tvDropdownSelectsite.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0);
+            ToastAlert.CustomToasterror(activity!!,"Please select site")
             return false
         }
         if(addUserBinding!!.etnEmail.text.toString().equals("")){
             addUserBinding!!.etnEmail.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user E-mail")
+            addUserBinding!!.tvEmailAddUser.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            addUserBinding!!.etnEmail.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            addUserBinding!!.etnEmail.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+            ToastAlert.CustomToastwornning(activity!!,"Please provide user E-mail")
             return false
         }
         if(addUserBinding!!.etnContactno.text.toString().equals("")){
             addUserBinding!!.etnContactno.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user contact no")
+            addUserBinding!!.tvContactno.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            addUserBinding!!.etnContactno.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            addUserBinding!!.etnContactno.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+            ToastAlert.CustomToastwornning(activity!!,"Please provide user contact no")
+            return false
+        }
+        if(addUserBinding!!.tvCountryname.text.toString().equals("")){
+            addUserBinding!!.llCountry.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            addUserBinding!!.tvSelectcountry.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            ToastAlert.CustomToastwornning(activity!!,"Please select country")
             return false
         }
         if(addUserBinding!!.etnAddress.text.toString().equals("")){
             addUserBinding!!.etnAddress.requestFocus()
-            ToastAlert.CustomToastwornning(activity!!,"Enter user address")
+            addUserBinding!!.tvAddress.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            addUserBinding!!.etnAddress.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            addUserBinding!!.etnAddress.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+
+            ToastAlert.CustomToastwornning(activity!!,"Please provide user address")
             return false
         }
-        if (selectedSiteId.equals("")){
-            //Alert.showalert(activity!!, "Select Site")
-            ToastAlert.CustomToastwornning(activity!!,"Select site")
+        if(addUserBinding!!.etnPostcode.text.toString().equals("")){
+            addUserBinding!!.etnPostcode.requestFocus()
+            addUserBinding!!.tvPostcode.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            addUserBinding!!.etnPostcode.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            addUserBinding!!.etnPostcode.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+            ToastAlert.CustomToastwornning(activity!!,"Please provide postcose")
+            return false
+        }
+        if(addUserBinding!!.tvDropdownSelectstatus.text.toString().equals("")){
+            addUserBinding!!.llselectStatus.setBackgroundResource(R.drawable.asscolor_round_red_broder)
+            addUserBinding!!.tvSelectstatus.setTextColor(activity!!.resources.getColor(R.color.text_red))
+            ToastAlert.CustomToastwornning(activity!!,"Please select status")
             return false
         }
         return true
@@ -574,6 +715,10 @@ class AddUserFragment : Fragment(), CountryClickInterface {
 
     override fun OnItemClick(position: Int) {
         fullScreenDialog!!.dismiss()
+        addUserBinding!!.countryImage.visibility=View.VISIBLE
+        addUserBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
+        addUserBinding!!.llCountry.setBackgroundResource(R.drawable.asscolor_round)
+        addUserBinding!!.tvSelectcountry.setTextColor(activity!!.resources.getColor(R.color.textColor))
         addUserBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
         if (countrylist.get(position).country_flag_path!=null) {
             Glide.with(activity!!)
