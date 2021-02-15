@@ -1,14 +1,35 @@
 <?xml version="1.0" encoding="utf-8"?>
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/top_two_rounded_corner_white"
     tools:context=".screens.fragments.email.EmailFragment">
 
-    <!-- TODO: Update blank fragment layout -->
     <TextView
+        android:id="@+id/tv_addemail"
+        android:layout_width="@dimen/_170sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@drawable/gradient_login_button"
+        android:gravity="center"
+        android:text="ADD EMAILS"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_15sdp"
+        android:layout_marginTop="@dimen/_5sdp"
+        android:textStyle="bold">
+
+    </TextView>
+
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:layout_margin="@dimen/_7sdp"
+        android:layout_above="@id/tv_addemail"></androidx.recyclerview.widget.RecyclerView>
 
-</FrameLayout>
+
+
+</RelativeLayout>

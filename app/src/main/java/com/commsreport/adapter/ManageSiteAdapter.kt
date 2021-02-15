@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.databinding.ItemManageSitesBinding
 
@@ -34,7 +35,13 @@ class ManageSiteAdapter(val activity: HomeActivity, val siteList: ArrayList<Site
         itemView!!.tvAdddress.setTypeface(CustomTypeface.getRajdhaniRegular(activity))
 
         itemView!!.tvCompanyname.setText(siteList.get(position).site_name)
+        itemView!!.tvcountryname.setText(siteList.get(position).country_name)
         itemView!!.tvAdddress.setText(siteList.get(position).site_address)
+        if (siteList.get(position).country_flag_path!=null) {
+            Glide.with(activity)
+                .load(siteList.get(position).country_flag_path)
+                .into(itemView!!.imgFlag);
+        }
         if (siteList.get(position).company_logo_path.equals("") || siteList.get(position).company_logo_path==null){
             itemView!!.tvNoImage!!.visibility=View.VISIBLE
             itemView!!.imgCompany!!.visibility=View.GONE
@@ -47,9 +54,18 @@ class ManageSiteAdapter(val activity: HomeActivity, val siteList: ArrayList<Site
                     .into(itemView!!.imgCompany);
             }
         }
-        itemView!!.imgEdit.setOnClickListener {
+        if (siteList.get(position).status.equals("ACTIVE")){
+            itemView!!.imgFlagStatus.setBackgroundResource(R.drawable.active)
+        }else
+            itemView!!.imgFlagStatus.setBackgroundResource(R.drawable.inactive)
+
+        itemView!!.rledit.setOnClickListener {
               AppSheardPreference(activity).setSiteDetails(PreferenceConstent.siteDetails,siteList.get(position))
               activity.openFragment(EditSiteFragment())
+        }
+
+        itemView!!.rlDelete.setOnClickListener {
+
         }
 
     }

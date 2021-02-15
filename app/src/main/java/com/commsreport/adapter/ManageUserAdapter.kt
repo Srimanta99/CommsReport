@@ -5,6 +5,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.databinding.ItemManageUserBinding
 import com.commsreport.model.SiteUserListModel
@@ -48,6 +49,11 @@ class ManageUserAdapter(val activity: HomeActivity,val userList: ArrayList<SiteU
             .load(userList.get(position).user_profile_picture_path)
             .centerCrop()
             .into( itemManageSitesBinding!!.imgUser);
+
+        if (userList.get(position).status.equals("ACTIVE")){
+            itemManageSitesBinding!!.imgStatus.setBackgroundResource(R.drawable.active)
+        }else
+            itemManageSitesBinding!!.imgStatus.setBackgroundResource(R.drawable.inactive)
     }
 
     override fun getItemCount(): Int {

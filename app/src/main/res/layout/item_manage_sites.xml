@@ -69,6 +69,7 @@
 
                         </TextView>
                         <ImageView
+                            android:id="@+id/img_flag_status"
                             android:layout_width="@dimen/_20sdp"
                             android:layout_height="@dimen/_20sdp"
                             android:layout_alignParentRight="true"
@@ -104,9 +105,11 @@
                             android:background="@drawable/flag"
                             android:layout_margin="@dimen/_5sdp"></ImageView>
                         <TextView
+                            android:id="@+id/tvcountryname"
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:text="United kindom"
+                            android:textSize="@dimen/_12sdp"
                             android:gravity="center_vertical"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:textColor="@color/black"
@@ -190,6 +193,7 @@
             android:layout_weight="1">
 
             <RelativeLayout
+                android:id="@+id/rledit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/_5sdp"
@@ -231,6 +235,7 @@
             android:layout_weight="1">
 
             <RelativeLayout
+                android:id="@+id/rl_delete"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_5sdp"

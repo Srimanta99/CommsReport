@@ -2,6 +2,7 @@ package com.commsreport.screens.forgotpassword
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Html
 import android.view.LayoutInflater
 import androidx.databinding.DataBindingUtil
 import com.commsreport.R
@@ -33,5 +34,7 @@ class ForgotPasswordActivity : AppCompatActivity() {
         activityForgotPasswordBinding!!.tvForgotpassword.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         activityForgotPasswordBinding!!.btnLogin.setTypeface(CustomTypeface.getRajdhaniBold(this))
         activityForgotPasswordBinding!!.etemail.setTypeface(CustomTypeface.getRajdhaniMedium(this))
+        val text="<font color=#FE0100>Note: </font> <font color=#1E3F6C>Please enter the email address that you want to notify you once you submit it</font>";
+        activityForgotPasswordBinding!!.tvForgotpassword.setText(Html.fromHtml(text));
     }
 }

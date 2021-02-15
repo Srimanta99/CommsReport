@@ -719,6 +719,7 @@ class AddUserFragment : Fragment(), CountryClickInterface {
         addUserBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
         addUserBinding!!.llCountry.setBackgroundResource(R.drawable.asscolor_round)
         addUserBinding!!.tvSelectcountry.setTextColor(activity!!.resources.getColor(R.color.textColor))
+        addUserBinding!!.tvCountryname.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
         addUserBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
         if (countrylist.get(position).country_flag_path!=null) {
             Glide.with(activity!!)

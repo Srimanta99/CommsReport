@@ -56,11 +56,12 @@ class CustomPopUpDialogSiteListAddUser(context: HomeActivity?, val siteList: Lis
 
         customPopupListAdapter = CustomPopupListAdapter(homeActivity!!,siteList!!,object :OnItemClickInterface{
             override fun OnItemClick(position: Int) {
+                addUserFragment!!.addUserBinding!!.tvDropdownSelectstatus!!.setPadding(homeActivity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,(R.dimen._10sdp).toInt(),0);
                 addUserFragment.addUserBinding!!.tvDropdownSelectsite.setText(addUserFragment.siteList.get(position).site_name)
                 addUserFragment.selectedSiteId=addUserFragment.siteList.get(position).id
                 addUserFragment!!.addUserBinding!!.tvDropdownSelectsite.setBackgroundResource(R.drawable.asscolor_round)
                 addUserFragment!!.addUserBinding!!.tvSelectsite.setTextColor(homeActivity!!.resources.getColor(R.color.textColor))
-                addUserFragment!!.addUserBinding!!.tvDropdownSelectstatus!!.setPadding(homeActivity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,(R.dimen._10sdp).toInt(),0);
+
                 dismiss()
 
             }
