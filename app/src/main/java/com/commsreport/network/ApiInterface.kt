@@ -59,6 +59,14 @@ interface ApiInterface {
     fun callApiforcountrylist(@Header("Authorization") token:String, @Body body: JsonObject): Call<CountryListModel>
 
 
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.EMAILLIST)
+    fun callApiforemaillist(@Header("Authorization") token:String, @Body body: JsonObject): Call<EmailListModel>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.EMAILCREATE)
+    fun callApiforemailadd(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
     // @Headers("Content-Type: application/json")
     /*@POST(NetworkUtility.LOG_IN)
     fun callLogInApi(@Field("user_email") email:String,

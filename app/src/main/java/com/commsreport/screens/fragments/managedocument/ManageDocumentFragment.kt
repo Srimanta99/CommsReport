@@ -79,8 +79,7 @@ class ManageDocumentFragment : Fragment() {
        // manageDocumentBinding!!.navDocSearch.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
       //  manageDocumentBinding!!.navDocSearch.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         manageDocumentBinding!!.navDocSearch.Search.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-
-        manageDocumentBinding!!.contentManageDocument.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        manageDocumentBinding!!.contentManageDocument.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         contentManageDocumentBinding!!.imgMenu.setOnClickListener {
             activity!!.homeBinding!!.drawerLayout!!.openDrawer(Gravity.LEFT)

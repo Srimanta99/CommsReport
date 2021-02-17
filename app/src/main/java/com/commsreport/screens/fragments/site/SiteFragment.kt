@@ -66,6 +66,7 @@ class SiteFragment : Fragment(),CountryClickInterface {
     var countrylist= ArrayList<CountryListModel.CountryList>()
     var fullScreenDialog : FullscreenCountryDialogSite?=null
     var selectedStatus=""
+    var selectedCountry=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -114,6 +115,7 @@ class SiteFragment : Fragment(),CountryClickInterface {
                 fragmentAddSiteBinding!!.imgStatus.setBackgroundResource(R.drawable.active)
                 fragmentAddSiteBinding!!.llStatus.setBackgroundResource(R.drawable.asscolor_round)
                 fragmentAddSiteBinding!!.tvStatus1.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                selectedStatus="1"
                 mPopupwindow.dismiss()
             }
             inactive.setOnClickListener {
@@ -121,6 +123,7 @@ class SiteFragment : Fragment(),CountryClickInterface {
                 fragmentAddSiteBinding!!.imgStatus.setBackgroundResource(R.drawable.inactive)
                 fragmentAddSiteBinding!!.llStatus.setBackgroundResource(R.drawable.asscolor_round)
                 fragmentAddSiteBinding!!.tvStatus1.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                selectedStatus="2"
                 mPopupwindow.dismiss()
             }
         }
@@ -281,9 +284,11 @@ class SiteFragment : Fragment(),CountryClickInterface {
         builder.addFormDataPart("site_name", fragmentAddSiteBinding!!.etSiteName.text.toString())
         builder.addFormDataPart("site_address", fragmentAddSiteBinding!!.etAddressSite.text.toString())
         builder.addFormDataPart("site_postcode", fragmentAddSiteBinding!!.etPinCode.text.toString())
+
         if (imgFile!=null)
         builder.addFormDataPart("site_logo", imgFile!!.absolutePath, okhttp3.RequestBody.create(MediaType.parse("image/jpeg"), imgFile))
-        builder.addFormDataPart("status_id", "1")
+        builder.addFormDataPart("status_id",selectedStatus )
+        builder.addFormDataPart("country_id",selectedCountry)
         val requestBody = builder.build()
         var request: Request? = null
         request = Request.Builder()
@@ -561,6 +566,7 @@ class SiteFragment : Fragment(),CountryClickInterface {
         fragmentAddSiteBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
         fragmentAddSiteBinding!!.llCountry.setBackgroundResource(R.drawable.asscolor_round)
         fragmentAddSiteBinding!!.tvCounrty.setTextColor(activity!!.resources.getColor(R.color.textColor))
+        selectedCountry=countrylist.get(position).id
         if (countrylist.get(position).country_flag_path!=null) {
             fragmentAddSiteBinding!!.imgCountry.visibility=View.VISIBLE
             Glide.with(activity!!)

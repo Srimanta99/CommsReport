@@ -72,7 +72,7 @@ class FaultFragment : Fragment() {
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         contentManageFaultBinding!!.tvAddfault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         faultBinding!!.contentManageFault!!.tvSelectedsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        faultBinding!!.contentManageFault.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.contentManageFault.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
         faultBinding!!.navFaultSearch.tvSearch.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
         faultBinding!!.navFaultSearch.tvScarchByDate.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         faultBinding!!.navFaultSearch.tvDate.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
@@ -84,7 +84,7 @@ class FaultFragment : Fragment() {
         }
         faultBinding!!.navFaultSearch.searchFault.setOnClickListener {
             if (!faultBinding!!.navFaultSearch!!.tvDate.text.toString().equals("") || !faultBinding!!.navFaultSearch.tvDropdownSelectsite.text.toString().equals("")){
-
+                callApiforFaultList(selectedSiteId!!)
             }else
                 ToastAlert.CustomToastwornning(activity!!,"Please enter some value")
         }
@@ -123,6 +123,7 @@ class FaultFragment : Fragment() {
         }
         faultBinding!!.navFaultSearch.searchFault.setOnClickListener {
             callApiforFaultList(selectedSiteId!!)
+            faultBinding!!.drawerLayout!!.closeDrawer(Gravity.RIGHT)
         }
 
     }
@@ -209,6 +210,7 @@ class FaultFragment : Fragment() {
         }
     }
    public  fun callApiforFaultList(siteId:String){
+       selectedSiteId=siteId
        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
        customProgress.showProgress(activity!!,"Please Wait..",false)
        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
@@ -233,6 +235,8 @@ class FaultFragment : Fragment() {
                            if (response!!.body()!!.row.size>0) {
                                faultList.clear()
                                faultList=response!!.body()!!.row
+                               faultBinding!!.contentManageFault.recManagefault.visibility=View.VISIBLE
+                               faultBinding!!.contentManageFault.noData.visibility=View.GONE
                                setAdpterValue()
 
                            }else

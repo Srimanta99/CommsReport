@@ -20,7 +20,7 @@
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="@dimen/_65sdp"
-        android:textColor="@color/text_red"
+        android:textColor="#3c4e55"
         android:textSize="@dimen/_55sdp"
         android:text="0"></TextView>
 
@@ -36,7 +36,7 @@
 
         android:gravity="center"
         android:text="FAULTS REPORTED"
-        android:textColor="@color/black"
+        android:textColor="#1b2932"
         android:textSize="@dimen/_16sdp"></TextView>
 
 </RelativeLayout>

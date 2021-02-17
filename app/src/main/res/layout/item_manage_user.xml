@@ -223,6 +223,7 @@
             android:layout_weight="1">
 
             <RelativeLayout
+                android:id="@+id/rl_edit"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginRight="@dimen/_5sdp"
@@ -264,6 +265,7 @@
             android:layout_weight="1">
 
             <RelativeLayout
+                android:id="@+id/rl_delete"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_marginLeft="@dimen/_5sdp"

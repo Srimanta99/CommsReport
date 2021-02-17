@@ -2,7 +2,8 @@ package com.wecompli.network
 
 class NetworkUtility {
     companion object{
-        val BASE_URL = "https://codopoliz.com/dev-app/comms/comms-api/"
+     val BASE_URL ="http://commsapp.io/app/"
+      //  val BASE_URL = "https://codopoliz.com/dev-app/comms/comms-api/"
        // val BASE_URL ="https://wecompli.io/rest/api/mobile/"
         const val  LOGIN="api/user/login"
         const val  SITELIST="api/site/list"
@@ -21,6 +22,8 @@ class NetworkUtility {
         const val EDIT_SITE="api/site/update"
         const val PROFILE_UPDATE="api/user/profile-update"
         const val COUNTRYLIST="api/country/list"
+        const val EMAILLIST="api/email/list"
+        const val  EMAILCREATE="api/email/create"
 
     }
 }

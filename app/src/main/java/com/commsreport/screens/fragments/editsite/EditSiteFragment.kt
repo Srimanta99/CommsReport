@@ -21,11 +21,13 @@ import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
+import com.commsreport.Utils.FullscreenCountryDialog
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogEditSite
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteListAddUser
 import com.commsreport.databinding.FragmentEditSiteBinding
+import com.commsreport.model.CountryListModel
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
 import com.commsreport.screens.fragments.site.REQUEST_CAMERA
@@ -37,6 +39,7 @@ import com.sculptee.utils.customprogress.CustomProgressDialog
 import com.wecompli.network.ApiInterface
 import com.wecompli.network.NetworkUtility
 import com.wecompli.network.Retrofit
+import com.wecompli.utils.onitemclickinterface.CountryClickInterface
 import com.wecompli.utils.sheardpreference.AppSheardPreference
 import com.wecompli.utils.sheardpreference.PreferenceConstent
 import okhttp3.MediaType
@@ -57,7 +60,7 @@ import java.util.concurrent.TimeUnit
 private const val ARG_PARAM1 = "param1"
 private const val ARG_PARAM2 = "param2"
 
-class EditSiteFragment : Fragment() {
+class EditSiteFragment : Fragment(),CountryClickInterface {
     // TODO: Rename and change types of parameters
     private var param1: String? = null
     private var param2: String? = null
@@ -69,6 +72,10 @@ class EditSiteFragment : Fragment() {
     var image: String?=null
     var imgFile: File?=null
     var siteList=ArrayList<SiteListModel.RowList>()
+    var countrylist= ArrayList<CountryListModel.CountryList>()
+    var fullScreenDialog : FullscreenCountryDialog?=null
+    var selectedStatus=""
+    var selectedCountry=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -122,6 +129,52 @@ class EditSiteFragment : Fragment() {
         editSiteBinding!!.tvSubmitSite.setOnClickListener {
             if(checkblankvalidation())
                 cllApiforUpdateSite()
+        }
+        editSiteBinding!!.tvCountryname.setOnClickListener {
+            val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+            customProgress.showProgress(activity!!, "Please Wait..", false)
+            val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+            try {
+                val paramObject = JSONObject()
+                paramObject.put("status_id", "1")
+                var obj: JSONObject = paramObject
+                var jsonParser: JsonParser = JsonParser()
+                var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+                val callApi=apiInterface.callApiforcountrylist(userdata!!.token, gsonObject)
+                callApi.enqueue(object : Callback<CountryListModel> {
+                    override fun onResponse(call: Call<CountryListModel>, response: Response<CountryListModel>) {
+                        customProgress.hideProgress()
+
+                        if (response.code() == 200) {
+
+                            if (response.body()!!.status){
+                                countrylist= response!!.body()!!.row
+                                fullScreenDialog = FullscreenCountryDialog(countrylist!!,activity!!,this@EditSiteFragment)
+                                fullScreenDialog!!.isCancelable = false
+                                fullScreenDialog!!.show(activity!!.supportFragmentManager,"")
+                                /* val builder = AlertDialog.Builder(context, android.R.style.Theme_Material_Light_NoActionBar_Fullscreen)
+                                 val dialog = builder.create()
+                                 dialog.setContentView(R.layout.country_alert_layout)
+                                 dialog.show()*/
+                            }
+                            else
+                                ToastAlert.CustomToasterror(activity!!, response!!.body()!!.message)
+
+                        } else if (response.code() == 401) {
+                            Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
+
+                        }
+                    }
+
+                    override fun onFailure(call: Call<CountryListModel>, t: Throwable) {
+                        customProgress.hideProgress()
+                    }
+                })
+
+            }catch (e: Exception){
+                e.printStackTrace()
+            }
+
         }
     }
 
@@ -448,6 +501,22 @@ class EditSiteFragment : Fragment() {
 
         }catch (e: Exception){
             e.printStackTrace()
+        }
+    }
+
+    override fun OnItemClick(position: Int) {
+        fullScreenDialog!!.dismiss()
+        editSiteBinding!!.countryImage.visibility=View.VISIBLE
+        editSiteBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
+        editSiteBinding!!.llCountry.setBackgroundResource(R.drawable.asscolor_round)
+        editSiteBinding!!.tvSelectcountry.setTextColor(activity!!.resources.getColor(R.color.textColor))
+        editSiteBinding!!.tvCountryname.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
+        editSiteBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
+        selectedCountry=countrylist.get(position).id
+        if (countrylist.get(position).country_flag_path!=null) {
+            Glide.with(activity!!)
+                .load(countrylist.get(position).country_flag_path)
+                .into(editSiteBinding!!.countryImage);
         }
     }
 }

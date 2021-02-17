@@ -170,7 +170,45 @@
 
                         </EditText>
 
+                        <TextView
+                            android:id="@+id/tv_selectcountry"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginLeft="@dimen/_5sdp"
+                            android:layout_marginBottom="@dimen/_5sdp"
+                            android:drawablePadding="@dimen/_4sdp"
+                            android:drawableRight="@drawable/star"
+                            android:text="Select Country"
+                            android:textColor="@color/text_color_blue"
+                            android:textSize="@dimen/_12sdp">
 
+                        </TextView>
+
+                        <LinearLayout
+                            android:id="@+id/ll_country"
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/_40sdp"
+                            android:background="@drawable/asscolor_round"
+
+                            android:layout_marginBottom="@dimen/_7sdp">
+                            <ImageView
+                                android:id="@+id/country_image"
+                                android:layout_width="@dimen/_40sdp"
+                                android:layout_height="@dimen/_40sdp"
+                                android:visibility="gone"
+                                ></ImageView>
+
+                            <TextView
+                                android:id="@+id/tv_countryname"
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:layout_marginLeft="@dimen/_7sdp"
+                                android:padding="@dimen/_5sdp"
+                                android:gravity="center_vertical"
+                                android:hint="Please select country"
+                                android:textSize="@dimen/_12sdp"
+                                android:drawableRight="@drawable/down_arrow"></TextView>
+                        </LinearLayout>
                         <TextView
                             android:id="@+id/tv_upload"
                             android:layout_width="match_parent"
@@ -179,7 +217,7 @@
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:textColor="#1E3F6C"
                             android:layout_marginLeft="@dimen/_5sdp"
-
+                             android:layout_marginTop="@dimen/_5sdp"
                             android:textSize="@dimen/_12sdp">
 
                         </TextView>

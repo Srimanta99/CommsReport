@@ -2,24 +2,19 @@ package com.commsreport.screens.home
 
 import android.view.Gravity
 import android.view.View
-import androidx.annotation.NonNull
 import androidx.core.view.GravityCompat
 import com.commsreport.R
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.databinding.ActivityHomeBinding
 
-import com.commsreport.screens.fragments.adduser.AddUserFragment
 
-
-import com.commsreport.screens.fragments.document.DocumentUploadFragment
-import com.commsreport.screens.fragments.email.EmailFragment
+import com.commsreport.screens.fragments.manageemail.EmailFragment
 import com.commsreport.screens.fragments.faults.FaultFragment
 import com.commsreport.screens.fragments.leaderdashboard.LeaderDashboardFragment
 import com.commsreport.screens.fragments.managedocument.ManageDocumentFragment
 import com.commsreport.screens.fragments.managesite.ManageSiteFragment
 import com.commsreport.screens.fragments.manageuser.ManageUserFragment
 import com.commsreport.screens.fragments.settings.SettingFragment
-import com.commsreport.screens.fragments.site.SiteFragment
 
 class HomeOnClick(val homeActivity: HomeActivity, val homeBinding: ActivityHomeBinding):View.OnClickListener {
 

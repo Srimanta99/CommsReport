@@ -78,6 +78,8 @@ class AddUserFragment : Fragment(), CountryClickInterface {
     var imgFile:File?=null
     var countrylist= ArrayList<CountryListModel.CountryList>()
     var fullScreenDialog : FullscreenCountryDialog?=null
+    var selectedStatus=""
+    var selectedCountry=""
    // var countryClickInterface=CountryClickInterface()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -222,6 +224,7 @@ class AddUserFragment : Fragment(), CountryClickInterface {
                 addUserBinding!!.imgStatus.setBackgroundResource(R.drawable.active)
                 addUserBinding!!.llselectStatus.setBackgroundResource(R.drawable.asscolor_round)
                 addUserBinding!!.tvSelectstatus.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                selectedStatus="1"
                 mPopupwindow.dismiss()
             }
             inactive.setOnClickListener {
@@ -230,6 +233,7 @@ class AddUserFragment : Fragment(), CountryClickInterface {
                 addUserBinding!!.llselectStatus.setBackgroundResource(R.drawable.asscolor_round)
                 addUserBinding!!.llselectStatus.setBackgroundResource(R.drawable.asscolor_round)
                 addUserBinding!!.tvSelectstatus.setTextColor(activity!!.resources.getColor(R.color.textColor))
+                selectedStatus="2"
                 mPopupwindow.dismiss()
             }
 
@@ -491,7 +495,8 @@ class AddUserFragment : Fragment(), CountryClickInterface {
         builder.addFormDataPart("user_contactno" , addUserBinding!!.etnContactno.text.toString())
         builder.addFormDataPart("company_id" , userdata!!.company_id)
         builder.addFormDataPart("site_id" , selectedSiteId)
-        builder.addFormDataPart("status_id" , "1")
+        builder.addFormDataPart("status_id" , selectedStatus)
+        builder.addFormDataPart("user_country_id",selectedCountry)
         if (imgFile!=null)
         builder.addFormDataPart("user_profile_picture",imgFile!!.absolutePath , okhttp3.RequestBody.create(
             MediaType.parse("image/jpeg"), imgFile))
@@ -721,6 +726,7 @@ class AddUserFragment : Fragment(), CountryClickInterface {
         addUserBinding!!.tvSelectcountry.setTextColor(activity!!.resources.getColor(R.color.textColor))
         addUserBinding!!.tvCountryname.setPadding(activity!!.resources.getDimension(R.dimen._10sdp).toInt(),0,0,0);
         addUserBinding!!.tvCountryname!!.setText(countrylist.get(position).country_name)
+        selectedCountry=countrylist.get(position).id
         if (countrylist.get(position).country_flag_path!=null) {
             Glide.with(activity!!)
                 .load(countrylist.get(position).country_flag_path)
