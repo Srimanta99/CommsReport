@@ -10,16 +10,32 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
+import com.commsreport.Utils.alert.Alert
+import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.databinding.ItemManageUserBinding
-import com.commsreport.model.FaultListModel
+import com.commsreport.model.AddUserResponse
 import com.commsreport.model.SiteUserListModel
 import com.commsreport.screens.fragments.edituser.EditUserFragment
+import com.commsreport.screens.fragments.manageuser.ManageUserFragment
 import com.commsreport.screens.home.HomeActivity
+import com.google.gson.JsonObject
+import com.google.gson.JsonParser
+import com.sculptee.utils.customprogress.CustomProgressDialog
+import com.wecompli.network.ApiInterface
+import com.wecompli.network.Retrofit
 import com.wecompli.utils.sheardpreference.AppSheardPreference
 import com.wecompli.utils.sheardpreference.PreferenceConstent
+import org.json.JSONObject
+import retrofit2.Call
+import retrofit2.Callback
+import retrofit2.Response
 import java.util.ArrayList
 
-class ManageUserAdapter(val activity: HomeActivity,val userList: ArrayList<SiteUserListModel.UserList>) : RecyclerView.Adapter<ManageUserAdapter.ViewHolder>() {
+class ManageUserAdapter(
+    val activity: HomeActivity,
+    val userList: ArrayList<SiteUserListModel.UserList>,
+    val manageUserFragment: ManageUserFragment
+) : RecyclerView.Adapter<ManageUserAdapter.ViewHolder>() {
     var itemManageSitesBinding:ItemManageUserBinding?=null
     class ViewHolder(itemView:  ItemManageUserBinding) : RecyclerView.ViewHolder(itemView.root)
 
@@ -83,6 +99,7 @@ class ManageUserAdapter(val activity: HomeActivity,val userList: ArrayList<SiteU
         tv_message.typeface = CustomTypeface.getRajdhaniRegular(activity)
         tv_ok.setOnClickListener {
             alertDialog.dismiss()
+            callApiforDeleteUser(userList,position)
 
         }
         tv_no.setOnClickListener {
@@ -94,6 +111,47 @@ class ManageUserAdapter(val activity: HomeActivity,val userList: ArrayList<SiteU
         /*alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
             DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
         alertDialog.show()*/
+
+    }
+
+    private fun callApiforDeleteUser(userList: SiteUserListModel.UserList, position: Int) {
+        var userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
+        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!,"Please Wait..",false)
+        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        try {
+            val paramObject = JSONObject()
+            paramObject.put("user_id",userList.id)
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi=apiInterface.callApifordeleteUser(userdata!!.token,gsonObject)
+            callApi.enqueue(object : Callback<AddUserResponse> {
+                override fun onResponse(call: Call<AddUserResponse>, response: Response<AddUserResponse>) {
+                    customProgress.hideProgress()
+                    if(response.code()==200) {
+                        if(response.body()!!.status){
+                            ToastAlert.CustomToastSuccess(activity,"User delete Successfully")
+                            //  Alert.showalert(activity!!,"Fault Close Successfully")
+                            manageUserFragment.userList.removeAt(position)
+                            notifyDataSetChanged()
+                        }
+
+                    }else if(response.code()==401){
+                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<AddUserResponse>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
 
     }
 }

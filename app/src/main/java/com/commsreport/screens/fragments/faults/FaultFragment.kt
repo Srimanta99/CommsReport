@@ -122,8 +122,11 @@ class FaultFragment : Fragment() {
             customPopUpDialogSiteList!!.show()
         }
         faultBinding!!.navFaultSearch.searchFault.setOnClickListener {
-            callApiforFaultList(selectedSiteId!!)
-            faultBinding!!.drawerLayout!!.closeDrawer(Gravity.RIGHT)
+            if(!selectedSiteId.equals("")) {
+                callApiforFaultList(selectedSiteId!!)
+                faultBinding!!.drawerLayout!!.closeDrawer(Gravity.RIGHT)
+            }else
+                ToastAlert.CustomToastwornning(activity!!,"Please select site")
         }
 
     }
@@ -239,8 +242,11 @@ class FaultFragment : Fragment() {
                                faultBinding!!.contentManageFault.noData.visibility=View.GONE
                                setAdpterValue()
 
-                           }else
-                               ToastAlert.CustomToasterror(activity!!,"No Record Found")
+                           }else{
+                               faultBinding!!.contentManageFault.recManagefault.visibility=View.GONE
+                               faultBinding!!.contentManageFault.noData.visibility=View.VISIBLE
+                           }
+                             //  ToastAlert.CustomToasterror(activity!!,"No Record Found")
                        }
 
 

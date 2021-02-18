@@ -1,6 +1,7 @@
 package com.commsreport.screens.fragments.settings
 
 import android.os.Bundle
+import android.text.Html
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
@@ -64,17 +65,77 @@ class SettingFragment : Fragment() {
         settingsBinding!!.tvConfirmpass.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         settingsBinding!!.etConpass.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         settingsBinding!!.submitTvid.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        settingsBinding!!.tvNotepass.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        settingsBinding!!.tvNote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         settingsBinding!!.etName.setText(userdata!!.full_name)
         settingsBinding!!.etEmail.setText(userdata!!.email)
         settingsBinding!!.etCompanyname.setText(userdata!!.company_name)
+        val notemendatory= "<font color=#FE0100>Note: </font> <font color=#1E3F6C> Please change your password from below</font>"
+        settingsBinding!!.tvNotepass.setText(Html.fromHtml(notemendatory))
+
+        val notemendatory1= "<font color=#FE0100>Note: </font> <font color=#1E3F6C>(*) fields are all mandatory fields</font>"
+        settingsBinding!!.tvNote.setText(Html.fromHtml(notemendatory1))
         settingsBinding!!.submitTvid.setOnClickListener {
             if(checkvalidation()){
             callApiforCallChangePassword()
             }
         }
-        if(userdata!!.user_type.equals("COMPANY_ADMIN")){
-            settingsBinding!!.etCompanyname.isEnabled=true
+        settingsBinding!!.tvUpdate.setOnClickListener {
+            if(!settingsBinding!!.etName.text.toString().equals(""))
+            callApiforCallProfileUpdate()
+            else
+                ToastAlert.CustomToastwornning(activity!!,"Please provide name")
+        }
+       // if(userdata!!.user_type.equals("COMPANY_ADMIN")){
+
+               settingsBinding!!.etCompanyname.isEnabled=true
+
+       // }
+    }
+
+    private fun callApiforCallProfileUpdate() {
+        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!, "Please Wait..", false)
+        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        try {
+            val paramObject = JSONObject()
+            // paramObject.put("user_id", userdata!!.user_id)
+            //paramObject.put("user_first_name",settingsBinding!!.etName.text.toString())
+            // paramObject.put("user_email_ID",settingsBinding!!.etEmail.text.toString())
+            paramObject.put("user_first_name", settingsBinding!!.etName.text.toString())
+          //  paramObject.put("user_old_password", settingsBinding!!.etCurrentpassword.text.toString())
+           // paramObject.put("user_confirm_password", settingsBinding!!.etConpass.text.toString())
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi=apiInterface.callApiforupdateprofile(userdata!!.token, gsonObject)
+            callApi.enqueue(object : Callback<AddUserResponse> {
+                override fun onResponse(call: Call<AddUserResponse>, response: Response<AddUserResponse>) {
+                    customProgress.hideProgress()
+
+                    if (response.code() == 200) {
+
+                        if (response.body()!!.status){
+                            ToastAlert.CustomToastSuccess(activity!!, response!!.body()!!.message)
+                            activity!!.homeBinding!!.tvUsername.setText(settingsBinding!!.etName.text.toString())
+
+                        }else
+                            ToastAlert.CustomToasterror(activity!!, response!!.body()!!.message)
+
+                    } else if (response.code() == 401) {
+                        Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<AddUserResponse>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e: Exception){
+            e.printStackTrace()
         }
     }
 
@@ -84,9 +145,9 @@ class SettingFragment : Fragment() {
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
         try {
             val paramObject = JSONObject()
-            paramObject.put("user_id", userdata!!.user_id)
-            paramObject.put("user_first_name",settingsBinding!!.etName.text.toString())
-            paramObject.put("user_email_ID",settingsBinding!!.etEmail.text.toString())
+           // paramObject.put("user_id", userdata!!.user_id)
+            //paramObject.put("user_first_name",settingsBinding!!.etName.text.toString())
+           // paramObject.put("user_email_ID",settingsBinding!!.etEmail.text.toString())
             paramObject.put("user_password", settingsBinding!!.etNewpassword.text.toString())
             paramObject.put("user_old_password", settingsBinding!!.etCurrentpassword.text.toString())
             paramObject.put("user_confirm_password", settingsBinding!!.etConpass.text.toString())

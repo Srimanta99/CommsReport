@@ -24,6 +24,7 @@ import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteList
 import com.commsreport.adapter.NotifyEmailAdapter
 import com.commsreport.databinding.ContentReportFaultBinding
 import com.commsreport.databinding.FragmentReportFaultaBinding
+import com.commsreport.model.EmailListModel
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
 import com.commsreport.screens.fragments.site.REQUEST_CAMERA
@@ -71,7 +72,8 @@ class ReportFaultFragment : Fragment() {
     public  var selectedSiteId=""
     var contentReportFaultBinding:ContentReportFaultBinding?=null
      var userdata:LoginResponseModel.Userdata? =null
-
+    var emailList:ArrayList<EmailListModel.EmailRow>?=null
+    var selectedEmail=ArrayList<String>()
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -89,56 +91,16 @@ class ReportFaultFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        fragmentReportFaultBinding!!.contentReportfault!!.tvaddNote.setTypeface(
-            CustomTypeface.getRajdhaniMedium(
-                activity!!
-            )
-        )
-        fragmentReportFaultBinding!!.contentReportfault.etAddnote.setTypeface(
-            CustomTypeface.getRajdhaniMedium(
-                activity!!
-            )
-        )
-        fragmentReportFaultBinding!!.contentReportfault.tvSelectsite.setTypeface(
-            CustomTypeface.getRajdhaniMedium(
-                activity!!
-            )
-        )
-        fragmentReportFaultBinding!!.contentReportfault.tvSelectedsite.setTypeface(
-            CustomTypeface.getRajdhaniMedium(
-                activity!!
-            )
-        )
-        fragmentReportFaultBinding!!.contentReportfault.tvImg1.setTypeface(
-            CustomTypeface.getRajdhaniSemiBold(
-                activity!!
-            )
-        )
-        fragmentReportFaultBinding!!.contentReportfault.tvImg2.setTypeface(
-            CustomTypeface.getRajdhaniSemiBold(
-                activity!!
-            )
-        )
-        fragmentReportFaultBinding!!.contentReportfault.tvImg3.setTypeface(
-            CustomTypeface.getRajdhaniSemiBold(
-                activity!!
-            )
-        )
-        fragmentReportFaultBinding!!.contentReportfault.tvImg4.setTypeface(
-            CustomTypeface.getRajdhaniSemiBold(
-                activity!!
-            )
-        )
-        fragmentReportFaultBinding!!.contentReportfault.tvAddfault.setTypeface(
-            CustomTypeface.getRajdhaniMedium(
-                activity!!
-            )
-        )
-        fragmentReportFaultBinding!!.contentReportfault.tvHeaderText.setTypeface(
-            CustomTypeface.getRajdhaniBold(
-                activity!!
-            )
-        )
+        fragmentReportFaultBinding!!.contentReportfault!!.tvaddNote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.etAddnote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvSelectedsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvImg1.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvImg2.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvImg3.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvImg4.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvAddfault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.contentReportfault.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
         fragmentReportFaultBinding!!.navnotifyEmail.tvNotifywho.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
         fragmentReportFaultBinding!!.navnotifyEmail.tvNoteNotifywho.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentReportFaultBinding!!.navnotifyEmail.submitNotifywho.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
@@ -186,9 +148,7 @@ class ReportFaultFragment : Fragment() {
         }
         fragmentReportFaultBinding!!.contentReportfault.tvAddfault.setOnClickListener {
             if (!selectedSiteId.equals("")) {
-                if (!fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString().equals(
-                        ""
-                    )) {
+                if (!fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString().equals("")) {
                     submitfalutusingmultipartBulider()
                 }else {
                     fragmentReportFaultBinding!!.contentReportfault.etAddnote.requestFocus()
@@ -198,15 +158,61 @@ class ReportFaultFragment : Fragment() {
                 ToastAlert.CustomToastwornning(activity!!, "Please select site")
         }
         fragmentReportFaultBinding!!.contentReportfault.tvNotify.setOnClickListener {
-            fragmentReportFaultBinding!!.drawerLayout.openDrawer(Gravity.RIGHT)
+            if (!selectedSiteId.equals("")) {
+                callApiforEmailList()
+                fragmentReportFaultBinding!!.drawerLayout.openDrawer(Gravity.RIGHT)
+            }else{
+                ToastAlert.CustomToastwornning(activity!!,"Please select site")
+            }
         }
 
         fragmentReportFaultBinding!!.contentReportfault.imgMenu.setOnClickListener {
             activity!!.homeBinding!!.drawerLayout!!.openDrawer(Gravity.LEFT)
         }
-        val notifyEmailAdapter=NotifyEmailAdapter(activity!!)
-        fragmentReportFaultBinding!!.navnotifyEmail.recNotifywho.adapter=notifyEmailAdapter
 
+
+    }
+
+    private fun callApiforEmailList() {
+        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!,"Please Wait..",false)
+        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        try {
+            val paramObject = JSONObject()
+            paramObject.put("company_id", userdata!!.company_id)
+            paramObject.put("site_id",selectedSiteId)
+
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi=apiInterface.callApiforemaillist(userdata!!.token,gsonObject)
+            callApi.enqueue(object : Callback<EmailListModel> {
+                override fun onResponse(call: Call<EmailListModel>, response: Response<EmailListModel>) {
+                    customProgress.hideProgress()
+
+                    if(response.code()==200) {
+                        if (response.body()!!.row.size>0) {
+                            emailList = response!!.body()!!.row
+                            val notifyEmailAdapter=NotifyEmailAdapter(activity!!,emailList!!,this@ReportFaultFragment)
+                            fragmentReportFaultBinding!!.navnotifyEmail.recNotifywho.adapter=notifyEmailAdapter
+
+                        }else
+                            ToastAlert.CustomToasterror(activity!!,response!!.body()!!.message)
+
+                    }else if(response.code()==401){
+                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<EmailListModel>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
     }
 
     override fun onResume() {
@@ -529,10 +535,7 @@ class ReportFaultFragment : Fragment() {
         val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
         builder.addFormDataPart("site_id", selectedSiteId)
         builder.addFormDataPart("check_process_type", "checks")
-        builder.addFormDataPart(
-            "fault_description",
-            fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString()
-        )
+        builder.addFormDataPart("fault_description", fragmentReportFaultBinding!!.contentReportfault.etAddnote.text.toString())
         builder.addFormDataPart("status_id", "1")
         builder.addFormDataPart("fault_entry_date", formattedDate)
 

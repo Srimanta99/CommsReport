@@ -82,11 +82,19 @@ class ManageSiteFragment : Fragment() {
         contentManageSiteBinding!!.tvAddSite.setOnClickListener {
             activity!!.openFragment(SiteFragment())
         }
+        fragmentManageSiteBinding!!.navSiteSearch.Searchsite.setOnClickListener {
+            if(!fragmentManageSiteBinding!!.navSiteSearch.etsherchName.text.toString().equals("")){
+                callApiForSiteList()
+                fragmentManageSiteBinding!!.drawerLayout!!.closeDrawer(Gravity.RIGHT)
+            }else{
+                ToastAlert.CustomToastwornning(activity!!,"Provide enter search name")
+            }
+        }
 
     }
 
 
-    private fun callApiForSiteList() {
+    public fun callApiForSiteList() {
         var userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
         customProgress.showProgress(activity!!,"Please Wait..",false)
@@ -94,6 +102,7 @@ class ManageSiteFragment : Fragment() {
         try {
             val paramObject = JSONObject()
             paramObject.put("company_id", userdata!!.company_id)
+            paramObject.put("site_name",fragmentManageSiteBinding!!.navSiteSearch.etsherchName.text.toString())
 
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
@@ -102,15 +111,20 @@ class ManageSiteFragment : Fragment() {
             callApi.enqueue(object :Callback<SiteListModel>{
                 override fun onResponse(call: Call<SiteListModel>, response: Response<SiteListModel>) {
                     customProgress.hideProgress()
-
                     if(response.code()==200) {
                         siteList.clear()
                         siteList = response.body()!!.row
-                        if (siteList.size>=0) {
-                            manageSiteAdapter = ManageSiteAdapter(activity!!, siteList)
+                        if (siteList.size>0) {
+                            contentManageSiteBinding!!.recManagesite.visibility=View.VISIBLE
+                            contentManageSiteBinding!!.noItem.visibility=View.GONE
+                            manageSiteAdapter = ManageSiteAdapter(activity!!, siteList,this@ManageSiteFragment)
                             contentManageSiteBinding!!.recManagesite.adapter = manageSiteAdapter
-                        }else
-                            ToastAlert.CustomToasterror(activity!!, "No Site Found")
+                        }else{
+                            //ToastAlert.CustomToasterror(activity!!, "No Site Found")
+                            contentManageSiteBinding!!.recManagesite.visibility=View.GONE
+                            contentManageSiteBinding!!.noItem.visibility=View.VISIBLE
+                        }
+
                     }else if(response.code()==401){
                         Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
 

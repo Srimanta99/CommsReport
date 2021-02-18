@@ -65,7 +65,7 @@ class SiteFragment : Fragment(),CountryClickInterface {
     var userdata: LoginResponseModel.Userdata? =null
     var countrylist= ArrayList<CountryListModel.CountryList>()
     var fullScreenDialog : FullscreenCountryDialogSite?=null
-    var selectedStatus=""
+    var selectedStatus="1"
     var selectedCountry=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -76,11 +76,7 @@ class SiteFragment : Fragment(),CountryClickInterface {
         activity=  getActivity() as HomeActivity
     }
 
-    override fun onCreateView(
-        inflater: LayoutInflater,
-        container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View? {
+    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         fragmentAddSiteBinding= FragmentAddSiteBinding.inflate(inflater, container, false)
         return fragmentAddSiteBinding!!.root
     }

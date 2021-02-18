@@ -5,6 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@drawable/top_two_rounded_corner_white"
+
     android:orientation="vertical">
 
 
@@ -56,7 +57,8 @@
             <ScrollView
                 android:fillViewport="true"
                 android:layout_width="match_parent"
-                android:layout_height="match_parent">
+                android:layout_height="match_parent"
+               >
 
                 <LinearLayout
                     android:layout_width="match_parent"
@@ -64,6 +66,7 @@
                     android:layout_marginTop="@dimen/_25sdp"
                     android:layout_marginLeft="@dimen/_20sdp"
                     android:layout_marginRight="@dimen/_20sdp"
+                    android:paddingBottom="@dimen/_20sdp"
                     android:orientation="vertical">
 
                     <LinearLayout
@@ -72,12 +75,14 @@
                         android:orientation="vertical">
                         <TextView
                             android:id="@+id/tv_email"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Site name"
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:textColor="#1E3F6C"
                             android:layout_marginLeft="@dimen/_5sdp"
+                            android:drawableRight="@drawable/star"
+                            android:drawablePadding="@dimen/_5sdp"
                             android:textSize="@dimen/_12sdp">
 
                         </TextView>
@@ -94,24 +99,28 @@
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
                             android:background="@drawable/asscolor_round"
-                            android:layout_marginBottom="@dimen/_10sdp"
+
                             android:inputType="textEmailAddress"
 
                             >
 
                         </EditText>
 
-
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/divider"></TextView>
 
                         <TextView
                             android:id="@+id/tv_address_site"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Site address"
                             android:textColor="#1E3F6C"
                             android:textSize="@dimen/_12sdp"
                             android:layout_marginLeft="@dimen/_5sdp"
-
+                            android:drawableRight="@drawable/star"
+                            android:drawablePadding="@dimen/_5sdp"
                             android:layout_marginBottom="@dimen/_10sdp">
 
                         </TextView>
@@ -142,12 +151,13 @@
 
                         <TextView
                             android:id="@+id/tv_pincode"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="PostCode"
                             android:textColor="#1E3F6C"
                             android:layout_marginLeft="@dimen/_5sdp"
-
+                            android:drawableRight="@drawable/star"
+                            android:drawablePadding="@dimen/_5sdp"
                             android:textSize="@dimen/_12sdp"
                             android:layout_marginBottom="@dimen/_5sdp">
 
@@ -190,7 +200,7 @@
                             android:layout_height="@dimen/_40sdp"
                             android:background="@drawable/asscolor_round"
 
-                            android:layout_marginBottom="@dimen/_7sdp">
+                          >
                             <ImageView
                                 android:id="@+id/country_image"
                                 android:layout_width="@dimen/_40sdp"
@@ -207,8 +217,13 @@
                                 android:gravity="center_vertical"
                                 android:hint="Please select country"
                                 android:textSize="@dimen/_12sdp"
+                                android:paddingLeft="@dimen/_5sdp"
                                 android:drawableRight="@drawable/down_arrow"></TextView>
                         </LinearLayout>
+                        <TextView
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:background="@drawable/divider"></TextView>
                         <TextView
                             android:id="@+id/tv_upload"
                             android:layout_width="match_parent"
@@ -217,7 +232,7 @@
                             android:layout_marginBottom="@dimen/_5sdp"
                             android:textColor="#1E3F6C"
                             android:layout_marginLeft="@dimen/_5sdp"
-                             android:layout_marginTop="@dimen/_5sdp"
+                             android:layout_marginTop="@dimen/_10sdp"
                             android:textSize="@dimen/_12sdp">
 
                         </TextView>
@@ -326,7 +341,7 @@
                             android:layout_width="match_parent"
                             android:layout_height="match_parent"
                             android:layout_gravity="bottom"
-                            android:gravity="bottom"
+
                             android:layout_marginTop="@dimen/_10sdp"
                             android:layout_marginBottom="@dimen/_20sdp">
 
@@ -341,6 +356,7 @@
                                 android:layout_gravity="center"
                                 android:layout_alignParentBottom="true"
                                 android:layout_centerHorizontal="true"
+
                                 android:background="@drawable/gradient_login_button"
                                 android:gravity="center">
 

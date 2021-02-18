@@ -51,8 +51,12 @@ interface ApiInterface {
     fun callApifordocumentremove(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
     @Headers("Content-Type: application/json")
-    @POST(NetworkUtility.PROFILE_UPDATE)
+    @POST(NetworkUtility.PASSWORD_UPDATE)
     fun callApifordochangepassword(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.PROFILE_UPDATE)
+    fun callApiforupdateprofile(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
     @Headers("Content-Type: application/json")
     @POST(NetworkUtility.COUNTRYLIST)
@@ -66,6 +70,16 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(NetworkUtility.EMAILCREATE)
     fun callApiforemailadd(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.SITE_REMOVE)
+    fun callApifordeletesite(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.User_Remove)
+    fun callApifordeleteUser(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
+
 
     // @Headers("Content-Type: application/json")
     /*@POST(NetworkUtility.LOG_IN)

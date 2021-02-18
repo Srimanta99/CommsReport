@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
+import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.adapter.ManageDocumentAdapter
 import com.commsreport.databinding.FragmentLeaderDashboardBinding
 import com.commsreport.model.DocumentListModel
@@ -115,6 +116,9 @@ class LeaderDashboardFragment : Fragment() {
                     } else if (response.code() == 401) {
                         Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
 
+                    }
+                    else{
+                        ToastAlert.CustomToasterror(activity!!,"Something wrong. try later")
                     }
                 }
 

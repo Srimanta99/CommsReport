@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginLeft="@dimen/_15sdp"
+    android:layout_marginRight="@dimen/_15sdp"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="@dimen/_10sdp">
+
+        <ImageView
+            android:layout_width="@dimen/_45sdp"
+            android:layout_height="@dimen/_45sdp"
+            android:background="@drawable/circle_shape_search"></ImageView>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_14sdp"
+            android:drawableLeft="@drawable/search">
+
+        </TextView>
+
+        <TextView
+            android:id="@+id/tv_Search"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="Search"
+            android:textColor="@color/black"
+            android:textSize="@dimen/_18sdp"></TextView>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/tv_sitename"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="@dimen/_10sdp"
+        android:layout_marginTop="@dimen/_20sdp"
+        android:text="Search by site"
+        android:textColor="#1E3F6C"
+        android:textSize="@dimen/_14sdp">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/tvsherch_name"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_40sdp"
+        android:layout_marginTop="@dimen/_10sdp"
+        android:layout_marginBottom="@dimen/_10sdp"
+        android:background="@drawable/asscolor_round"
+        android:inputType="text"
+        android:paddingLeft="@dimen/_9sdp"
+        android:paddingTop="@dimen/_10sdp"
+        android:paddingRight="@dimen/_9sdp"
+        android:paddingBottom="@dimen/_10sdp"
+        android:textSize="@dimen/_12sdp"
+        android:textStyle="normal"
+        android:drawableRight="@drawable/down_arrow"
+        >
+
+    </TextView>
+
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:layout_marginTop="@dimen/_20sdp"
+        android:layout_marginBottom="@dimen/_20sdp"
+        android:gravity="bottom">
+
+
+        <TextView
+            android:id="@+id/Searchsite"
+            android:layout_width="@dimen/_170sdp"
+            android:layout_height="@dimen/_44sdp"
+            android:layout_centerHorizontal="true"
+            android:layout_gravity="center"
+            android:background="@drawable/gradient_login_button"
+            android:gravity="center"
+            android:text="SEARCH"
+            android:textColor="@color/white"
+            android:textSize="@dimen/_12sdp"
+            android:textStyle="bold">
+
+        </TextView>
+
+
+    </RelativeLayout>
+</LinearLayout>

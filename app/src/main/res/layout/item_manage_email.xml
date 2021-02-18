@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_120sdp"
+        android:layout_margin="@dimen/_10sdp"
+        android:padding="@dimen/_5sdp"
+        android:background="@drawable/asscolor_round">
+        <TextView
+            android:id="@+id/tv_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/_5sdp"
+            android:text="Name:"
+            android:layout_marginTop="@dimen/_7sdp"
+
+            android:textColor="#1E3F6C"
+            android:textSize="@dimen/_12sdp"
+             ></TextView>
+        <TextView
+            android:id="@+id/emailname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toRightOf="@id/tv_name"
+            android:textSize="@dimen/_12sdp"
+            android:padding="@dimen/_5sdp"
+            android:text="Name"></TextView>
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/tv_name"
+            android:padding="@dimen/_5sdp"
+            android:text="Email"
+            android:textColor="#1E3F6C"
+            android:textSize="@dimen/_12sdp"
+            ></TextView>
+        <TextView
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_toRightOf="@id/tv_email"
+            android:layout_below="@id/emailname"
+            android:textSize="@dimen/_12sdp"
+            android:padding="@dimen/_5sdp"
+            android:text="Name"></TextView>
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:layout_margin="@dimen/_10sdp"
+            android:background="@drawable/active"></ImageView>
+        <TextView
+            android:id="@+id/tv_companyname"
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_35sdp"
+            android:background="@drawable/tag"
+            android:layout_alignParentBottom="true"
+            android:layout_margin="@dimen/_6sdp"
+            android:textAllCaps="true"
+            android:text="Truegym Chatham"
+            android:textColor="@color/white"
+            android:paddingLeft="@dimen/_15sdp"
+            android:paddingRight="@dimen/_15sdp"
+            android:textSize="@dimen/_12sdp"
+            android:gravity="center"
+            android:layout_alignParentRight="true"></TextView>
+    </RelativeLayout>
+
+</LinearLayout>

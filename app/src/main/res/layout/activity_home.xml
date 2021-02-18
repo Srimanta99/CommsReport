@@ -36,6 +36,8 @@
                     android:id="@+id/imgProfile"
                     android:layout_width="@dimen/_45sdp"
                     android:layout_height="@dimen/_45sdp"
+                    android:scaleType="fitXY"
+                    android:padding="@dimen/_3sdp"
                     android:background="@drawable/profile"
                     android:layout_centerVertical="true"></ImageView>
 

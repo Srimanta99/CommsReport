@@ -190,6 +190,7 @@ class EditSiteFragment : Fragment(),CountryClickInterface {
         builder.addFormDataPart("site_address", editSiteBinding!!.etAddressSite.text.toString())
         builder.addFormDataPart("site_postcode" , editSiteBinding!!.etPinCode.text.toString())
         builder.addFormDataPart("status_id" , "1")
+        builder.addFormDataPart("country_id",selectedCountry)
         if (imgFile!=null)
             builder.addFormDataPart("site_logo",imgFile!!.absolutePath , okhttp3.RequestBody.create(
                 MediaType.parse("image/jpeg"), imgFile))

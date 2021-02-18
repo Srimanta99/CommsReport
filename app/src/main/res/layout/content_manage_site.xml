@@ -42,7 +42,7 @@
             android:background="@drawable/searchwithbg"
             android:visibility="visible"></ImageView>
     </RelativeLayout>
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_marginBottom="@dimen/_70sdp"
@@ -55,12 +55,18 @@
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/_4sdp"
             tools:itemCount="10"
-
+            android:visibility="gone"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
             tools:listitem="@layout/item_manage_sites">
 
         </androidx.recyclerview.widget.RecyclerView>
-    </LinearLayout>
+        <ImageView
+            android:id="@+id/no_item"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:background="@drawable/no_data_found1"></ImageView>
+    </RelativeLayout>
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="@dimen/_70sdp"

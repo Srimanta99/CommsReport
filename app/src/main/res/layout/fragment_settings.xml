@@ -25,7 +25,8 @@
                     <LinearLayout
                         android:layout_width="match_parent"
                         android:layout_height="match_parent"
-                        android:orientation="vertical">
+                        android:orientation="vertical"
+                        android:layout_marginBottom="@dimen/_120sdp">
                         <TextView
                             android:id="@+id/tv_companyname"
                             android:layout_width="wrap_content"
@@ -40,7 +41,7 @@
 
                         </TextView>
 
-                        <EditText
+                        <TextView
                             android:id="@+id/et_companyname"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/_40sdp"
@@ -52,10 +53,10 @@
                             android:paddingRight="@dimen/_9sdp"
                             android:paddingTop="@dimen/_10sdp"
                             android:paddingBottom="@dimen/_10sdp"
-
+                            android:enabled="false"
                             android:inputType="text">
 
-                        </EditText>
+                        </TextView>
                         <TextView
                             android:id="@+id/tv_name"
                             android:layout_width="wrap_content"
@@ -162,15 +163,19 @@
                         </TextView>
 
                         <TextView
+                            android:id="@+id/tv_notepass"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:gravity="center"
-                            android:text="note: please change your password from below"></TextView>
+                            android:textSize="@dimen/_11sdp"
+                            android:text="Note: please change your password from below"></TextView>
 
                         <TextView
                             android:id="@+id/tv_currentpassword"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:drawableRight="@drawable/star"
+                            android:drawablePadding="@dimen/_4sdp"
                             android:text="Current password"
                             android:textColor="@color/text_color_blue"
                             android:layout_marginLeft="@dimen/_5sdp"
@@ -203,13 +208,14 @@
 
                         <TextView
                             android:id="@+id/tv_newpassword"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="New password"
                             android:textColor="@color/text_color_blue"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:textSize="@dimen/_12sdp"
-
+                            android:drawableRight="@drawable/star"
+                            android:drawablePadding="@dimen/_4sdp"
                             android:layout_marginBottom="@dimen/_5sdp">
 
                         </TextView>
@@ -236,13 +242,14 @@
 
                         <TextView
                             android:id="@+id/tv_confirmpass"
-                            android:layout_width="match_parent"
+                            android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="Conform new password"
                             android:textColor="@color/text_color_blue"
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:textSize="@dimen/_12sdp"
-
+                            android:drawableRight="@drawable/star"
+                            android:drawablePadding="@dimen/_4sdp"
                             android:layout_marginBottom="@dimen/_5sdp">
 
                         </TextView>
@@ -261,7 +268,7 @@
                                 android:paddingTop="@dimen/_10sdp"
                                 android:paddingBottom="@dimen/_10sdp"
                                 android:inputType="textPassword"
-                                android:enabled="false"
+
 
                                 >
 
@@ -290,12 +297,16 @@
                         </RelativeLayout>
 
 
-
+                        <TextView
+                            android:id="@+id/tv_note"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginBottom="@dimen/_20sdp"
+                            android:gravity="center"
+                            android:textSize="@dimen/_11sdp"
+                            android:text="Note:(*) fields are all mandatory fields"></TextView>
                     </LinearLayout>
-                   <TextView
-                       android:layout_width="match_parent"
-                       android:layout_height="wrap_content"
-                       android:text="note:(*) fields are all mandatory fields"></TextView>
+
                 </LinearLayout>
             </ScrollView>
 

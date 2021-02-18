@@ -93,6 +93,7 @@ class ManageDocumentFragment : Fragment() {
         manageDocumentBinding!!.navDocSearch.Search.setOnClickListener {
             if (!manageDocumentBinding!!.navDocSearch.etsherchName.text.toString().equals("")){
                 callApiForDocList(manageDocumentBinding!!.navDocSearch.etsherchName.text.toString())
+                manageDocumentBinding!!.searchDrawer!!.closeDrawer(Gravity.RIGHT)
             }else
                 ToastAlert.CustomToastwornning(activity!!,"Please enter some value")
         }
@@ -155,10 +156,16 @@ class ManageDocumentFragment : Fragment() {
                         docList.clear()
                         docList = response.body()!!.row
                         if (docList.size > 0) {
+                            manageDocumentBinding!!.contentManageDocument!!.recManageDocument.visibility=View.VISIBLE
+                            manageDocumentBinding!!.contentManageDocument!!.nodatafound.visibility=View.GONE
                             setAdapter()
 
-                        } else
-                            ToastAlert.CustomToasterror(activity!!, "No Document found")
+                        } else{
+                            manageDocumentBinding!!.contentManageDocument!!.recManageDocument.visibility=View.GONE
+                            manageDocumentBinding!!.contentManageDocument!!.nodatafound.visibility=View.VISIBLE
+                            //ToastAlert.CustomToasterror(activity!!, "No Document found")
+                        }
+
 
                     } else if (response.code() == 401) {
                         Alert.showalertForUnAuthorized(activity!!, "Unauthorized")

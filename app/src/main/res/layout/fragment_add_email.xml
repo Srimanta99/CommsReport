@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:background="@drawable/top_two_rounded_corner_white"
+    tools:context=".screens.fragments.addemail.AddEmailFragment">
+    <TextView
+        android:id="@+id/tv_note_email"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/_10sdp"
+        android:gravity="center"
+        android:textSize="@dimen/_12sdp"
+       ></TextView>
+    <include android:id="@+id/email_add"
+        layout="@layout/item_email_add"></include>
+
+
+   <!-- <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rec_add_item"
+        android:layout_width="match_parent"
+    android:layout_marginBottom="@dimen/_95sdp"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/tv_note_email"
+        app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+        tools:itemCount="10"
+        tools:listitem="@layout/item_email_add"></androidx.recyclerview.widget.RecyclerView>
+-->
+    <TextView
+        android:id="@+id/tv_submit"
+        android:layout_width="@dimen/_170sdp"
+        android:layout_height="@dimen/_44sdp"
+        android:layout_centerHorizontal="true"
+        android:layout_gravity="center"
+        android:background="@drawable/gradient_login_button"
+        android:gravity="center"
+        android:text="SUBMIT"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_12sdp"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="@dimen/_12sdp"
+
+        android:textStyle="bold">
+
+    </TextView>
+
+    <TextView
+        android:id="@+id/tv_note"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_addemail"
+        android:gravity="center"
+        android:textSize="@dimen/_12sdp"
+        android:layout_marginBottom="@dimen/_70sdp"
+        android:layout_alignParentBottom="true"
+
+        android:text="Note: [*] feilds are all mendatory feild"></TextView>
+</RelativeLayout>

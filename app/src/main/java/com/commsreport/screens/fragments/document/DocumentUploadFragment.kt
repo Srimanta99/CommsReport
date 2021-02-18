@@ -12,6 +12,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.provider.MediaStore
+import android.text.Html
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -57,6 +58,7 @@ class DocumentUploadFragment : Fragment() {
     internal var imagearraylist = ArrayList<File>()
     var filetypeed= ArrayList<String>()
     var filetype:String?=""
+    var notifyChk="0"
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -89,7 +91,15 @@ class DocumentUploadFragment : Fragment() {
         fragmentUploadDocumentsBinding!!.chkNotify.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentUploadDocumentsBinding!!.tvUploadDoc.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentUploadDocumentsBinding!!.tvSubmitUploadDoc.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvnotename.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentUploadDocumentsBinding!!.tvfeildsareall.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
        // fragmentUploadDocumentsBinding!!.tvAttachment1.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        val textnote="<font color=#FE0100>Note: </font> <font color=#1E3F6C>Please provide a relevant document name, it will help you to searching the document</font>";
+        fragmentUploadDocumentsBinding!!.tvnotename.setText(Html.fromHtml(textnote))
+
+        val textnote1="<font color=#FE0100>Note: [*]</font> <font color=#1E3F6C>fields are all mandatory fields</font>";
+        fragmentUploadDocumentsBinding!!.tvfeildsareall.setText(Html.fromHtml(textnote1))
+
 
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         fragmentUploadDocumentsBinding!!.llCal1.setOnClickListener {
@@ -106,25 +116,35 @@ class DocumentUploadFragment : Fragment() {
         }
         fragmentUploadDocumentsBinding!!.tvUploadDoc.setOnClickListener {
             if (docCount<=4)
-            checkpermession()
+                checkpermession()
             else
                 ToastAlert.CustomToastwornning(activity!!, "Max. 4 attachments allow")
         }
 
         fragmentUploadDocumentsBinding!!.tvSubmitUploadDoc.setOnClickListener {
             if (!fragmentUploadDocumentsBinding!!.etNameUploaddoc.text.toString().equals("")){
-                if (!fragmentUploadDocumentsBinding!!.tvStartdate.text.toString().equals("")){
-                    if (!fragmentUploadDocumentsBinding!!.tvExpirydate.text.toString().equals("")){
-                        if(imagearraylist.size>0)
-                        callApiforUploadDoc()
-                        else
-                            ToastAlert.CustomToastwornning(activity!!, "Select at least one document file")
-                    }else
+                if (fragmentUploadDocumentsBinding!!.chkNotify.isChecked) {
+                    notifyChk="1"
+                    if (!fragmentUploadDocumentsBinding!!.tvStartdate.text.toString().equals("")) {
+                        if (!fragmentUploadDocumentsBinding!!.tvExpirydate.text.toString().equals("")) {
+                            if (imagearraylist.size > 0)
+                                callApiforUploadDoc()
+                            else
+                                ToastAlert.CustomToastwornning(activity!!, "Select at least one document file")
+                        } else
                         //Alert.showalert(activity!!, "Select Expiry Date")
-                        ToastAlert.CustomToastwornning(activity!!, "Select Expiry Date")
-                }else
-                    ToastAlert.CustomToastwornning(activity!!, "Select Start Date")
+                            ToastAlert.CustomToastwornning(activity!!, "Select Expiry Date")
+                    } else
+                        ToastAlert.CustomToastwornning(activity!!, "Select Start Date")
                     //Alert.showalert(activity!!, "Select Start Date")
+                }else{
+                    notifyChk="0"
+                    if (imagearraylist.size > 0){
+                        callApiforUploadDoc()
+                    }
+                    else
+                        ToastAlert.CustomToastwornning(activity!!, "Select at least one document file")
+                }
             }else{
                 fragmentUploadDocumentsBinding!!.etNameUploaddoc.requestFocus()
                 ToastAlert.CustomToastwornning(activity!!, "Enter Document Name")
@@ -141,24 +161,14 @@ class DocumentUploadFragment : Fragment() {
         customProgress.showProgress(activity!!, "Please Wait..", false)
         val builder = MultipartBody.Builder().setType(MultipartBody.FORM)
         builder.addFormDataPart("company_id", userdata!!.company_id)
-        builder.addFormDataPart(
-            "document_name",
-            fragmentUploadDocumentsBinding!!.etNameUploaddoc.text.toString()
-        )
-        builder.addFormDataPart(
-            "affected_date",
-            fragmentUploadDocumentsBinding!!.tvStartdate.text.toString()
-        )
-        builder.addFormDataPart(
-            "expire_date",
-            fragmentUploadDocumentsBinding!!.tvExpirydate.text.toString()
-        )
+        builder.addFormDataPart("document_name", fragmentUploadDocumentsBinding!!.etNameUploaddoc.text.toString())
+        builder.addFormDataPart("affected_date", fragmentUploadDocumentsBinding!!.tvStartdate.text.toString())
+        builder.addFormDataPart("expire_date", fragmentUploadDocumentsBinding!!.tvExpirydate.text.toString())
         builder.addFormDataPart("status_id", "1")
-        builder.addFormDataPart("notify_about_expiry", "1")
+        builder.addFormDataPart("notify_about_expiry", notifyChk)
 
         for (i in imagearraylist.indices) {
-            builder.addFormDataPart(
-                "document_file[]", imagearraylist.get(i).name, okhttp3.RequestBody.create(
+            builder.addFormDataPart("document_file[]", imagearraylist.get(i).name, okhttp3.RequestBody.create(
                     MediaType.parse(filetypeed.get(i)), imagearraylist.get(i)
                 )
             )

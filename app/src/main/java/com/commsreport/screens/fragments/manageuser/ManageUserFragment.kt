@@ -9,7 +9,6 @@ import android.view.ViewGroup
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
-import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForFaultSearch
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForUserSearch
 import com.commsreport.adapter.ManageUserAdapter
 import com.commsreport.databinding.ContentManageUserBinding
@@ -64,7 +63,7 @@ class ManageUserFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
          userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
-        contentManageUserBinding!!.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        contentManageUserBinding!!.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
         fragmentManageUserBinding!!.navFaultSearch.Search.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentManageUserBinding!!.navFaultSearch.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentManageUserBinding!!.navFaultSearch.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
@@ -72,8 +71,10 @@ class ManageUserFragment : Fragment() {
         fragmentManageUserBinding!!.navFaultSearch.etsherchName.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentManageUserBinding!!.navFaultSearch.tvSearch.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
 
-       fragmentManageUserBinding!!.navFaultSearch.Search.setOnClickListener {
 
+       fragmentManageUserBinding!!.navFaultSearch.Search.setOnClickListener {
+           callApiForUserList()
+           fragmentManageUserBinding!!.drawerLayout.closeDrawer(Gravity.RIGHT)
        }
         fragmentManageUserBinding!!.navFaultSearch.tvDropdownSelectsite.setOnClickListener {
                 val customPopUpDialogSiteList= CustomPopUpDialogSiteForUserSearch(activity,siteList,this)
@@ -157,6 +158,8 @@ class ManageUserFragment : Fragment() {
         try {
             val paramObject = JSONObject()
             paramObject.put("company_id", userdata!!.company_id)
+            paramObject.put("site_id",selectedSiteId)
+            paramObject.put("user_name",fragmentManageUserBinding!!.navFaultSearch.etsherchName.text.toString())
 
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
@@ -170,10 +173,20 @@ class ManageUserFragment : Fragment() {
                         if (response.body()!!.status){
                             userList.clear()
                             userList=response!!.body()!!.row
-                            manaUserAdapter= ManageUserAdapter(activity!!,userList)
-                            contentManageUserBinding!!.recManageUser.adapter=manaUserAdapter
-                        }else
-                            ToastAlert.CustomToasterror(activity!!,"No User found")
+                            if (userList.size>0) {
+                                contentManageUserBinding!!.recManageUser.visibility = View.VISIBLE
+                                contentManageUserBinding!!.noImage.visibility = View.GONE
+                                manaUserAdapter = ManageUserAdapter(activity!!, userList, this@ManageUserFragment)
+                                contentManageUserBinding!!.recManageUser.adapter = manaUserAdapter
+                            }else{
+                                contentManageUserBinding!!.recManageUser.visibility=View.GONE
+                                contentManageUserBinding!!.noImage.visibility=View.VISIBLE
+                            }
+                        }else {
+                            //ToastAlert.CustomToasterror(activity!!, "No User found")
+                            contentManageUserBinding!!.recManageUser.visibility=View.GONE
+                            contentManageUserBinding!!.noImage.visibility=View.VISIBLE
+                        }
                     }else if(response.code()==401){
                         Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
 
