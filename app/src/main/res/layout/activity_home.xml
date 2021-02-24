@@ -67,7 +67,7 @@
                     android:id="@+id/imgedit"
                     android:layout_width="@dimen/_25sdp"
                     android:layout_height="@dimen/_25sdp"
-                    android:layout_alignParentBottom="true"
+                   android:layout_marginTop="@dimen/_35sdp"
                     android:layout_marginBottom="@dimen/_10sdp"
                     android:layout_marginRight="@dimen/_10sdp"
                     android:background="@drawable/edit"

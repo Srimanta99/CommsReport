@@ -51,14 +51,17 @@ class ManageUserAdapter(
         itemManageSitesBinding!!.emailId.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
         itemManageSitesBinding!!.teacherMobile.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
         itemManageSitesBinding!!.tvLocation.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
+        itemManageSitesBinding!!.tvSite.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity))
+        itemManageSitesBinding!!.tvSiteName.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
         itemManageSitesBinding!!.tvName.setText(userList.get(position).user_first_name)
         itemManageSitesBinding!!.emailId.setText(userList.get(position).user_email_ID)
         itemManageSitesBinding!!.teacherMobile.setText(userList.get(position).user_contactno)
         itemManageSitesBinding!!.tvLocation.setText(userList.get(position).user_address)
-        if (userList.get(position).user_contactno.equals("") || userList.get(position).user_contactno==null){
+        itemManageSitesBinding!!.tvSiteName.setText(userList.get(position).site_name)
+       /* if (userList.get(position).user_contactno.equals("") || userList.get(position).user_contactno==null){
             itemManageSitesBinding!!.imgPhone.visibility=View.INVISIBLE
 
-        }
+        }*/
         itemManageSitesBinding!!.rlEdit.setOnClickListener {
             AppSheardPreference(activity).setUserDetails(PreferenceConstent.selectedUser,userList.get(position))
             activity.openFragment(EditUserFragment())

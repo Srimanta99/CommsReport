@@ -94,7 +94,7 @@ class DocumentUploadFragment : Fragment() {
         fragmentUploadDocumentsBinding!!.tvnotename.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentUploadDocumentsBinding!!.tvfeildsareall.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
        // fragmentUploadDocumentsBinding!!.tvAttachment1.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
-        val textnote="<font color=#FE0100>Note: </font> <font color=#1E3F6C>Please provide a relevant document name, it will help you to searching the document</font>";
+        val textnote="<font color=#FE0100>Note: </font> <font color=#1E3F6C>Please provide a relevant document name, it will help you to search the document</font>";
         fragmentUploadDocumentsBinding!!.tvnotename.setText(Html.fromHtml(textnote))
 
         val textnote1="<font color=#FE0100>Note: [*]</font> <font color=#1E3F6C>fields are all mandatory fields</font>";

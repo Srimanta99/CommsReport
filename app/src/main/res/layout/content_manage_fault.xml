@@ -38,7 +38,7 @@
             android:layout_marginRight="@dimen/_5sdp"
             android:layout_marginTop="@dimen/_5sdp"
             android:layout_marginBottom="@dimen/_5sdp"
-            android:visibility="visible"
+            android:visibility="invisible"
             android:background="@drawable/searchwithbg"></ImageView>
     </RelativeLayout>
     <RelativeLayout
@@ -64,6 +64,45 @@
             >
 
         </TextView>
+        <RelativeLayout
+            android:id="@+id/rl_faultcount"
+            android:layout_width="match_parent"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:layout_marginRight="@dimen/_15sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_height="@dimen/_52sdp"
+            android:background="@drawable/rectangular_shape_rounded_corner_skyblue">
+            <TextView
+                android:id="@+id/tv_total_fault"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="@dimen/_17sdp"
+                android:gravity="center_vertical"
+                android:layout_marginLeft="@dimen/_15sdp"
+                android:text="TOTAL FAULT"
+                android:textAllCaps="true"
+                android:textColor="@color/white"
+                android:layout_marginRight="@dimen/_125sdp">
+
+            </TextView>
+            <RelativeLayout
+                android:layout_width="@dimen/_42sdp"
+                android:layout_height="match_parent"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="@dimen/_15sdp"
+                android:layout_marginTop="@dimen/_6sdp"
+                android:layout_marginBottom="@dimen/_6sdp"
+                android:background="@drawable/circle_shape_white">
+                <TextView
+                    android:id="@+id/tv_faultcount"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerInParent="true"
+                    android:textSize="@dimen/_16sdp"
+                    android:textColor="#18B8F9"
+                    android:text="00"></TextView>
+            </RelativeLayout>
+        </RelativeLayout>
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rec_managefault"
             xmlns:android="http://schemas.android.com/apk/res/android"
@@ -71,13 +110,13 @@
 
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="@dimen/_5sdp"
-            android:layout_marginLeft="@dimen/_5sdp"
-            android:layout_marginRight="@dimen/_5sdp"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_marginLeft="@dimen/_10sdp"
+            android:layout_marginRight="@dimen/_10sdp"
             app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
-            android:layout_below="@+id/tv_selectedsite"
-            tools:listitem="@layout/item_manage_faults"
-            android:visibility="gone"
+            android:layout_below="@+id/rl_faultcount"
+            tools:listitem="@layout/item_site_list_with_fault_count"
+            android:visibility="visible"
             android:layout_marginBottom="@dimen/_80sdp"
             >
 
@@ -102,6 +141,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_centerInParent="true"
+            android:visibility="gone"
             android:background="@drawable/no_data_found1"></ImageView>
 
     </RelativeLayout>

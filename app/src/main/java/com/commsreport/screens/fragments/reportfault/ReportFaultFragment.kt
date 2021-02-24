@@ -169,6 +169,9 @@ class ReportFaultFragment : Fragment() {
         fragmentReportFaultBinding!!.contentReportfault.imgMenu.setOnClickListener {
             activity!!.homeBinding!!.drawerLayout!!.openDrawer(Gravity.LEFT)
         }
+        fragmentReportFaultBinding!!.navnotifyEmail.submitNotifywho.setOnClickListener {
+            fragmentReportFaultBinding!!.drawerLayout!!.closeDrawer(Gravity.RIGHT)
+        }
 
 
     }

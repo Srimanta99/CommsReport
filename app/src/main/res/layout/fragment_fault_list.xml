@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.drawerlayout.widget.DrawerLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/home_bg"
+    android:orientation="vertical"
+    tools:context=".screens.fragments.faultlistdetails.FaultListFragment">
+    <include
+        android:id="@+id/content_faultlist"
+        layout="@layout/content_fault_list"></include>
+    <LinearLayout
+        android:layout_gravity="end"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent">
+        <ImageView
+            android:id="@+id/img_navclose"
+            android:layout_marginTop="@dimen/_10sdp"
+            android:layout_width="@dimen/_40sdp"
+            android:layout_height="@dimen/_40sdp"
+            android:src="@drawable/searchwithbg"
+            android:layout_alignParentRight="true"></ImageView>
+
+        <com.google.android.material.navigation.NavigationView
+            android:id="@+id/nav_view"
+            android:layout_width="@dimen/_200sdp"
+            android:layout_height="match_parent"
+            android:layout_gravity="end"
+            android:fitsSystemWindows="true">
+
+            <include layout="@layout/search_fault_layout"
+                android:id="@+id/nav_fault_search"/>
+        </com.google.android.material.navigation.NavigationView>
+    </LinearLayout>
+</androidx.drawerlayout.widget.DrawerLayout>

@@ -36,7 +36,7 @@
                         android:layout_width="0dp"
                         android:layout_height="match_parent"
 
-                        android:layout_weight="0.4"
+                        android:layout_weight="0.5"
                         android:orientation="vertical"
 
                         >
@@ -93,9 +93,10 @@
                             android:id="@+id/tv_name"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
-                            android:layout_marginTop="@dimen/_12sdp"
+                            android:layout_marginTop="@dimen/_10sdp"
                             android:text="Priyam Ghosh "
                             android:textColor="#1E3F6C"
+                            android:paddingLeft="@dimen/_1sdp"
                             android:layout_marginRight="@dimen/_20sdp"
                             android:textSize="@dimen/_14sdp"
                             android:textStyle="bold">
@@ -107,13 +108,14 @@
                             android:layout_height="wrap_content"
                             android:layout_marginTop="@dimen/_5sdp"
                             android:layout_marginBottom="@dimen/_2sdp"
+                            android:layout_marginLeft="@dimen/_2sdp"
                             android:orientation="horizontal">
 
 
                             <ImageView
-                                android:layout_width="@dimen/_20sdp"
-                                android:layout_height="@dimen/_15sdp"
-                                android:src="@drawable/ic_baseline_email_24">
+                                android:layout_width="@dimen/_12sdp"
+                                android:layout_height="@dimen/_12sdp"
+                                android:src="@drawable/mail">
 
                             </ImageView>
 
@@ -124,6 +126,7 @@
                                 android:gravity="top|left"
                                 android:text="chowdhury.codopoliz@gmail.com"
                                 android:textColor="#1E3F6C"
+                                android:layout_marginLeft="@dimen/_5sdp"
                                 android:textSize="@dimen/_10sdp">
 
                             </TextView>
@@ -139,9 +142,9 @@
 
                             <ImageView
                                 android:id="@+id/img_phone"
-                                android:layout_width="@dimen/_15sdp"
-                                android:layout_height="@dimen/_10sdp"
-                                android:src="@drawable/ic_baseline_phone_24">
+                                android:layout_width="@dimen/_12sdp"
+                                android:layout_height="@dimen/_11sdp"
+                                android:src="@drawable/phone">
 
                             </ImageView>
 
@@ -151,11 +154,47 @@
                                 android:layout_height="wrap_content"
                                 android:text="8777069940"
                                 android:textColor="#1E3F6C"
+                                android:layout_marginLeft="@dimen/_5sdp"
                                 android:textSize="@dimen/_10sdp">
 
                             </TextView>
                         </LinearLayout>
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginTop="@dimen/_5sdp"
+    android:layout_marginLeft="@dimen/_1sdp">
+    <TextView
+        android:id="@+id/tv_site"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_1sdp"
+        android:textSize="@dimen/_11sdp"
+        android:text="Site"
+        android:textColor="@color/textColor">
 
+    </TextView>
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_3sdp"
+        android:textSize="@dimen/_11sdp"
+        android:layout_marginLeft="@dimen/_5sdp"
+        android:layout_marginRight="@dimen/_5sdp"
+        android:textColor="@color/black"
+        android:text="|">
+
+    </TextView>
+    <TextView
+        android:id="@+id/tv_site_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:paddingLeft="@dimen/_3sdp"
+        android:textSize="@dimen/_10sdp"
+        android:text="Site">
+
+    </TextView>
+</LinearLayout>
 
                     </LinearLayout>
                 </LinearLayout>
@@ -177,10 +216,10 @@
                     android:paddingBottom="@dimen/_4sdp">
 
                     <ImageView
-                        android:layout_width="@dimen/_20sdp"
-                        android:layout_height="@dimen/_15sdp"
+                        android:layout_width="@dimen/_15sdp"
+                        android:layout_height="@dimen/_12sdp"
                         android:layout_marginLeft="@dimen/_12sdp"
-                        android:src="@drawable/ic_baseline_add_location_24">
+                        android:src="@drawable/location">
 
                     </ImageView>
 
@@ -190,6 +229,7 @@
                         android:layout_height="@dimen/_15sdp"
                         android:text="nabapally barasat kolkata 700126"
                         android:textColor="#1E3F6C"
+                        android:layout_marginLeft="@dimen/_5sdp"
                         android:textSize="@dimen/_10sdp">
 
                     </TextView>
@@ -215,11 +255,11 @@
         <TextView
             android:layout_width="0dp"
             android:layout_height="match_parent"
-            android:layout_weight="1.2"></TextView>
+            android:layout_weight="1.17"></TextView>
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_weight="1">
 
             <RelativeLayout
@@ -232,11 +272,11 @@
 
                 <ImageView
                     android:id="@+id/img_edit"
-                    android:layout_width="@dimen/_20sdp"
-                    android:layout_height="@dimen/_20sdp"
+                    android:layout_width="@dimen/_15sdp"
+                    android:layout_height="@dimen/_15sdp"
                     android:layout_centerVertical="true"
 
-                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_8sdp"
                     android:background="@drawable/edit_site"></ImageView>
 
                 <TextView
@@ -249,7 +289,7 @@
                     android:layout_toRightOf="@+id/img_fixfault"
                     android:gravity="center"
                     android:text="EDIT"
-                    android:textSize="@dimen/_11sdp">
+                    android:textSize="@dimen/_10sdp">
 
                 </TextView>
 
@@ -260,7 +300,7 @@
 
         <LinearLayout
             android:layout_width="0dp"
-            android:layout_height="@dimen/_30sdp"
+            android:layout_height="@dimen/_25sdp"
             android:layout_marginRight="@dimen/_5sdp"
             android:layout_weight="1">
 
@@ -273,10 +313,10 @@
 
                 <ImageView
                     android:id="@+id/imgtrash"
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_15sdp"
+                    android:layout_width="@dimen/_12sdp"
+                    android:layout_height="@dimen/_12sdp"
                     android:layout_centerVertical="true"
-                    android:layout_marginLeft="@dimen/_5sdp"
+                    android:layout_marginLeft="@dimen/_10sdp"
                     android:background="@drawable/fault_trash"></ImageView>
 
                 <TextView
@@ -289,7 +329,7 @@
                     android:gravity="center_vertical"
                     android:text="DELETE"
                     android:textColor="#fff"
-                    android:textSize="@dimen/_11sdp">
+                    android:textSize="@dimen/_10sdp">
 
                 </TextView>
 

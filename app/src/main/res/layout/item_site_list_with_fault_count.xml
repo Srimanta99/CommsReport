@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <RelativeLayout
+        android:id="@+id/rl_fault"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/_65sdp"
+        android:layout_margin="@dimen/_5sdp"
+        android:background="@drawable/rectangular_shape_rounded_corner_light_grey">
+        <TextView
+            android:id="@+id/tv_sitename"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:textSize="@dimen/_15sdp"
+            android:gravity="center_vertical"
+            android:layout_marginLeft="@dimen/_15sdp"
+            android:text="TRUEGYM"
+            android:layout_marginRight="@dimen/_125sdp">
+
+        </TextView>
+
+        <LinearLayout
+            android:layout_width="@dimen/_120sdp"
+            android:layout_height="match_parent"
+            android:layout_alignParentRight="true"
+            android:orientation="vertical"
+            android:background="@drawable/rectangular_shape_rounded_corner_deep_grey">
+
+            <TextView
+                android:id="@+id/tv_faultcount"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+                android:layout_marginTop="@dimen/_10sdp"
+                android:text="Faults Found"></TextView>
+            <TextView
+                android:id="@+id/tv_faultcount_val"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_20sdp"
+                android:layout_marginTop="@dimen/_2sdp"
+                android:text="01"></TextView>
+        </LinearLayout>
+    </RelativeLayout>
+
+</LinearLayout>

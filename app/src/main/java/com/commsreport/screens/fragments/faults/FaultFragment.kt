@@ -14,11 +14,15 @@ import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForFault
 import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForFaultSearch
 import com.commsreport.adapter.ManageFaultAdapter
+import com.commsreport.adapter.SiteFaultAdapter
 import com.commsreport.databinding.ContentManageFaultBinding
 import com.commsreport.databinding.FragmentFaultBinding
+
+
 import com.commsreport.model.FaultListModel
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
+import com.commsreport.screens.fragments.faultlistdetails.FaultListFragment
 import com.commsreport.screens.fragments.reportfault.ReportFaultFragment
 import com.commsreport.screens.home.HomeActivity
 import com.google.gson.JsonObject
@@ -26,6 +30,7 @@ import com.google.gson.JsonParser
 import com.sculptee.utils.customprogress.CustomProgressDialog
 import com.wecompli.network.ApiInterface
 import com.wecompli.network.Retrofit
+import com.wecompli.utils.onitemclickinterface.OnItemClickInterface
 import com.wecompli.utils.sheardpreference.AppSheardPreference
 import com.wecompli.utils.sheardpreference.PreferenceConstent
 import org.json.JSONObject
@@ -42,15 +47,15 @@ private const val ARG_PARAM2 = "param2"
 class FaultFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
-    var faultBinding:FragmentFaultBinding?=null
-    var contentManageFaultBinding:ContentManageFaultBinding?=null
+    var faultBinding: FragmentFaultBinding?=null
+    var contentManageFaultBinding: ContentManageFaultBinding?=null
     var activity:HomeActivity?=null
     var manageFaultAdapter:ManageFaultAdapter?=null
     var userdata: LoginResponseModel.Userdata? =null
     var siteList=ArrayList<SiteListModel.RowList>()
     var faultList=ArrayList<FaultListModel.FaultList>()
     var selecteddate=""
-
+    var siteFaultAdapter: SiteFaultAdapter?=null
     var selectedSiteId:String?=""
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -79,6 +84,8 @@ class FaultFragment : Fragment() {
         faultBinding!!.navFaultSearch.tvSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         faultBinding!!.navFaultSearch.tvDropdownSelectsite.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         faultBinding!!.navFaultSearch.searchFault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        faultBinding!!.contentManageFault.tvTotalFault.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
+        faultBinding!!.contentManageFault.tvFaultcount.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
         faultBinding!!.navFaultSearch.tvDate.setOnClickListener {
             datepickerdeStartDate()
         }
@@ -92,6 +99,8 @@ class FaultFragment : Fragment() {
           //  faultBinding!!.contentManageFault.tvSelectedsite.visibility=View.VISIBLE
 
             callApiForSiteList()
+            selectedSiteId = ""
+            callApiforFaultList(selectedSiteId!!)
 
         }else {
             faultBinding!!.navFaultSearch.tvDropdownSelectsite.setText(userdata!!.site_name)
@@ -195,7 +204,14 @@ class FaultFragment : Fragment() {
                     customProgress.hideProgress()
                     if(response.code()==200) {
                         siteList = response.body()!!.row
+                        faultBinding!!.contentManageFault.tvFaultcount.setText(padnumber(response!!.body()!!.total_fault).toString())
+                        siteFaultAdapter = SiteFaultAdapter(activity!!,siteList!!,this@FaultFragment,object :OnItemClickInterface{
+                            override fun OnItemClick(position: Int) {
+                                activity!!.openFragment(FaultListFragment())
 
+                            }
+                        })
+                        contentManageFaultBinding!!.recManagefault!!.adapter = siteFaultAdapter
 
                     }else if(response.code()==401){
                         Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
@@ -238,13 +254,13 @@ class FaultFragment : Fragment() {
                            if (response!!.body()!!.row.size>0) {
                                faultList.clear()
                                faultList=response!!.body()!!.row
-                               faultBinding!!.contentManageFault.recManagefault.visibility=View.VISIBLE
-                               faultBinding!!.contentManageFault.noData.visibility=View.GONE
+                               faultBinding!!.contentManageFault.recManagefault!!.visibility=View.VISIBLE
+                              // faultBinding!!.contentManageFault!!.noData!!.visibility=View.GONE
                                setAdpterValue()
 
                            }else{
-                               faultBinding!!.contentManageFault.recManagefault.visibility=View.GONE
-                               faultBinding!!.contentManageFault.noData.visibility=View.VISIBLE
+                               faultBinding!!.contentManageFault.recManagefault!!.visibility=View.GONE
+                             //  faultBinding!!.contentManageFault.noData!!.visibility=View.VISIBLE
                            }
                              //  ToastAlert.CustomToasterror(activity!!,"No Record Found")
                        }
