@@ -18,6 +18,7 @@ import com.commsreport.databinding.ItemManageFaultsBinding
 import com.commsreport.model.AddUserResponse
 
 import com.commsreport.model.FaultListModel
+import com.commsreport.screens.fragments.faultlistdetails.FaultListFragment
 import com.commsreport.screens.fragments.faults.FaultFragment
 import com.commsreport.screens.home.HomeActivity
 import com.commsreport.screens.login.LoginActivity
@@ -36,7 +37,7 @@ import retrofit2.Response
 class ManageFaultAdapter(
     val activity: HomeActivity?,
     val faultList: ArrayList<FaultListModel.FaultList>,
-    val faultFragment: FaultFragment
+    val faultFragment: FaultListFragment
 ) : RecyclerView.Adapter<ManageFaultAdapter.ViewHolder>() {
     var itemManageFaultsBinding: ItemManageFaultsBinding?=null
     class ViewHolder(itemView:  ItemManageFaultsBinding) : RecyclerView.ViewHolder(itemView.root)
@@ -133,7 +134,7 @@ class ManageFaultAdapter(
             paramObject.put("checks_process_fault_id", fault.id)
             paramObject.put("work_type", "repair")
             paramObject.put("fault_status_id", "4")
-            paramObject.put("site_id",faultFragment.selectedSiteId)
+            paramObject.put("site_id",faultFragment.selecteddate)
 
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
@@ -175,7 +176,7 @@ class ManageFaultAdapter(
             paramObject.put("checks_process_fault_id", fault.id)
             paramObject.put("work_type", "repair")
             paramObject.put("fault_status_id", "6")
-            paramObject.put("site_id",faultFragment.selectedSiteId)
+            paramObject.put("site_id",faultFragment.selected_Site_id)
 
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()

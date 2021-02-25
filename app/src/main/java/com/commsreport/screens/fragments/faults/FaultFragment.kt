@@ -7,6 +7,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.drawerlayout.widget.DrawerLayout
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
@@ -86,7 +87,9 @@ class FaultFragment : Fragment() {
         faultBinding!!.navFaultSearch.searchFault.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         faultBinding!!.contentManageFault.tvTotalFault.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
         faultBinding!!.contentManageFault.tvFaultcount.setTypeface(CustomTypeface.getRajdhaniBold(activity!!))
-        faultBinding!!.navFaultSearch.tvDate.setOnClickListener {
+
+        faultBinding!!.drawerLayout.setDrawerLockMode(DrawerLayout.LOCK_MODE_LOCKED_CLOSED);
+       /* faultBinding!!.navFaultSearch.tvDate.setOnClickListener {
             datepickerdeStartDate()
         }
         faultBinding!!.navFaultSearch.searchFault.setOnClickListener {
@@ -94,7 +97,7 @@ class FaultFragment : Fragment() {
                 callApiforFaultList(selectedSiteId!!)
             }else
                 ToastAlert.CustomToastwornning(activity!!,"Please enter some value")
-        }
+        }*/
         if(userdata!!.user_type.equals("COMPANY_ADMIN")){
           //  faultBinding!!.contentManageFault.tvSelectedsite.visibility=View.VISIBLE
 
@@ -207,6 +210,7 @@ class FaultFragment : Fragment() {
                         faultBinding!!.contentManageFault.tvFaultcount.setText(padnumber(response!!.body()!!.total_fault).toString())
                         siteFaultAdapter = SiteFaultAdapter(activity!!,siteList!!,this@FaultFragment,object :OnItemClickInterface{
                             override fun OnItemClick(position: Int) {
+                                AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_site_id,siteList.get(position).id)
                                 activity!!.openFragment(FaultListFragment())
 
                             }
@@ -256,7 +260,7 @@ class FaultFragment : Fragment() {
                                faultList=response!!.body()!!.row
                                faultBinding!!.contentManageFault.recManagefault!!.visibility=View.VISIBLE
                               // faultBinding!!.contentManageFault!!.noData!!.visibility=View.GONE
-                               setAdpterValue()
+                              // setAdpterValue()
 
                            }else{
                                faultBinding!!.contentManageFault.recManagefault!!.visibility=View.GONE
@@ -282,10 +286,10 @@ class FaultFragment : Fragment() {
        }
    }
 
-    public fun setAdpterValue() {
+   /* public fun setAdpterValue() {
         manageFaultAdapter = ManageFaultAdapter(activity,faultList!!,this)
         contentManageFaultBinding!!.recManagefault!!.adapter = manageFaultAdapter
-    }
+    }*/
 
 
 

@@ -6,6 +6,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:background="@drawable/home_bg"
     android:orientation="vertical"
+    android:id="@+id/drawer_layout"
     tools:context=".screens.fragments.faultlistdetails.FaultListFragment">
     <include
         android:id="@+id/content_faultlist"

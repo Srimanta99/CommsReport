@@ -60,11 +60,17 @@
             android:layout_below="@+id/rl_faultcount"
             tools:listitem="@layout/item_manage_faults"
             android:visibility="visible"
-            android:layout_marginBottom="@dimen/_80sdp"
+            android:layout_marginBottom="@dimen/_10sdp"
             >
 
         </androidx.recyclerview.widget.RecyclerView>
-        <!--
+        <ImageView
+            android:id="@+id/imgnodata"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:visibility="invisible"
+            android:background="@drawable/no_data_found1"></ImageView>        <!--
                 <TextView
                     android:id="@+id/tv_addfault"
                     android:layout_width="@dimen/_175sdp"

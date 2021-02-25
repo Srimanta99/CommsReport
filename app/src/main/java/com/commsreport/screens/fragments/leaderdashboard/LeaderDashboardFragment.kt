@@ -14,6 +14,7 @@ import com.commsreport.model.DocumentListModel
 import com.commsreport.model.FaultCountModel
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.screens.fragments.document.DocumentUploadFragment
+import com.commsreport.screens.fragments.faultlistdetails.FaultListFragment
 import com.commsreport.screens.fragments.faults.FaultFragment
 import com.commsreport.screens.fragments.reportfault.ReportFaultFragment
 import com.commsreport.screens.home.HomeActivity
@@ -65,7 +66,15 @@ class LeaderDashboardFragment : Fragment() {
             activity!!.openFragment(ReportFaultFragment())
         }
         fragmentLeaderDashboardBinding!!.rlFaultcount.setOnClickListener {
-            activity!!.openFragment(FaultFragment())
+            if(userdata!!.user_type.equals("COMPANY_ADMIN")){
+                activity!!.openFragment(FaultFragment())
+            }else{
+                AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_site_id,userdata!!.site_id)
+                activity!!.openFragment(FaultListFragment())
+            }
+
+
+
         }
         userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         callApiForFaultCount()

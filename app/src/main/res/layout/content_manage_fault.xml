@@ -70,7 +70,7 @@
             android:layout_marginLeft="@dimen/_15sdp"
             android:layout_marginRight="@dimen/_15sdp"
             android:layout_marginTop="@dimen/_20sdp"
-            android:layout_height="@dimen/_52sdp"
+            android:layout_height="@dimen/_47sdp"
             android:background="@drawable/rectangular_shape_rounded_corner_skyblue">
             <TextView
                 android:id="@+id/tv_total_fault"
@@ -86,7 +86,7 @@
 
             </TextView>
             <RelativeLayout
-                android:layout_width="@dimen/_42sdp"
+                android:layout_width="@dimen/_38sdp"
                 android:layout_height="match_parent"
                 android:layout_alignParentRight="true"
                 android:layout_marginRight="@dimen/_15sdp"
@@ -129,7 +129,7 @@
             android:layout_marginBottom="@dimen/_20sdp"
             android:layout_gravity="center"
             android:gravity="center"
-            android:text="ADD FAULT"
+            android:text="REPORT FAULT"
             android:textColor="#fff"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
