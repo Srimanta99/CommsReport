@@ -103,7 +103,7 @@ class FaultFragment : Fragment() {
 
             callApiForSiteList()
             selectedSiteId = ""
-            callApiforFaultList(selectedSiteId!!)
+           // callApiforFaultList(selectedSiteId!!)
 
         }else {
             faultBinding!!.navFaultSearch.tvDropdownSelectsite.setText(userdata!!.site_name)
@@ -129,10 +129,10 @@ class FaultFragment : Fragment() {
             val customPopUpDialogSiteList= CustomPopUpDialogSiteForFault(activity,siteList,this)
             customPopUpDialogSiteList!!.show()
         }
-        faultBinding!!.navFaultSearch.tvDropdownSelectsite.setOnClickListener {
+       /* faultBinding!!.navFaultSearch.tvDropdownSelectsite.setOnClickListener {
             val customPopUpDialogSiteList= CustomPopUpDialogSiteForFaultSearch(activity,siteList,this)
             customPopUpDialogSiteList!!.show()
-        }
+        }*/
         faultBinding!!.navFaultSearch.searchFault.setOnClickListener {
             if(!selectedSiteId.equals("")) {
                 callApiforFaultList(selectedSiteId!!)
@@ -211,6 +211,7 @@ class FaultFragment : Fragment() {
                         siteFaultAdapter = SiteFaultAdapter(activity!!,siteList!!,this@FaultFragment,object :OnItemClickInterface{
                             override fun OnItemClick(position: Int) {
                                 AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_site_id,siteList.get(position).id)
+                                AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_sitename,siteList.get(position).site_name)
                                 activity!!.openFragment(FaultListFragment())
 
                             }

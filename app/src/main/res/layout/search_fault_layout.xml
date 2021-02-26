@@ -61,6 +61,7 @@
         android:textSize="@dimen/_12sdp"
         android:textStyle="normal"
         android:layout_marginTop="@dimen/_10sdp"
+        android:hint="--/--/----"
         android:drawableRight="@drawable/calenderinnav"
         android:drawablePadding="@dimen/_10sdp"
         >
@@ -75,7 +76,7 @@
 
         android:text="Search by Site"
         android:textColor="#1E3F6C"
-android:visibility="invisible"
+         android:visibility="visible"
         android:textSize="@dimen/_14sdp">
 
     </TextView>
@@ -90,7 +91,8 @@ android:visibility="invisible"
         android:gravity="center_vertical"
         android:paddingLeft="@dimen/_7sdp"
         android:paddingRight="@dimen/_10sdp"
-        android:visibility="invisible"
+        android:visibility="visible"
+        android:hint="Select site"
         android:textSize="@dimen/_12sdp"></TextView>
 
     <RelativeLayout

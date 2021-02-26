@@ -106,6 +106,7 @@ class ReportFaultFragment : Fragment() {
         fragmentReportFaultBinding!!.navnotifyEmail.submitNotifywho.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentReportFaultBinding!!.contentReportfault.tvNote.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentReportFaultBinding!!.contentReportfault.tvMendatory.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        fragmentReportFaultBinding!!.navnotifyEmail.tvNoemail.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         val notetext= "<font color=#FE0100>Note: </font> <font color=#1E3F6C>Please enter your complete fault details in the above section</font>"
         fragmentReportFaultBinding!!.contentReportfault.tvNote.setText(Html.fromHtml(notetext))
         val notemendatory= "<font color=#FE0100>Note: </font> <font color=#1E3F6C>[*] feilds are all mandatory fields</font>"
@@ -159,8 +160,10 @@ class ReportFaultFragment : Fragment() {
         }
         fragmentReportFaultBinding!!.contentReportfault.tvNotify.setOnClickListener {
             if (!selectedSiteId.equals("")) {
+
                 callApiforEmailList()
                 fragmentReportFaultBinding!!.drawerLayout.openDrawer(Gravity.RIGHT)
+                fragmentReportFaultBinding!!.navnotifyEmail.llNoemail.visibility=View.GONE
             }else{
                 ToastAlert.CustomToastwornning(activity!!,"Please select site")
             }
@@ -171,6 +174,7 @@ class ReportFaultFragment : Fragment() {
         }
         fragmentReportFaultBinding!!.navnotifyEmail.submitNotifywho.setOnClickListener {
             fragmentReportFaultBinding!!.drawerLayout!!.closeDrawer(Gravity.RIGHT)
+            fragmentReportFaultBinding!!.navnotifyEmail.llNoemail.visibility=View.GONE
         }
 
 
@@ -200,7 +204,8 @@ class ReportFaultFragment : Fragment() {
                             fragmentReportFaultBinding!!.navnotifyEmail.recNotifywho.adapter=notifyEmailAdapter
 
                         }else
-                            ToastAlert.CustomToasterror(activity!!,response!!.body()!!.message)
+                            fragmentReportFaultBinding!!.navnotifyEmail.llNoemail.visibility=View.VISIBLE
+                           // ToastAlert.CustomToasterror(activity!!,response!!.body()!!.message)
 
                     }else if(response.code()==401){
                         Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
@@ -545,7 +550,7 @@ class ReportFaultFragment : Fragment() {
         for (i in imagearraylist.indices) {
             builder.addFormDataPart(
                 "fault_image[]", imagearraylist.get(i).name, okhttp3.RequestBody.create(
-                    MediaType.parse("image/jpeg"), imagearraylist.get(i)
+                    MediaType.parse("image/jpg"), imagearraylist.get(i)
                 )
             )
         }

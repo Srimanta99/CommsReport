@@ -69,7 +69,7 @@ class AddUserFragment : Fragment(), CountryClickInterface {
 
     private var param1: String? = null
     private var param2: String? = null
-   public var addUserBinding:FragmentAddUserBinding?=null
+   public var addUserBinding: FragmentAddUserBinding?=null
     var activity: HomeActivity?=null
     var userdata: LoginResponseModel.Userdata? =null
     var siteList=ArrayList<SiteListModel.RowList>()
@@ -499,7 +499,7 @@ class AddUserFragment : Fragment(), CountryClickInterface {
         builder.addFormDataPart("user_country_id",selectedCountry)
         if (imgFile!=null)
         builder.addFormDataPart("user_profile_picture",imgFile!!.absolutePath , okhttp3.RequestBody.create(
-            MediaType.parse("image/jpeg"), imgFile))
+            MediaType.parse("image/jpg"), imgFile))
 
         val requestBody = builder.build()
         var request: Request? = null

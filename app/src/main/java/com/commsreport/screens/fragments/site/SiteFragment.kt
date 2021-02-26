@@ -282,7 +282,7 @@ class SiteFragment : Fragment(),CountryClickInterface {
         builder.addFormDataPart("site_postcode", fragmentAddSiteBinding!!.etPinCode.text.toString())
 
         if (imgFile!=null)
-        builder.addFormDataPart("site_logo", imgFile!!.absolutePath, okhttp3.RequestBody.create(MediaType.parse("image/jpeg"), imgFile))
+        builder.addFormDataPart("site_logo", imgFile!!.absolutePath, okhttp3.RequestBody.create(MediaType.parse("image/jpg"), imgFile))
         builder.addFormDataPart("status_id",selectedStatus )
         builder.addFormDataPart("country_id",selectedCountry)
         val requestBody = builder.build()

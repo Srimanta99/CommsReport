@@ -272,8 +272,8 @@
 
                 <ImageView
                     android:id="@+id/img_edit"
-                    android:layout_width="@dimen/_15sdp"
-                    android:layout_height="@dimen/_15sdp"
+                    android:layout_width="@dimen/_14sdp"
+                    android:layout_height="@dimen/_14sdp"
                     android:layout_centerVertical="true"
 
                     android:layout_marginLeft="@dimen/_8sdp"
@@ -313,8 +313,8 @@
 
                 <ImageView
                     android:id="@+id/imgtrash"
-                    android:layout_width="@dimen/_12sdp"
-                    android:layout_height="@dimen/_12sdp"
+                    android:layout_width="@dimen/_11sdp"
+                    android:layout_height="@dimen/_11sdp"
                     android:layout_centerVertical="true"
                     android:layout_marginLeft="@dimen/_10sdp"
                     android:background="@drawable/fault_trash"></ImageView>

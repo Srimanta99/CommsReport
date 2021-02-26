@@ -41,12 +41,14 @@
 
 
             <LinearLayout
+                android:id="@+id/ll_date"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="@dimen/_8sdp"
                 android:orientation="horizontal">
 
                 <LinearLayout
+                    android:id="@+id/ll_startdate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -97,6 +99,7 @@
                     android:layout_height="match_parent"></TextView>
 
                 <LinearLayout
+                    android:id="@+id/ll_enddate"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="1"
@@ -119,7 +122,7 @@
                             android:id="@+id/end_date"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
-                            android:text="Start date"
+                            android:text="End date"
                             android:textSize="@dimen/_12sdp"
                             android:textColor="#1E3F6C"
                             android:textStyle="bold">

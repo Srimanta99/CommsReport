@@ -58,8 +58,19 @@ class ManageDocumentAdapter(
         itemManageDocumentBinding!!.tvDownload4.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
 
         itemManageDocumentBinding!!.tvDocname.setText(docList.get(position).document_name)
+        if (!docList.get(position).affected_date.equals("0000-00-00"))
         itemManageDocumentBinding!!.tvStartDate.setText(docList.get(position).affected_date)
-        itemManageDocumentBinding!!.tvEndDate.setText(docList.get(position).expire_date)
+        else
+            itemManageDocumentBinding!!.llStartdate.visibility=View.GONE
+
+        if (!docList.get(position).expire_date.equals("0000-00-00"))
+           itemManageDocumentBinding!!.tvEndDate.setText(docList.get(position).expire_date)
+        else
+            itemManageDocumentBinding!!.llEnddate.visibility=View.GONE
+
+        if (docList.get(position).affected_date.equals("0000-00-00") && docList.get(position).expire_date.equals("0000-00-00"))
+            itemManageDocumentBinding!!.llDate.visibility=View.GONE
+
         itemManageDocumentBinding!!.tvRemove.setOnClickListener {
             documentClose(docList.get(position).id, position)
          //   callApiforRemoveDocument(docList.get(position).id, position)

@@ -70,6 +70,8 @@ class LeaderDashboardFragment : Fragment() {
                 activity!!.openFragment(FaultFragment())
             }else{
                 AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_site_id,userdata!!.site_id)
+                AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_sitename,userdata!!.site_name)
+
                 activity!!.openFragment(FaultListFragment())
             }
 

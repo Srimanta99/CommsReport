@@ -13,6 +13,7 @@ import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.databinding.ItemManageUserBinding
+
 import com.commsreport.model.AddUserResponse
 import com.commsreport.model.SiteUserListModel
 import com.commsreport.screens.fragments.edituser.EditUserFragment
@@ -37,7 +38,7 @@ class ManageUserAdapter(
     val manageUserFragment: ManageUserFragment
 ) : RecyclerView.Adapter<ManageUserAdapter.ViewHolder>() {
     var itemManageSitesBinding:ItemManageUserBinding?=null
-    class ViewHolder(itemView:  ItemManageUserBinding) : RecyclerView.ViewHolder(itemView.root)
+    class ViewHolder(itemView: ItemManageUserBinding) : RecyclerView.ViewHolder(itemView.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
          var inflater=LayoutInflater.from(parent.context)
@@ -55,7 +56,10 @@ class ManageUserAdapter(
         itemManageSitesBinding!!.tvSiteName.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
         itemManageSitesBinding!!.tvName.setText(userList.get(position).user_first_name)
         itemManageSitesBinding!!.emailId.setText(userList.get(position).user_email_ID)
-        itemManageSitesBinding!!.teacherMobile.setText(userList.get(position).user_contactno)
+        if(!userList.get(position).user_contactno.equals(""))
+           itemManageSitesBinding!!.teacherMobile.setText(userList.get(position).user_contactno)
+        else
+            itemManageSitesBinding!!.teacherMobile.setText("No contact number provided")
         itemManageSitesBinding!!.tvLocation.setText(userList.get(position).user_address)
         itemManageSitesBinding!!.tvSiteName.setText(userList.get(position).site_name)
        /* if (userList.get(position).user_contactno.equals("") || userList.get(position).user_contactno==null){

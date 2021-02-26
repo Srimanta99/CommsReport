@@ -473,7 +473,7 @@ class EditUserFragment : Fragment(), CountryClickInterface {
         builder.addFormDataPart("user_country_id",selectedCountry)
         if (imgFile!=null)
             builder.addFormDataPart("user_profile_picture",imgFile!!.absolutePath , okhttp3.RequestBody.create(
-                MediaType.parse("image/jpeg"), imgFile))
+                MediaType.parse("image/jpg"), imgFile))
 
         val requestBody = builder.build()
         var request: Request? = null

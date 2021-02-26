@@ -21,5 +21,6 @@ object PreferenceConstent {
     var site_id = "siteid"
     var park_id = "parkid"
     var selected_site_id="selectedsiteid"
+    var selected_sitename="selectedsitename"
 
 }

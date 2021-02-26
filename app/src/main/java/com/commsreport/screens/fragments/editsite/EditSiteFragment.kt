@@ -193,7 +193,7 @@ class EditSiteFragment : Fragment(),CountryClickInterface {
         builder.addFormDataPart("country_id",selectedCountry)
         if (imgFile!=null)
             builder.addFormDataPart("site_logo",imgFile!!.absolutePath , okhttp3.RequestBody.create(
-                MediaType.parse("image/jpeg"), imgFile))
+                MediaType.parse("image/jpg"), imgFile))
 
         val requestBody = builder.build()
         var request: Request? = null

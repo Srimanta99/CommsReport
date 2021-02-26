@@ -1,7 +1,6 @@
 package com.commsreport.adapter
 
 import android.app.Dialog
-import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -11,17 +10,14 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
+import com.commsreport.Utils.FullScreenImageSlider
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.databinding.ItemManageFaultsBinding
-
 import com.commsreport.model.AddUserResponse
-
 import com.commsreport.model.FaultListModel
 import com.commsreport.screens.fragments.faultlistdetails.FaultListFragment
-import com.commsreport.screens.fragments.faults.FaultFragment
 import com.commsreport.screens.home.HomeActivity
-import com.commsreport.screens.login.LoginActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.sculptee.utils.customprogress.CustomProgressDialog
@@ -33,14 +29,17 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ManageFaultAdapter(
     val activity: HomeActivity?,
     val faultList: ArrayList<FaultListModel.FaultList>,
-    val faultFragment: FaultListFragment
-) : RecyclerView.Adapter<ManageFaultAdapter.ViewHolder>() {
+    val faultFragment: FaultListFragment) : RecyclerView.Adapter<ManageFaultAdapter.ViewHolder>() {
     var itemManageFaultsBinding: ItemManageFaultsBinding?=null
-    class ViewHolder(itemView:  ItemManageFaultsBinding) : RecyclerView.ViewHolder(itemView.root)
+    var fullscreenImageSlider: FullScreenImageSlider?=null
+    class ViewHolder(itemView: ItemManageFaultsBinding) : RecyclerView.ViewHolder(itemView.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder {
         val inflate=LayoutInflater.from(parent.context)
@@ -50,8 +49,16 @@ class ManageFaultAdapter(
     }
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
-        itemManageFaultsBinding!!.faultDecription.setTypeface(CustomTypeface.getRajdhaniSemiBold(activity!!))
-        itemManageFaultsBinding!!.tvFaultdescription.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
+        itemManageFaultsBinding!!.faultDecription.setTypeface(
+            CustomTypeface.getRajdhaniSemiBold(
+                activity!!
+            )
+        )
+        itemManageFaultsBinding!!.tvFaultdescription.setTypeface(
+            CustomTypeface.getRajdhaniMedium(
+                activity!!
+            )
+        )
         itemManageFaultsBinding!!.tvClose.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         itemManageFaultsBinding!!.tvFaultdate.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         itemManageFaultsBinding!!.faultdate.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
@@ -59,99 +66,143 @@ class ManageFaultAdapter(
         itemManageFaultsBinding!!.tvFaultdescription.setText(faultList.get(position).fault_description)
 
         itemManageFaultsBinding!!.tvClose.setOnClickListener {
-            closeFaultAlert(faultList.get(position),position)
+            closeFaultAlert(faultList.get(position), position)
             //callApiforCloseFault(faultList.get(position),position)
         }
         itemManageFaultsBinding!!.tvRemove.setOnClickListener {
-            fixFaultAlert(faultList.get(position),position)
+            fixFaultAlert(faultList.get(position), position)
                // callApiforRemoveFault(faultList.get(position),position);
         }
 
 
         try {
             if (faultList.get(position).created_at!=null){
-                itemManageFaultsBinding!!.tvFaultdate.setText(faultList.get(position).created_at.split(" ")[0])
+                var spf = SimpleDateFormat("yyyy-MM-dd")
+                val newDate: Date = spf.parse(faultList.get(position).created_at.split(" ")[0])
+                spf = SimpleDateFormat("dd MMM yyyy")
+                var date:String = spf.format(newDate)
+                itemManageFaultsBinding!!.tvFaultdate.setText(date)
             }
             if (faultList.get(position).fault_files.size==1){
                 itemManageFaultsBinding!!.imgFault1.visibility= View.VISIBLE
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[0])
-                    .into( itemManageFaultsBinding!!.imgFault1);
+                    .into(itemManageFaultsBinding!!.imgFault1);
+                itemManageFaultsBinding!!.imgFault1.setOnClickListener {
+                    fullscreenImageSlider= FullScreenImageSlider(activity,faultList.get(position).fault_files)
+                    //fullscreenImageSlider!!.isCancelable = false
+                    fullscreenImageSlider!!.show(activity!!.supportFragmentManager,"")
+                }
             }
             if (faultList.get(position).fault_files.size==1){
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[0])
-                    .into( itemManageFaultsBinding!!.imgFault1);
+                    .into(itemManageFaultsBinding!!.imgFault1);
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[1])
-                    .into( itemManageFaultsBinding!!.imgFault2);
+                    .into(itemManageFaultsBinding!!.imgFault2);
             }
             if (faultList.get(position).fault_files.size==3){
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[0])
-                    .into( itemManageFaultsBinding!!.imgFault1);
+                    .into(itemManageFaultsBinding!!.imgFault1);
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[1])
-                    .into( itemManageFaultsBinding!!.imgFault2);
+                    .into(itemManageFaultsBinding!!.imgFault2);
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[2])
-                    .into( itemManageFaultsBinding!!.imgFault3);
+                    .into(itemManageFaultsBinding!!.imgFault3);
 
 
             }
             if (faultList.get(position).fault_files.size==4){
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[0])
-                    .into( itemManageFaultsBinding!!.imgFault1);
+                    .into(itemManageFaultsBinding!!.imgFault1);
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[1])
-                    .into( itemManageFaultsBinding!!.imgFault2);
+                    .into(itemManageFaultsBinding!!.imgFault2);
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[2])
-                    .into( itemManageFaultsBinding!!.imgFault3);
+                    .into(itemManageFaultsBinding!!.imgFault3);
                 Glide.with(activity)
                     .load(faultList.get(position).fault_files[3])
-                    .into( itemManageFaultsBinding!!.imgFault4);
+                    .into(itemManageFaultsBinding!!.imgFault4);
                 /*  itemManageFaultsBinding!!.imgFault1.visibility= View.VISIBLE
                   itemManageFaultsBinding!!.imgFault2.visibility= View.VISIBLE
                   itemManageFaultsBinding!!.imgFault3.visibility= View.VISIBLE
                   itemManageFaultsBinding!!.imgFault4.visibility= View.VISIBLE*/
             }
 
-        }catch (e:Exception){
+            itemManageFaultsBinding!!.imgFault1.setOnClickListener {
+                if (faultList.get(position).fault_files.size>0) {
+                    fullscreenImageSlider =
+                        FullScreenImageSlider(activity, faultList.get(position).fault_files)
+                    //fullscreenImageSlider!!.isCancelable = false
+                    fullscreenImageSlider!!.show(activity!!.supportFragmentManager, "")
+                }
+            }
+            itemManageFaultsBinding!!.imgFault2.setOnClickListener {
+                if (faultList.get(position).fault_files.size>0) {
+                    fullscreenImageSlider =
+                        FullScreenImageSlider(activity, faultList.get(position).fault_files)
+                    //fullscreenImageSlider!!.isCancelable = false
+                    fullscreenImageSlider!!.show(activity!!.supportFragmentManager, "")
+                }
+            }
+            itemManageFaultsBinding!!.imgFault3.setOnClickListener {
+                if (faultList.get(position).fault_files.size>0) {
+                    fullscreenImageSlider =
+                        FullScreenImageSlider(activity, faultList.get(position).fault_files)
+                    //fullscreenImageSlider!!.isCancelable = false
+                    fullscreenImageSlider!!.show(activity!!.supportFragmentManager, "")
+                }
+            }
+            itemManageFaultsBinding!!.imgFault4.setOnClickListener {
+                if (faultList.get(position).fault_files.size>0) {
+                    fullscreenImageSlider = FullScreenImageSlider(activity, faultList.get(position).fault_files)
+                    //fullscreenImageSlider!!.isCancelable = false
+                    fullscreenImageSlider!!.show(activity!!.supportFragmentManager, "")
+                }
+            }
+
+        }catch (e: Exception){
             e.printStackTrace()
         }
 
     }
 
-    private fun callApiforRemoveFault(fault: FaultListModel.FaultList,position: Int) {
+    private fun callApiforRemoveFault(fault: FaultListModel.FaultList, position: Int) {
         var userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
-        customProgress.showProgress(activity!!,"Please Wait..",false)
+        customProgress.showProgress(activity!!, "Please Wait..", false)
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
         try {
             val paramObject = JSONObject()
             paramObject.put("checks_process_fault_id", fault.id)
             paramObject.put("work_type", "repair")
             paramObject.put("fault_status_id", "4")
-            paramObject.put("site_id",faultFragment.selecteddate)
+            paramObject.put("site_id", faultFragment.selecteddate)
 
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
             var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
-            val callApi=apiInterface.callApiforFaultRepair(userdata!!.token,gsonObject)
+            val callApi=apiInterface.callApiforFaultRepair(userdata!!.token, gsonObject)
             callApi.enqueue(object : Callback<AddUserResponse> {
-                override fun onResponse(call: Call<AddUserResponse>, response: Response<AddUserResponse>) {
+                override fun onResponse(
+                    call: Call<AddUserResponse>,
+                    response: Response<AddUserResponse>
+                ) {
                     customProgress.hideProgress()
-                    if(response.code()==200) {
-                        if(response.body()!!.status){
-                            ToastAlert.CustomToastSuccess(activity!!,"Fault Remove Successfully")
+                    if (response.code() == 200) {
+                        if (response.body()!!.status) {
+                            ToastAlert.CustomToastSuccess(activity!!, "Fault Remove Successfully")
                             faultFragment.faultList.removeAt(position)
                             faultFragment.setAdpterValue()
                         }
 
-                    }else if(response.code()==401){
-                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
+                    } else if (response.code() == 401) {
+                        Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
 
                     }
                 }
@@ -161,7 +212,7 @@ class ManageFaultAdapter(
                 }
             })
 
-        }catch (e:Exception){
+        }catch (e: Exception){
             e.printStackTrace()
         }
     }
@@ -169,32 +220,35 @@ class ManageFaultAdapter(
     private fun callApiforCloseFault(fault: FaultListModel.FaultList, position: Int) {
         var userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
-        customProgress.showProgress(activity!!,"Please Wait..",false)
+        customProgress.showProgress(activity!!, "Please Wait..", false)
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
         try {
             val paramObject = JSONObject()
             paramObject.put("checks_process_fault_id", fault.id)
             paramObject.put("work_type", "repair")
             paramObject.put("fault_status_id", "6")
-            paramObject.put("site_id",faultFragment.selected_Site_id)
+            paramObject.put("site_id", faultFragment.selected_Site_id)
 
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
             var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
-            val callApi=apiInterface.callApiforFaultRepair(userdata!!.token,gsonObject)
+            val callApi=apiInterface.callApiforFaultRepair(userdata!!.token, gsonObject)
             callApi.enqueue(object : Callback<AddUserResponse> {
-                override fun onResponse(call: Call<AddUserResponse>, response: Response<AddUserResponse>) {
+                override fun onResponse(
+                    call: Call<AddUserResponse>,
+                    response: Response<AddUserResponse>
+                ) {
                     customProgress.hideProgress()
-                    if(response.code()==200) {
-                        if(response.body()!!.status){
-                            ToastAlert.CustomToastSuccess(activity,"Fault Close Successfully")
-                          //  Alert.showalert(activity!!,"Fault Close Successfully")
+                    if (response.code() == 200) {
+                        if (response.body()!!.status) {
+                            ToastAlert.CustomToastSuccess(activity, "Fault Close Successfully")
+                            //  Alert.showalert(activity!!,"Fault Close Successfully")
                             faultFragment.faultList.removeAt(position)
                             faultFragment.setAdpterValue()
                         }
 
-                    }else if(response.code()==401){
-                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
+                    } else if (response.code() == 401) {
+                        Alert.showalertForUnAuthorized(activity!!, "Unauthorized")
 
                     }
                 }
@@ -204,7 +258,7 @@ class ManageFaultAdapter(
                 }
             })
 
-        }catch (e:Exception){
+        }catch (e: Exception){
             e.printStackTrace()
         }
     }
@@ -229,7 +283,7 @@ class ManageFaultAdapter(
         tv_message.typeface = CustomTypeface.getRajdhaniRegular(activity)
         tv_ok.setOnClickListener {
             alertDialog.dismiss()
-            callApiforCloseFault(faultList.get(position),position)
+            callApiforCloseFault(faultList.get(position), position)
         }
         tv_no.setOnClickListener {
             alertDialog.dismiss()
@@ -259,13 +313,13 @@ class ManageFaultAdapter(
         tv_message.typeface = CustomTypeface.getRajdhaniRegular(activity)
         tv_ok.setOnClickListener {
             alertDialog.dismiss()
-            callApiforRemoveFault(faultList.get(position),position);
+            callApiforRemoveFault(faultList.get(position), position);
         }
         tv_no.setOnClickListener {
             alertDialog.dismiss()
 
         }
-        tv_message.setText("Are you want to fix this fault?")
+        tv_message.setText("Are you sure the fault has been fixed?")
         alertDialog.show()
         /*alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
             DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
