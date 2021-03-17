@@ -26,8 +26,10 @@ class NetworkUtility {
         const val COUNTRYLIST="api/country/list"
         const val EMAILLIST="api/email/list"
         const val  EMAILCREATE="api/email/create"
-       const val SITE_REMOVE="api/site/remove"
-      const val User_Remove="api/user/remove"
+        const val SITE_REMOVE="api/site/remove"
+        const val User_Remove="api/user/remove"
+        const val SUBCRIPTION="api/subscription/list"
+        const val  PAYMENT="api/payment/create"
 
     }
 }

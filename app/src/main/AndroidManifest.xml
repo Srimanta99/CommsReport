@@ -3,10 +3,13 @@
     package="com.commsreport">
 
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-    <uses-permission android:name="android.permission.INTERNET"></uses-permission>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.CAMERA" />
-    <uses-feature android:name="android.hardware.camera"/>
+
+    <uses-feature android:name="android.hardware.camera" />
+
     <uses-permission-sdk-23 android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
@@ -14,25 +17,28 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
+        android:requestLegacyExternalStorage="true"
         android:roundIcon="@mipmap/ic_launcher"
         android:supportsRtl="true"
-        android:usesCleartextTraffic="true"
-        android:requestLegacyExternalStorage="true"
-        android:theme="@style/AppTheme">
-        <activity android:name=".screens.forgotpassword.ForgotPasswordActivity" >
-
-        </activity>
+        android:theme="@style/AppTheme"
+        android:usesCleartextTraffic="true">
+        <activity android:name=".screens.cardinfo.CardActivity"
+            android:screenOrientation="portrait"></activity>
+        <activity android:name=".screens.subcription.PackageActivity" />
+        <activity android:name=".screens.forgotpassword.ForgotPasswordActivity" />
         <activity android:name=".screens.login.LoginActivity" />
         <activity android:name=".screens.home.HomeActivity" />
+
+        <activity android:name=".screens.thankyoupage.ThankyouActivity"
+            android:screenOrientation="portrait"></activity>
         <activity
             android:name=".screens.splash.SplashActivity"
-            android:theme="@style/SplashTheme" >
+            android:theme="@style/SplashTheme">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-
         </activity>
     </application>
 

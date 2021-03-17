@@ -79,6 +79,14 @@ interface ApiInterface {
     @POST(NetworkUtility.User_Remove)
     fun callApifordeleteUser(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.SUBCRIPTION)
+    fun callApiforSubPackage(@Header("Authorization") token:String, @Body body: JsonObject): Call<SubCriptionPackagResponseemodel>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.PAYMENT)
+    fun callApiforpayment(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
 
 
     // @Headers("Content-Type: application/json")

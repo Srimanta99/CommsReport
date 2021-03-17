@@ -27,6 +27,9 @@ import org.json.JSONObject
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
+import java.text.SimpleDateFormat
+import java.util.*
+import kotlin.collections.ArrayList
 
 class ManageDocumentAdapter(
     val activity: HomeActivity,
@@ -58,13 +61,25 @@ class ManageDocumentAdapter(
         itemManageDocumentBinding!!.tvDownload4.setTypeface(CustomTypeface.getRajdhaniMedium(activity))
 
         itemManageDocumentBinding!!.tvDocname.setText(docList.get(position).document_name)
-        if (!docList.get(position).affected_date.equals("0000-00-00"))
-        itemManageDocumentBinding!!.tvStartDate.setText(docList.get(position).affected_date)
+        if (!docList.get(position).affected_date.equals("0000-00-00")) {
+            var spf = SimpleDateFormat("yyyy-MM-dd")
+            val newDate: Date = spf.parse(docList.get(position).affected_date)
+            spf = SimpleDateFormat("dd MMM yyyy")
+            var date:String = spf.format(newDate)
+            itemManageDocumentBinding!!.tvStartDate.setText(date)
+        }
         else
             itemManageDocumentBinding!!.llStartdate.visibility=View.GONE
 
-        if (!docList.get(position).expire_date.equals("0000-00-00"))
-           itemManageDocumentBinding!!.tvEndDate.setText(docList.get(position).expire_date)
+        if (!docList.get(position).expire_date.equals("0000-00-00")){
+            var spf = SimpleDateFormat("yyyy-MM-dd")
+            val newDate: Date = spf.parse(docList.get(position).expire_date)
+            spf = SimpleDateFormat("dd MMM yyyy")
+            var date:String = spf.format(newDate)
+            itemManageDocumentBinding!!.tvEndDate.setText(date)
+        }
+
+
         else
             itemManageDocumentBinding!!.llEnddate.visibility=View.GONE
 
@@ -77,16 +92,21 @@ class ManageDocumentAdapter(
         }
         if(docList.get(position).document_file.size==1){
             itemManageDocumentBinding!!.rlDownload1.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.llDoc1.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.llDoc2.visibility=View.GONE
         }
         if(docList.get(position).document_file.size==2){
             itemManageDocumentBinding!!.rlDownload1.visibility=View.VISIBLE
             itemManageDocumentBinding!!.rlDownload2.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.llDoc2.visibility=View.GONE
+            itemManageDocumentBinding!!.llDoc1.visibility=View.VISIBLE
 
         }
         if(docList.get(position).document_file.size==3){
             itemManageDocumentBinding!!.rlDownload1.visibility=View.VISIBLE
             itemManageDocumentBinding!!.rlDownload2.visibility=View.VISIBLE
             itemManageDocumentBinding!!.rlDownload3.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.llDoc2.visibility=View.VISIBLE
 
         }
         if(docList.get(position).document_file.size==4){
@@ -94,6 +114,7 @@ class ManageDocumentAdapter(
             itemManageDocumentBinding!!.rlDownload2.visibility=View.VISIBLE
             itemManageDocumentBinding!!.rlDownload3.visibility=View.VISIBLE
             itemManageDocumentBinding!!.rlDownload4.visibility=View.VISIBLE
+            itemManageDocumentBinding!!.llDoc2.visibility=View.VISIBLE
         }
 
         itemManageDocumentBinding!!.rlDownload1.setOnClickListener {

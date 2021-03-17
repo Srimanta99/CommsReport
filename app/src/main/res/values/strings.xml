@@ -18,4 +18,16 @@
     <string name="select_image_mode">Choose Image from </string>
     <string name="from_gallery">Select photo from gallery</string>
     <string name="from_camera">Capture photo from camera</string>
+    <string name="Entercredit">Enter your credit card details</string>
+    <string name="Cardnumber">Card number</string>
+    <string name="name">Name</string>
+    <string name="Expirydate">Expiry date</string>
+    <string name="CVV">CVV</string>
+    <string name="stripe"> stripe</string>
+    <string name="PAY">PAY</string>
+    <string name="DASHBOARD">DASHBOARD</string>
+    <string name="Poweredby">Powered by </string>
+    <string name="Note">Note : </string>
+    <string name="Forsupport">For support, Write us at </string>
+    <string name="support">support@commsapp.i0</string>
 </resources>

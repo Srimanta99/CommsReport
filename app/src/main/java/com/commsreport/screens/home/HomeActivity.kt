@@ -92,9 +92,10 @@ class HomeActivity : AppCompatActivity() {
            })
 
        if(userdata.user_type.equals("COMPANY_ADMIN")){
-           homeBinding!!.llSite.visibility=View.VISIBLE
+           homeBinding!!.llSite!!.visibility=View.VISIBLE
            homeBinding!!.llUser.visibility=View.VISIBLE
            homeBinding!!.llEmail.visibility=View.VISIBLE
+           homeBinding!!.llPayment.visibility=View.VISIBLE
 
        }
    }
@@ -119,6 +120,7 @@ class HomeActivity : AppCompatActivity() {
         homeBinding!!.tvFault.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvDocument.setTypeface(CustomTypeface.getRajdhaniMedium(this))
         homeBinding!!.tvEmail.setTypeface(CustomTypeface.getRajdhaniMedium(this))
+        homeBinding!!.tvPayment.setTypeface(CustomTypeface.getRajdhaniMedium(this))
 
     }
     /*override fun onBackPressed() {

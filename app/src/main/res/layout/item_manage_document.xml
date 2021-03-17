@@ -147,6 +147,7 @@
             </LinearLayout>
 
             <LinearLayout
+                android:id="@+id/ll_doc1"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_4sdp"
@@ -226,6 +227,7 @@
 
             </LinearLayout>
             <LinearLayout
+                android:id="@+id/ll_doc2"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginLeft="@dimen/_4sdp"

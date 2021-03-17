@@ -59,6 +59,7 @@ class CustomPopUpDialogSiteForUserSearch(context: HomeActivity?, val siteList: L
             override fun OnItemClick(position: Int) {
                // editUser.fragmentManageUserBinding!!.navFaultSearch.tvDropdownSelectsite.setText(editUser.siteList.get(position).site_name)
                 editUser.selectedSiteId=editUser.siteList.get(position).id
+                editUser.fragmentManageUserBinding!!.navFaultSearch.tvDropdownSelectsite.setText(editUser.siteList.get(position).site_name)
                 dismiss()
 
             }

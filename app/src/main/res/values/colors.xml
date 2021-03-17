@@ -26,4 +26,9 @@
     <color name="textColor">#1E3F6C</color>
     <color name="grey">#585755</color>
     <color name="seek_color1">#9A9A9A</color>
+    <color name="packtextcolor">#0417ab</color>
+    <color name="usertextcolor">#798290</color>
+
+    <color name="text_color_dark_blue">#0F297E</color>
+    <color name="text_color_light_blak">#323545</color>
 </resources>

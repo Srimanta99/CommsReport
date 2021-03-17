@@ -479,10 +479,7 @@ class DocumentUploadFragment : Fragment() {
             val cr: ContentResolver = activity!!.getContentResolver()
             cr.getType(uri)
         } else {
-            val fileExtension = MimeTypeMap.getFileExtensionFromUrl(
-                uri
-                    .toString()
-            )
+            val fileExtension = MimeTypeMap.getFileExtensionFromUrl(uri.toString())
             MimeTypeMap.getSingleton().getMimeTypeFromExtension(
                 fileExtension.toLowerCase()
             )

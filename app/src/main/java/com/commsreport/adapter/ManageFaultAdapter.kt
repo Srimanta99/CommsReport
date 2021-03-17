@@ -94,44 +94,59 @@ class ManageFaultAdapter(
                     fullscreenImageSlider!!.show(activity!!.supportFragmentManager,"")
                 }
             }
-            if (faultList.get(position).fault_files.size==1){
-                Glide.with(activity)
-                    .load(faultList.get(position).fault_files[0])
-                    .into(itemManageFaultsBinding!!.imgFault1);
-                Glide.with(activity)
-                    .load(faultList.get(position).fault_files[1])
-                    .into(itemManageFaultsBinding!!.imgFault2);
-            }
-            if (faultList.get(position).fault_files.size==3){
-                Glide.with(activity)
-                    .load(faultList.get(position).fault_files[0])
-                    .into(itemManageFaultsBinding!!.imgFault1);
-                Glide.with(activity)
-                    .load(faultList.get(position).fault_files[1])
-                    .into(itemManageFaultsBinding!!.imgFault2);
-                Glide.with(activity)
-                    .load(faultList.get(position).fault_files[2])
-                    .into(itemManageFaultsBinding!!.imgFault3);
+            if(faultList.get(position).fault_files.size>0) {
+                if (faultList.get(position).fault_files.size == 1) {
+                    Glide.with(activity)
+                        .load(faultList.get(position).fault_files[0])
+                        .into(itemManageFaultsBinding!!.imgFault1);
+                    Glide.with(activity)
+                        .load(faultList.get(position).fault_files[1])
+                        .into(itemManageFaultsBinding!!.imgFault2);
+                }
+                if (faultList.get(position).fault_files.size == 3) {
+                    Glide.with(activity)
+                        .load(faultList.get(position).fault_files[0])
+                        .into(itemManageFaultsBinding!!.imgFault1);
+                    Glide.with(activity)
+                        .load(faultList.get(position).fault_files[1])
+                        .into(itemManageFaultsBinding!!.imgFault2);
+                    Glide.with(activity)
+                        .load(faultList.get(position).fault_files[2])
+                        .into(itemManageFaultsBinding!!.imgFault3);
 
 
-            }
-            if (faultList.get(position).fault_files.size==4){
-                Glide.with(activity)
-                    .load(faultList.get(position).fault_files[0])
-                    .into(itemManageFaultsBinding!!.imgFault1);
-                Glide.with(activity)
-                    .load(faultList.get(position).fault_files[1])
-                    .into(itemManageFaultsBinding!!.imgFault2);
-                Glide.with(activity)
-                    .load(faultList.get(position).fault_files[2])
-                    .into(itemManageFaultsBinding!!.imgFault3);
-                Glide.with(activity)
-                    .load(faultList.get(position).fault_files[3])
-                    .into(itemManageFaultsBinding!!.imgFault4);
-                /*  itemManageFaultsBinding!!.imgFault1.visibility= View.VISIBLE
+                }
+                if (faultList.get(position).fault_files.size == 4) {
+                    Glide.with(activity)
+                        .load(faultList.get(position).fault_files[0])
+                        .into(itemManageFaultsBinding!!.imgFault1);
+                    Glide.with(activity)
+                        .load(faultList.get(position).fault_files[1])
+                        .into(itemManageFaultsBinding!!.imgFault2);
+                    Glide.with(activity)
+                        .load(faultList.get(position).fault_files[2])
+                        .into(itemManageFaultsBinding!!.imgFault3);
+                    Glide.with(activity)
+                        .load(faultList.get(position).fault_files[3])
+                        .into(itemManageFaultsBinding!!.imgFault4);
+                    /*  itemManageFaultsBinding!!.imgFault1.visibility= View.VISIBLE
                   itemManageFaultsBinding!!.imgFault2.visibility= View.VISIBLE
                   itemManageFaultsBinding!!.imgFault3.visibility= View.VISIBLE
                   itemManageFaultsBinding!!.imgFault4.visibility= View.VISIBLE*/
+                }
+            }else{
+                Glide.with(activity)
+                    .load("")
+                    .into(itemManageFaultsBinding!!.imgFault1);
+                Glide.with(activity)
+                    .load("")
+                    .into(itemManageFaultsBinding!!.imgFault2);
+                Glide.with(activity)
+                    .load("")
+                    .into(itemManageFaultsBinding!!.imgFault3);
+                Glide.with(activity)
+                    .load("")
+                    .into(itemManageFaultsBinding!!.imgFault4);
             }
 
             itemManageFaultsBinding!!.imgFault1.setOnClickListener {
