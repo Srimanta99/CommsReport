@@ -18,18 +18,7 @@
             android:layout_height="match_parent"
             >
 
-            <RelativeLayout
-                android:layout_width="@dimen/_135sdp"
-                android:layout_height="@dimen/_130sdp"
-                android:layout_centerHorizontal="true">
-                <ImageView
-                    android:id="@+id/imageiconid"
-                    android:layout_width="@dimen/_135sdp"
-                    android:layout_height="@dimen/_130sdp"
-                    android:background="@drawable/round_tick">
-                </ImageView>
 
-            </RelativeLayout>
             <RelativeLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -68,28 +57,35 @@
                         android:gravity="center">
 
                     </TextView>
+
                     <ImageView
                         android:layout_width="@dimen/_60sdp"
                         android:layout_height="@dimen/_60sdp"
-                        android:background="@drawable/rounded_logo"
                         android:layout_gravity="center"
-                        android:layout_marginTop="@dimen/_10sdp">
+                        android:layout_marginTop="@dimen/_10sdp"
+                        android:background="@drawable/rounded_logo">
 
                     </ImageView>
 
 
 
-
-
-
                 </LinearLayout>
-
-
 
             </RelativeLayout>
 
 
+            <RelativeLayout
+                android:layout_width="@dimen/_135sdp"
+                android:layout_height="@dimen/_130sdp"
+                android:layout_centerHorizontal="true">
+                <ImageView
+                    android:id="@+id/imageiconid"
+                    android:layout_width="@dimen/_135sdp"
+                    android:layout_height="@dimen/_130sdp"
+                    android:background="@drawable/tick">
+                </ImageView>
 
+            </RelativeLayout>
 
         </RelativeLayout>
 

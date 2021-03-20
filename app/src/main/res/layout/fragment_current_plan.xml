@@ -20,6 +20,7 @@
         android:layout_height="wrap_content"
         android:background="@drawable/selected"
         android:layout_below="@+id/tv_currentplan"
+
         android:padding="@dimen/_21sdp">
         <TextView
             android:id="@+id/tv_unlimited"
@@ -28,7 +29,7 @@
             android:textSize="@dimen/_16sdp"
             android:paddingLeft="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:text="Unlimited"></TextView>
+            android:text="NA"></TextView>
         <ImageView
             android:id="@+id/chk_unlimited_select"
             android:layout_width="wrap_content"
@@ -40,7 +41,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_unlimited"
-            android:text=" Unlimited users "
+            android:text=" 0 users "
             android:layout_marginLeft="@dimen/_5sdp"
             android:padding="@dimen/_6sdp"
             android:layout_marginTop="@dimen/_7sdp"
@@ -52,7 +53,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_unlimited"
-            android:text=" Unlimited Sites "
+            android:text=" 0 Sites "
             android:padding="@dimen/_6sdp"
             android:textSize="@dimen/_11sdp"
             android:layout_toRightOf="@+id/tv_unlimited_user"
@@ -67,7 +68,7 @@
             android:layout_height="wrap_content"
             android:layout_below="@+id/tv_unlimited_site"
             android:layout_marginTop="@dimen/_7sdp"
-            android:text="10 GBP/"
+            android:text="0 GBP/"
             android:textColor="@color/white"
             android:layout_marginLeft="@dimen/_7sdp"
             android:textSize="@dimen/_17sdp"></TextView>
@@ -128,12 +129,14 @@
         </LinearLayout>
     </RelativeLayout>
     <LinearLayout
+        android:id="@+id/lldate"
         android:layout_width="match_parent"
         android:layout_height="@dimen/_150sdp"
         android:layout_marginTop="@dimen/_16sdp"
         android:layout_marginRight="@dimen/_19sdp"
         android:layout_marginLeft="@dimen/_19sdp"
         android:layout_below="@+id/rl_unlimited"
+
         android:orientation="vertical">
         <LinearLayout
             android:layout_width="match_parent"
@@ -144,7 +147,7 @@
                 android:id="@+id/tv_subcriptiondate"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:gravity="center"
                 android:textSize="@dimen/_13sdp"
                 android:text="Subcription date"></TextView>
@@ -153,7 +156,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="12 th April, 20221"
+                android:text="N/A"
                 android:gravity="center"
                 android:paddingLeft="@dimen/_15sdp"
                 android:paddingRight="@dimen/_10sdp"
@@ -177,7 +180,7 @@
                 android:id="@+id/tv_lastbillingdate"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:gravity="center"
                 android:textSize="@dimen/_13sdp"
                 android:text="Last billing date"></TextView>
@@ -186,7 +189,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="12 th April, 20221"
+                android:text="N/A"
                 android:gravity="center"
                 android:paddingLeft="@dimen/_15sdp"
                 android:paddingRight="@dimen/_10sdp"
@@ -209,7 +212,7 @@
                 android:id="@+id/tv_next_billing_date"
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:layout_weight="1"
+                android:layout_weight="1.2"
                 android:gravity="center"
                 android:textSize="@dimen/_13sdp"
                 android:text="Next billing date"></TextView>
@@ -218,7 +221,7 @@
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
                 android:layout_weight="1"
-                android:text="12 th April, 20221"
+                android:text="N/A"
                 android:gravity="center"
                 android:paddingLeft="@dimen/_15sdp"
                 android:paddingRight="@dimen/_5sdp"

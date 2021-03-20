@@ -256,7 +256,7 @@
         android:button="@drawable/customcheckboxselectorpayment"
         android:layout_marginLeft="@dimen/_60sdp"
         android:layout_marginTop="@dimen/_15sdp"
-        android:text="  Accept our "
+        android:text="  Accept our"
         android:textSize="@dimen/_11sdp"
         android:layout_below="@+id/ll_subcription"></CheckBox>
     <TextView

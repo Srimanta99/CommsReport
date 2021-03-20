@@ -41,6 +41,7 @@ class ManageSiteFragment : Fragment() {
     var activity:HomeActivity?=null
     var siteList=ArrayList<SiteListModel.RowList>()
     var contentManageSiteBinding:ContentManageSiteBinding?=null
+    var addSite:Boolean=true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -80,7 +81,10 @@ class ManageSiteFragment : Fragment() {
 
         callApiForSiteList()
         contentManageSiteBinding!!.tvAddSite.setOnClickListener {
+            if (addSite)
             activity!!.openFragment(SiteFragment())
+            else
+                ToastAlert.CustomToastwornning(activity!!,"Please Upgrade your package")
         }
         fragmentManageSiteBinding!!.navSiteSearch.Searchsite.setOnClickListener {
             if(!fragmentManageSiteBinding!!.navSiteSearch.etsherchName.text.toString().equals("")){
@@ -114,6 +118,7 @@ class ManageSiteFragment : Fragment() {
                     if(response.code()==200) {
                         siteList.clear()
                         siteList = response.body()!!.row
+                        addSite=response.body()!!.user_add
                         if (siteList.size>0) {
                             contentManageSiteBinding!!.recManagesite.visibility=View.VISIBLE
                             contentManageSiteBinding!!.noItem.visibility=View.GONE

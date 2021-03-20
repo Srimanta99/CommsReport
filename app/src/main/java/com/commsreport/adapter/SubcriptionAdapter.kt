@@ -11,6 +11,8 @@ import com.commsreport.databinding.ItemPackageBinding
 import com.commsreport.model.SubCriptionPackagResponseemodel
 import com.commsreport.screens.fragments.subcriptionpackage.SubcriptionPackageFragment
 import com.commsreport.screens.home.HomeActivity
+import com.wecompli.utils.sheardpreference.AppSheardPreference
+import com.wecompli.utils.sheardpreference.PreferenceConstent
 
 
 class SubcriptionAdapter(
@@ -69,6 +71,7 @@ class SubcriptionAdapter(
                 }
               subcriptionPackageFragment.calladapter(position)
         }
+
         if (subCriptionPackagemodelList!!.get(position).ischeck){
             subcriptionPackageFragment.selectedPackage=subCriptionPackagemodelList!!.get(position);
             itemView!!.chkUnlimitedSelect.isChecked=true
@@ -109,6 +112,18 @@ class SubcriptionAdapter(
                 subcriptionPackageFragment.calladapter(position)
             }
         }
+       /* if (AppSheardPreference(activity).getvalue_in_preference(PreferenceConstent.selected_packageid).equals(subCriptionPackagemodelList!!.get(position).id)){
+            subcriptionPackageFragment.selectedPackage=subCriptionPackagemodelList!!.get(position);
+            itemView!!.chkUnlimitedSelect.isChecked=true
+            itemView!!.rlUnlimited.setBackgroundResource(R.drawable.selected)
+            itemView!!.tvUnlimited.setTextColor(activity!!.resources.getColor(R.color.white))
+            itemView!!.tvUnlimitedUser.setBackgroundResource(R.drawable.rectangular_rounded_shape_selecteduser_site)
+            itemView!!.tvUnlimitedUser.setTextColor(activity!!.resources.getColor(R.color.white))
+            itemView!!.tvUnlimitedSite.setBackgroundResource(R.drawable.rectangular_rounded_shape_selecteduser_site)
+            itemView!!.tvUnlimitedSite.setTextColor(activity!!.resources.getColor(R.color.white))
+            itemView!!.tvtengbp.setTextColor(activity!!.resources.getColor(R.color.white))
+            itemView!!.tvtengbppermonth.setTextColor(activity!!.resources.getColor(R.color.white))
+        }*/
 
     }
 

@@ -87,7 +87,13 @@ interface ApiInterface {
     @POST(NetworkUtility.PAYMENT)
     fun callApiforpayment(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.SUBCRIPTION_DETAILS)
+    fun callApiforsubcription(@Header("Authorization") token:String, @Body body: JsonObject): Call<SubcriptionDeatilsResponse>
 
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.FREEPACKAGE)
+    fun callApiforfreesubcription(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
 
     // @Headers("Content-Type: application/json")
     /*@POST(NetworkUtility.LOG_IN)

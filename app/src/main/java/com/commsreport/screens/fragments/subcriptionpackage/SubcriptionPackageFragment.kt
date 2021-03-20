@@ -11,6 +11,7 @@ import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.adapter.SubcriptionAdapter
 import com.commsreport.databinding.FragmentSubcriptionPackageBinding
+import com.commsreport.model.AddUserResponse
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
 import com.commsreport.model.SubCriptionPackagResponseemodel
@@ -65,14 +66,19 @@ class SubcriptionPackageFragment : Fragment() {
         fragmentSubcriptionPackageBinding!!.tvSubmit.setTypeface(CustomTypeface.getRajdhaniMedium(homeActivity!!))
          fragmentSubcriptionPackageBinding!!.tvSubmit.setOnClickListener {
              if(selectedPackage!=null) {
-                 if (selectedPackage!!.package_price.equals("0")) {
-                     callApiforUpdatePackage()
-                     val intent = Intent(homeActivity!!, ThankyouActivity::class.java)
-                     startActivity(intent)
-                 }else{
-                     val intent = Intent(homeActivity!!, PackageActivity::class.java)
-                     intent.putExtra("package", selectedPackage)
-                     startActivity(intent)
+
+                 if (AppSheardPreference(activity!!).getvalue_in_preference(PreferenceConstent.selected_packageid).equals(selectedPackage!!.id)){
+                     ToastAlert.CustomToastwornning(homeActivity!!,"Please select different package.")
+                 }else {
+                     AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_packageid,selectedPackage!!.id)
+                     if (selectedPackage!!.package_price.equals("0")) {
+                         callApiforUpdatePackage()
+
+                     } else {
+                         val intent = Intent(homeActivity!!, PackageActivity::class.java)
+                         intent.putExtra("package", selectedPackage)
+                         startActivity(intent)
+                     }
                  }
              }else{
                  ToastAlert.CustomToastwornning(homeActivity!!,"Please select package.")
@@ -81,6 +87,43 @@ class SubcriptionPackageFragment : Fragment() {
     }
 
     private fun callApiforUpdatePackage() {
+        var userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
+        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!,"Please Wait..",false)
+        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        try {
+            val paramObject = JSONObject()
+            paramObject.put("user_id",userdata!!.user_id)
+            paramObject.put("subscription_package_id",selectedPackage!!.id)
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi=apiInterface.callApiforfreesubcription(userdata!!.token,gsonObject)
+            callApi.enqueue(object : Callback<AddUserResponse> {
+                override fun onResponse(call: Call<AddUserResponse>, response: Response<AddUserResponse>) {
+                    customProgress.hideProgress()
+                    if(response.code()==200) {
+                        if(response.body()!!.status){
+                            ToastAlert.CustomToastSuccess(activity!!,response!!.body()!!.message)
+                            val intent = Intent(homeActivity!!, ThankyouActivity::class.java)
+                            intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            startActivity(intent)
+                        }
+
+                    }else if(response.code()==401){
+                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<AddUserResponse>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
 
     }
 
@@ -124,6 +167,11 @@ class SubcriptionPackageFragment : Fragment() {
                     customProgress.hideProgress()
                     if(response.code()==200) {
                     subCriptionPackagemodelList=response.body()!!.row
+                        for (i in 0 until subCriptionPackagemodelList.size){
+                            if (AppSheardPreference(activity!!).getvalue_in_preference(PreferenceConstent.selected_packageid).equals(subCriptionPackagemodelList!!.get(i).id)){
+                                subCriptionPackagemodelList.get(i).ischeck=true
+                            }
+                        }
                         subcriptionAdapter= SubcriptionAdapter(homeActivity!!,this@SubcriptionPackageFragment,subCriptionPackagemodelList)
                         fragmentSubcriptionPackageBinding!!.recSubcription.adapter=subcriptionAdapter
                     }else if(response.code()==401){

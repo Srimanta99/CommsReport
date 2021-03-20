@@ -13,6 +13,7 @@ import com.commsreport.Utils.custompopupsite.CustomPopUpDialogSiteForUserSearch
 import com.commsreport.adapter.ManageUserAdapter
 import com.commsreport.databinding.ContentManageUserBinding
 import com.commsreport.databinding.FragmentManageUserBinding
+
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
 import com.commsreport.model.SiteUserListModel
@@ -37,13 +38,14 @@ class ManageUserFragment : Fragment() {
     private var param1: String? = null
     private var param2: String? = null
     var activity:HomeActivity?=null
-    var fragmentManageUserBinding:FragmentManageUserBinding?=null
-    var contentManageUserBinding:ContentManageUserBinding?=null
+    var fragmentManageUserBinding: FragmentManageUserBinding?=null
+    var contentManageUserBinding: ContentManageUserBinding?=null
     var manaUserAdapter:ManageUserAdapter?=null
     var userList=ArrayList<SiteUserListModel.UserList>()
     var userdata:LoginResponseModel.Userdata?=null
     var siteList=ArrayList<SiteListModel.RowList>()
     var selectedSiteId:String?=""
+    var userAdd:Boolean=true
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         arguments?.let {
@@ -91,7 +93,10 @@ class ManageUserFragment : Fragment() {
         callApiForUserList()
 
         contentManageUserBinding!!.tvAddUser.setOnClickListener {
-            activity!!.openFragment(AddUserFragment())
+            if (userAdd)
+             activity!!.openFragment(AddUserFragment())
+            else
+                ToastAlert.CustomToastwornning(activity!!,"Please upgrade your package")
         }
         fragmentManageUserBinding!!.navClose.setOnClickListener {
             fragmentManageUserBinding!!.drawerLayout.closeDrawer(Gravity.RIGHT)
@@ -171,6 +176,7 @@ class ManageUserFragment : Fragment() {
 
                     if(response.code()==200) {
                         if (response.body()!!.status){
+                            userAdd=response!!.body()!!.user_add
                             userList.clear()
                             userList=response!!.body()!!.row
                             if (userList.size>0) {

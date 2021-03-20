@@ -22,7 +22,7 @@ class PackageActivity:AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
          selectedpackage = intent.getSerializableExtra("package") as? SubCriptionPackagResponseemodel.PackageItem
-        val formatter: Format = SimpleDateFormat("dd MMM, yyyy")
+        val formatter: Format = SimpleDateFormat("dd MMMM, yyyy")
         val today: String = formatter.format(Date())
         activityPackageBinding= ActivityPackageBinding.inflate(LayoutInflater.from(this))
         setContentView(activityPackageBinding!!.root)

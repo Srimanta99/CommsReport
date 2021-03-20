@@ -1,17 +1,16 @@
 package com.commsreport.screens.cardinfo
 
 import android.content.Intent
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.LayoutInflater
-import com.commsreport.R
+import androidx.appcompat.app.AppCompatActivity
 import com.commsreport.Utils.CustomTypeface
-import com.commsreport.Utils.FullscreenCountryDialog
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.databinding.ActivityCardBinding
 import com.commsreport.model.AddUserResponse
-import com.commsreport.model.CountryListModel
 import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SubCriptionPackagResponseemodel
 import com.commsreport.screens.thankyoupage.ThankyouActivity
@@ -30,6 +29,7 @@ import retrofit2.Response
 class CardActivity : AppCompatActivity() {
     var activityCardBinding:ActivityCardBinding?=null
     var selectedpackage:SubCriptionPackagResponseemodel.PackageItem?=null
+    private var lock = false
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         activityCardBinding= ActivityCardBinding.inflate(LayoutInflater.from(this))
@@ -52,6 +52,73 @@ class CardActivity : AppCompatActivity() {
         activityCardBinding!!.loginUnderline.setTypeface(CustomTypeface.getRajdhaniBold(this))
         activityCardBinding!!.tvPay.setTypeface(CustomTypeface.getRajdhaniSemiBold(this))
         activityCardBinding!!.tvHeaderText.setTypeface(CustomTypeface.getRajdhaniBold(this))
+
+        activityCardBinding!!.etExpMonth.addTextChangedListener(object : TextWatcher {
+
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(p0: Editable?) {
+                if (p0!!.length >= 2)
+                    activityCardBinding!!.etExpYear.requestFocus()
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })
+
+       /* activityCardBinding!!.etnCardnumber.addTextChangedListener(object : TextWatcher {
+            private val space = ' '
+            override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+
+            override fun afterTextChanged(s: Editable?) {
+                if (lock || s!!.length > 16) {
+                    return
+                }
+                lock = true
+
+                  for(i in 4..20 step 5 ){
+                      if (s.toString()[i] != ' ') {
+                          s.insert(i, " ");
+                      }
+
+                  }
+
+                lock = false
+                *//*  if(s!!.length%4==0)
+                {
+                    activityCardBinding!!.etnCardnumber.setText( activityCardBinding!!.etnCardnumber.getText().toString() + " ");
+                    activityCardBinding!!.etnCardnumber.setSelection(s.length)
+                }*//*
+                *//* var pos = 0
+                while (true) {
+                    if (pos >= s!!.length) break
+                    if (space === s.get(pos) && ((pos + 1) % 11 != 0 || pos + 1 == s.length)) {
+                        s.delete(pos, pos + 1)
+                    } else {
+                        pos++
+                    }
+                }
+                pos = 10
+                while (true) {
+                    if (pos >= s!!.length) break
+                    val c: Char = s!!.get(pos)
+                    if (Character.isDigit(c)) {
+                        s!!.insert(pos, "" + space)
+                    }
+                    pos += 11
+                }*//*
+            }
+
+            override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+
+            }
+        })*/
+
         activityCardBinding!!.tvPay.setOnClickListener {
             if(!activityCardBinding!!.etnCardnumber.text.toString().equals("")) {
                 if (!activityCardBinding!!.etnNameid.text.toString().equals("")) {
@@ -60,16 +127,16 @@ class CardActivity : AppCompatActivity() {
                             if (!activityCardBinding!!.etCvv.text.toString().equals("")) {
                                 callApiforpayment()
                             }else
-                                ToastAlert.CustomToastwornning(this,"Enter card cvv")
+                                ToastAlert.CustomToastwornning(this, "Enter card cvv")
                         }else
-                        ToastAlert.CustomToastwornning(this,"Enter card expiry Year")
+                        ToastAlert.CustomToastwornning(this, "Enter card expiry Year")
 
                 }else
-                        ToastAlert.CustomToastwornning(this,"Enter card expiry month")
+                        ToastAlert.CustomToastwornning(this, "Enter card expiry month")
                 }else
-                    ToastAlert.CustomToastwornning(this,"Enter card name")
+                    ToastAlert.CustomToastwornning(this, "Enter card name")
             }else
-                ToastAlert.CustomToastwornning(this,"Enter card number")
+                ToastAlert.CustomToastwornning(this, "Enter card number")
 
         }
         activityCardBinding!!.imgBack.setOnClickListener {
@@ -78,7 +145,9 @@ class CardActivity : AppCompatActivity() {
     }
 
     private fun callApiforpayment() {
-        var userdata: LoginResponseModel.Userdata? = AppSheardPreference(this!!).getUser(PreferenceConstent.userData)
+        var userdata: LoginResponseModel.Userdata? = AppSheardPreference(this!!).getUser(
+            PreferenceConstent.userData
+        )
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
         customProgress.showProgress(this, "Please Wait..", false)
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
@@ -86,25 +155,30 @@ class CardActivity : AppCompatActivity() {
 
             val paramObject = JSONObject()
             paramObject.put("user_id", userdata!!.user_id)
-            paramObject.put("subscription_package_id",selectedpackage!!.id)
-            paramObject.put("card_number",activityCardBinding!!.etnCardnumber.text.toString())
-            paramObject.put("exp_month",activityCardBinding!!.etExpMonth.text.toString())
-            paramObject.put("exp_year",activityCardBinding!!.etExpYear.text.toString())
-            paramObject.put("cvc",activityCardBinding!!.etCvv.text.toString())
+            paramObject.put("subscription_package_id", selectedpackage!!.id)
+            paramObject.put("card_number", activityCardBinding!!.etnCardnumber.text.toString())
+            paramObject.put("exp_month", activityCardBinding!!.etExpMonth.text.toString())
+            paramObject.put("exp_year", activityCardBinding!!.etExpYear.text.toString())
+            paramObject.put("cvc", activityCardBinding!!.etCvv.text.toString())
             var obj: JSONObject = paramObject
             var jsonParser: JsonParser = JsonParser()
             var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
             val callApi=apiInterface.callApiforpayment(userdata!!.token, gsonObject)
             callApi.enqueue(object : Callback<AddUserResponse> {
-                override fun onResponse(call: Call<AddUserResponse>, response: Response<AddUserResponse>) {
+                override fun onResponse(
+                    call: Call<AddUserResponse>,
+                    response: Response<AddUserResponse>
+                ) {
                     customProgress.hideProgress()
 
                     if (response.code() == 200) {
                         if (response.body()!!.status) {
+                            ToastAlert.CustomToastSuccess(this@CardActivity,response!!.body()!!.message)
                             val intent = Intent(this@CardActivity, ThankyouActivity::class.java)
+                            intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
-                        }else{
-                            Alert.showalertForUnAuthorized(this@CardActivity!!, response!!.body()!!.message)
+                        } else {
+                            Alert.showalert(this@CardActivity!!, response!!.body()!!.message)
                         }
 
 
