@@ -29,7 +29,7 @@
             android:textSize="@dimen/_16sdp"
             android:paddingLeft="@dimen/_10sdp"
             android:textColor="@color/white"
-            android:text="NA"></TextView>
+            android:text="Free"></TextView>
         <ImageView
             android:id="@+id/chk_unlimited_select"
             android:layout_width="wrap_content"

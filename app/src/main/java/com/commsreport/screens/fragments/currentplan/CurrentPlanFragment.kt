@@ -1,5 +1,6 @@
 package com.commsreport.screens.fragments.currentplan
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +13,7 @@ import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SubcriptionDeatilsResponse
 import com.commsreport.screens.fragments.subcriptionpackage.SubcriptionPackageFragment
 import com.commsreport.screens.home.HomeActivity
+import com.commsreport.screens.romovesiteuser.RemoveSiteUserActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import com.sculptee.utils.customprogress.CustomProgressDialog
@@ -131,7 +133,8 @@ class CurrentPlanFragment : Fragment() {
         )
         fragmentCurrentPlanBinding!!.tvSubmit.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentCurrentPlanBinding!!.tvSubmit.setOnClickListener {
-            activity!!.openFragment(SubcriptionPackageFragment())
+           // activity!!.openFragment(SubcriptionPackageFragment())
+            activity!!.startActivity(Intent(activity,RemoveSiteUserActivity::class.java))
         }
 
         callApiForSubcriptionList()
@@ -140,6 +143,7 @@ class CurrentPlanFragment : Fragment() {
     override fun onResume() {
         super.onResume()
         activity!!.homeBinding!!.mainView.tvHeaderText.setText("Payment")
+        activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.VISIBLE
     }
     companion object {
         @JvmStatic

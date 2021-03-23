@@ -28,6 +28,7 @@
         <activity android:name=".screens.forgotpassword.ForgotPasswordActivity" />
         <activity android:name=".screens.login.LoginActivity" />
         <activity android:name=".screens.home.HomeActivity" />
+        <activity android:name=".screens.romovesiteuser.RemoveSiteUserActivity"></activity>
 
         <activity android:name=".screens.thankyoupage.ThankyouActivity"
             android:screenOrientation="portrait"></activity>
