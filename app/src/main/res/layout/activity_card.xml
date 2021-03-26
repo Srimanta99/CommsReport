@@ -91,6 +91,7 @@
                 android:textSize="@dimen/_12sdp"
                 android:textColor="@color/text_color_light_blak"
                 android:hint="0000-0000-0000-0000"
+
                 android:paddingLeft="@dimen/_10sdp"
                 >
             </EditText>

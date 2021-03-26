@@ -133,8 +133,8 @@ class CurrentPlanFragment : Fragment() {
         )
         fragmentCurrentPlanBinding!!.tvSubmit.setTypeface(CustomTypeface.getRajdhaniMedium(activity!!))
         fragmentCurrentPlanBinding!!.tvSubmit.setOnClickListener {
-           // activity!!.openFragment(SubcriptionPackageFragment())
-            activity!!.startActivity(Intent(activity,RemoveSiteUserActivity::class.java))
+            activity!!.openFragment(SubcriptionPackageFragment())
+          //  activity!!.startActivity(Intent(activity,RemoveSiteUserActivity::class.java))
         }
 
         callApiForSubcriptionList()

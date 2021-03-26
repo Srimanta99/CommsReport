@@ -63,7 +63,7 @@ class SubcriptionAdapter(
                 for(i in 0 until  subCriptionPackagemodelList!!.size) {
                     if (i == position) {
                         subcriptionPackageFragment.subCriptionPackagemodelList!!.get(i).ischeck = true
-
+                       // AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_packageid,subCriptionPackagemodelList.get(i).id)
                     }
                     else {
                         subcriptionPackageFragment.subCriptionPackagemodelList!!.get(i).ischeck = false

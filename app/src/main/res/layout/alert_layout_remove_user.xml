@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:orientation="vertical" android:layout_width="match_parent"
+        android:layout_height="match_parent">
+    <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="@dimen/_190sdp"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="@dimen/_20sdp"
+            android:layout_marginRight="@dimen/_20sdp"
+        android:background="@drawable/rectangular_shape_white_round_corner_lightgrey_broder"
+          >
+        <ImageView
+
+            android:layout_width="@dimen/_50sdp"
+            android:layout_height="@dimen/_50sdp"
+            android:background="@drawable/alert_icon"
+            android:layout_marginTop="@dimen/_20sdp"
+            android:layout_centerHorizontal="true">
+
+        </ImageView>
+        <ImageView
+           android:id="@+id/close"
+            android:layout_width="@dimen/_15sdp"
+            android:layout_height="@dimen/_15sdp"
+            android:background="@drawable/close"
+            android:layout_margin="@dimen/_10sdp"
+          android:layout_alignParentRight="true">
+
+        </ImageView>
+        <TextView
+                android:id="@+id/tv_message"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_centerInParent="true"
+                android:textSize="@dimen/_12sdp"
+                android:gravity="center"
+                android:textColor="@color/black"
+            android:text="Do you want to delete your selected data?"
+                android:layout_margin="@dimen/_10sdp"></TextView>
+        <TextView
+            android:id="@+id/tv_note"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+           android:layout_below="@+id/tv_message"
+            android:textSize="@dimen/_12sdp"
+            android:gravity="center"
+            android:textColor="@color/black"
+            android:text=" Note:  Data will be deleted permanently"
+            ></TextView>
+        <TextView
+                android:id="@+id/btn_ok"
+                android:layout_width="@dimen/_70sdp"
+                android:layout_height="@dimen/_30sdp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/_14sdp"
+                android:text="OK"
+               android:gravity="center"
+                android:textColor="@color/white"
+                android:textSize="@dimen/_12sdp"
+               android:background="@drawable/rectangular_shape_blue"
+
+                android:layout_centerHorizontal="true"></TextView>
+    </RelativeLayout>
+
+</RelativeLayout>

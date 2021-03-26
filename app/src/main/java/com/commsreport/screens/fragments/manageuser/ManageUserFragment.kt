@@ -1,11 +1,13 @@
 package com.commsreport.screens.fragments.manageuser
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.commsreport.Utils.ApplicationConstant
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
@@ -18,6 +20,7 @@ import com.commsreport.model.LoginResponseModel
 import com.commsreport.model.SiteListModel
 import com.commsreport.model.SiteUserListModel
 import com.commsreport.screens.fragments.adduser.AddUserFragment
+import com.commsreport.screens.fragments.subcriptionpackage.SubcriptionPackageFragment
 import com.commsreport.screens.home.HomeActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -95,8 +98,13 @@ class ManageUserFragment : Fragment() {
         contentManageUserBinding!!.tvAddUser.setOnClickListener {
             if (userAdd)
              activity!!.openFragment(AddUserFragment())
-            else
-                ToastAlert.CustomToastwornning(activity!!,"Please upgrade your package")
+            else {
+                ToastAlert.CustomToastwornning(activity!!, "Please Upgrade your package")
+                Handler().postDelayed({
+                    activity!!.openFragment(SubcriptionPackageFragment())
+                }, ApplicationConstant.PAGEREDIRECTIOnTIME)
+
+            }
         }
         fragmentManageUserBinding!!.navClose.setOnClickListener {
             fragmentManageUserBinding!!.drawerLayout.closeDrawer(Gravity.RIGHT)

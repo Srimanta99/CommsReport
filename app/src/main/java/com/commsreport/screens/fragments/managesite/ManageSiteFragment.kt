@@ -1,11 +1,13 @@
 package com.commsreport.screens.fragments.managesite
 
 import android.os.Bundle
+import android.os.Handler
 import android.view.Gravity
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.commsreport.Utils.ApplicationConstant
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
@@ -14,6 +16,7 @@ import com.commsreport.databinding.ContentManageSiteBinding
 import com.commsreport.databinding.FragmentManageSiteBinding
 import com.commsreport.model.SiteListModel
 import com.commsreport.screens.fragments.site.SiteFragment
+import com.commsreport.screens.fragments.subcriptionpackage.SubcriptionPackageFragment
 import com.commsreport.screens.home.HomeActivity
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
@@ -83,8 +86,12 @@ class ManageSiteFragment : Fragment() {
         contentManageSiteBinding!!.tvAddSite.setOnClickListener {
             if (addSite)
             activity!!.openFragment(SiteFragment())
-            else
-                ToastAlert.CustomToastwornning(activity!!,"Please Upgrade your package")
+            else {
+                ToastAlert.CustomToastwornning(activity!!, "Please Upgrade your package")
+                Handler().postDelayed({
+                    activity!!.openFragment(SubcriptionPackageFragment())
+                },ApplicationConstant.PAGEREDIRECTIOnTIME)
+            }
         }
         fragmentManageSiteBinding!!.navSiteSearch.Searchsite.setOnClickListener {
             if(!fragmentManageSiteBinding!!.navSiteSearch.etsherchName.text.toString().equals("")){

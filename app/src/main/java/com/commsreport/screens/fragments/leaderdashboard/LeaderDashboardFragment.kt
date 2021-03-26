@@ -83,7 +83,7 @@ class LeaderDashboardFragment : Fragment() {
     }
     override fun onResume() {
         super.onResume()
-        activity!!.homeBinding!!.mainView.tvHeaderText.setText("Dashboard")
+        activity!!.homeBinding!!.mainView!!.tvHeaderText.setText("Dashboard")
         activity!!.homeBinding!!.mainView!!.rlheader.visibility=View.VISIBLE
     }
     companion object {

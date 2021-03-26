@@ -66,11 +66,12 @@ class PackageActivity:AppCompatActivity() {
 
         activityPackageBinding!!.tvSubmit.setOnClickListener {
             if (activityPackageBinding!!.chkterm.isChecked) {
+
                 val intent = Intent(this, CardActivity::class.java)
                 intent.putExtra("package",selectedpackage)
                 startActivity(intent)
             }else{
-                ToastAlert.CustomToastwornning(this,"accept teem and condition")
+                ToastAlert.CustomToastwornning(this,"accept term and condition")
             }
         }
         activityPackageBinding!!.imgBack.setOnClickListener {

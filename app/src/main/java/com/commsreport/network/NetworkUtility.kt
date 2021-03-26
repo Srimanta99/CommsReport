@@ -32,6 +32,9 @@ class NetworkUtility {
         const val PAYMENT="api/payment/create"
         const val SUBCRIPTION_DETAILS="api/users/subscription"
         const val FREEPACKAGE="api/payment/createfree"
+       const val CHECKUSERSUBCRIPTION="api/subscription/check/with/user"
+      const val SiteUserListForRemove="api/site/and/user/list"
+      const val REMOVEUSERSITE="api/site/and/user/remove"
 
     }
 }

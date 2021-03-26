@@ -21,7 +21,7 @@
             android:id="@+id/tv_header_text"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="Remove "
+            android:text="Confirm "
             android:textSize="@dimen/_16sdp"
             android:textColor="@color/white"
             android:gravity="center"
@@ -39,7 +39,7 @@
         <LinearLayout
             android:id="@+id/ll_usersite"
             android:layout_width="match_parent"
-            android:layout_marginTop="@dimen/_12sdp"
+            android:layout_marginTop="@dimen/_5sdp"
             android:layout_height="@dimen/_50sdp">
             <RelativeLayout
                 android:layout_width="0dp"
@@ -102,7 +102,7 @@
             ></androidx.recyclerview.widget.RecyclerView>
 
         <TextView
-            android:id="@+id/tv_pay"
+            android:id="@+id/tv_remove"
             android:layout_width="@dimen/_200sdp"
             android:layout_height="@dimen/_45sdp"
             android:text="Remove"
@@ -114,8 +114,8 @@
             android:layout_gravity="center"
             android:layout_alignParentBottom="true"
             android:layout_centerHorizontal="true"
-            android:layout_margin="@dimen/_15sdp"
-            android:layout_marginBottom="@dimen/_4sdp">
+            android:layout_margin="@dimen/_11sdp"
+           >
 
         </TextView>
 

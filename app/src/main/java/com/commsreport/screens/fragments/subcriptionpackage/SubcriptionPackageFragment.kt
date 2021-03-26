@@ -2,20 +2,20 @@ package com.commsreport.screens.fragments.subcriptionpackage
 
 import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import com.commsreport.Utils.ApplicationConstant
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
 import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.adapter.SubcriptionAdapter
 import com.commsreport.databinding.FragmentSubcriptionPackageBinding
-import com.commsreport.model.AddUserResponse
-import com.commsreport.model.LoginResponseModel
-import com.commsreport.model.SiteListModel
-import com.commsreport.model.SubCriptionPackagResponseemodel
+import com.commsreport.model.*
 import com.commsreport.screens.home.HomeActivity
+import com.commsreport.screens.romovesiteuser.RemoveSiteUserActivity
 import com.commsreport.screens.subcription.PackageActivity
 import com.commsreport.screens.thankyoupage.ThankyouActivity
 import com.google.gson.JsonObject
@@ -70,7 +70,8 @@ class SubcriptionPackageFragment : Fragment() {
                  if (AppSheardPreference(activity!!).getvalue_in_preference(PreferenceConstent.selected_packageid).equals(selectedPackage!!.id)){
                      ToastAlert.CustomToastwornning(homeActivity!!,"Please select different package.")
                  }else {
-                     AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_packageid,selectedPackage!!.id)
+                    callApiforDowngradepackage()
+                    /* AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_packageid,selectedPackage!!.id)
                      if (selectedPackage!!.package_price.equals("0")) {
                          callApiforUpdatePackage()
 
@@ -78,12 +79,63 @@ class SubcriptionPackageFragment : Fragment() {
                          val intent = Intent(homeActivity!!, PackageActivity::class.java)
                          intent.putExtra("package", selectedPackage)
                          startActivity(intent)
-                     }
+                     }*/
                  }
              }else{
                  ToastAlert.CustomToastwornning(homeActivity!!,"Please select package.")
              }
          }
+    }
+
+    private fun callApiforDowngradepackage() {
+        var userdata= AppSheardPreference(activity!!).getUser(PreferenceConstent.userData)
+        val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
+        customProgress.showProgress(activity!!,"Please Wait..",false)
+        val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
+        try {
+            val paramObject = JSONObject()
+            paramObject.put("company_id",userdata!!.company_id)
+            paramObject.put("subscription_package_id",selectedPackage!!.id)
+            var obj: JSONObject = paramObject
+            var jsonParser: JsonParser = JsonParser()
+            var gsonObject: JsonObject = jsonParser.parse(obj.toString()) as JsonObject;
+            val callApi=apiInterface.callApiforCheckUserubcription(userdata!!.token,gsonObject)
+            callApi.enqueue(object : Callback<CheckUserSubcriptionResponse> {
+                override fun onResponse(call: Call<CheckUserSubcriptionResponse>, response: Response<CheckUserSubcriptionResponse>) {
+                    customProgress.hideProgress()
+                    if(response.code()==200) {
+                        if(response.body()!!.status){
+                            if(response!!.body()!!.site_add==true && response!!.body()!!.user_add==true) {
+                               // AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_packageid, selectedPackage!!.id)
+                                if (selectedPackage!!.package_price.equals("0")) {
+                                    callApiforUpdatePackage()
+
+                                } else {
+                                    val intent = Intent(homeActivity!!, PackageActivity::class.java)
+                                    intent.putExtra("package", selectedPackage)
+                                    startActivity(intent)
+                                }
+                            }else{
+                               Alert.showalertForRemoveUser(homeActivity!!)
+
+                            }
+                        }
+
+                    }else if(response.code()==401){
+                        Alert.showalertForUnAuthorized(activity!!,"Unauthorized")
+
+                    }
+                }
+
+                override fun onFailure(call: Call<CheckUserSubcriptionResponse>, t: Throwable) {
+                    customProgress.hideProgress()
+                }
+            })
+
+        }catch (e:Exception){
+            e.printStackTrace()
+        }
+
     }
 
     private fun callApiforUpdatePackage() {
@@ -168,8 +220,10 @@ class SubcriptionPackageFragment : Fragment() {
                     if(response.code()==200) {
                     subCriptionPackagemodelList=response.body()!!.row
                         for (i in 0 until subCriptionPackagemodelList.size){
-                            if (AppSheardPreference(activity!!).getvalue_in_preference(PreferenceConstent.selected_packageid).equals(subCriptionPackagemodelList!!.get(i).id)){
+                          //  if (AppSheardPreference(activity!!).getvalue_in_preference(PreferenceConstent.selected_packageid).equals(subCriptionPackagemodelList!!.get(i).id)){
+                            if(subCriptionPackagemodelList.get(i).is_selected){
                                 subCriptionPackagemodelList.get(i).ischeck=true
+                                AppSheardPreference(activity!!).setvalue_in_preference(PreferenceConstent.selected_packageid,subCriptionPackagemodelList.get(i).id)
                             }
                         }
                         subcriptionAdapter= SubcriptionAdapter(homeActivity!!,this@SubcriptionPackageFragment,subCriptionPackagemodelList)

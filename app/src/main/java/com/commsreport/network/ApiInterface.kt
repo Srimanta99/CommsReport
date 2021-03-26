@@ -3,9 +3,6 @@ package com.wecompli.network
 import com.commsreport.model.*
 import com.google.gson.JsonObject
 
-import okhttp3.MultipartBody
-import okhttp3.RequestBody
-import okhttp3.ResponseBody
 import retrofit2.Call
 import retrofit2.http.*
 
@@ -94,6 +91,19 @@ interface ApiInterface {
     @Headers("Content-Type: application/json")
     @POST(NetworkUtility.FREEPACKAGE)
     fun callApiforfreesubcription(@Header("Authorization") token:String, @Body body: JsonObject): Call<AddUserResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.CHECKUSERSUBCRIPTION)
+    fun callApiforCheckUserubcription(@Header("Authorization") token:String, @Body body: JsonObject): Call<CheckUserSubcriptionResponse>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.SiteUserListForRemove)
+    fun callApiforsiteandUser(@Header("Authorization") token:String, @Body body: JsonObject): Call<SiteAndUserModel>
+
+    @Headers("Content-Type: application/json")
+    @POST(NetworkUtility.REMOVEUSERSITE)
+    fun callApiforRemovesiteandUser(@Header("Authorization") token:String, @Body body: JsonObject): Call<SiteAndUserModel>
+
 
     // @Headers("Content-Type: application/json")
     /*@POST(NetworkUtility.LOG_IN)

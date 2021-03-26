@@ -82,6 +82,7 @@
                     android:layout_weight=".05"></TextView>
 
                 <LinearLayout
+                    android:id="@+id/ll_item"
                     android:layout_width="0dp"
                     android:layout_height="match_parent"
                     android:layout_marginLeft="@dimen/_5sdp"
@@ -95,7 +96,7 @@
                         android:layout_width="match_parent"
                         android:layout_height="@dimen/_35sdp">
                         <TextView
-                            android:id="@+id/tvusename"
+                            android:id="@+id/tvsitename"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:text="United kindom"
@@ -106,6 +107,7 @@
                             android:textColor="@color/black"
                             android:padding="@dimen/_3sdp"></TextView>
                         <CheckBox
+                            android:id="@+id/chk_select"
                             android:layout_width="@dimen/_25sdp"
                             android:layout_height="@dimen/_25sdp"
                             android:layout_centerVertical="true"
@@ -125,18 +127,18 @@
                             android:text=" User 0 "
                             android:layout_marginLeft="@dimen/_5sdp"
                             android:padding="@dimen/_6sdp"
-
+                            android:textColor="#1E3F6C"
                             android:textSize="@dimen/_11sdp"
                             android:background="@drawable/rectangular_shape_white_round_corner_lightgrey_broder"></TextView>
                         <TextView
-                            android:id="@+id/tv_sitecount"
+                            android:id="@+id/tv_faultcount"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_below="@+id/tv_unlimited"
                             android:text=" Fault 0 "
                             android:padding="@dimen/_6sdp"
                             android:textSize="@dimen/_11sdp"
-
+                            android:textColor="#1E3F6C"
                             android:layout_marginLeft="@dimen/_8sdp"
                             android:background="@drawable/rectangular_shape_white_round_corner_lightgrey_broder"></TextView>
 
@@ -151,7 +153,8 @@
                            android:layout_width="wrap_content"
                            android:layout_height="wrap_content"
                            android:textSize="@dimen/_12sdp"
-                           android:text="Created at :"></TextView>
+                           android:textColor="#1E3F6C"
+                           android:text="Created at: "></TextView>
                        <TextView
                            android:id="@+id/tv_created_date"
                            android:layout_width="wrap_content"

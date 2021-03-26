@@ -27,7 +27,7 @@ import retrofit2.Callback
 import retrofit2.Response
 
 class CardActivity : AppCompatActivity() {
-    var activityCardBinding:ActivityCardBinding?=null
+    var activityCardBinding: ActivityCardBinding?=null
     var selectedpackage:SubCriptionPackagResponseemodel.PackageItem?=null
     private var lock = false
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -69,55 +69,31 @@ class CardActivity : AppCompatActivity() {
             }
         })
 
-       /* activityCardBinding!!.etnCardnumber.addTextChangedListener(object : TextWatcher {
+        activityCardBinding!!.etnCardnumber.addTextChangedListener(object : TextWatcher {
             private val space = ' '
+            var len: kotlin.Int = 0
             override fun onTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
-
+                val str: String = activityCardBinding!!.etnCardnumber.getText().toString()
+                if ((str.length == 4 && len < str.length) || (str.length == 9 && len < str.length) || (str.length == 14 && len < str.length)) {
+                    //checking length  for backspace.
+                    activityCardBinding!!.etnCardnumber.setText(
+                        activityCardBinding!!.etnCardnumber.getText().toString() + "-"
+                    );
+                    //append space
+                    activityCardBinding!!.etnCardnumber.setSelection(activityCardBinding!!.etnCardnumber.text.length)
+                }
             }
 
             override fun afterTextChanged(s: Editable?) {
-                if (lock || s!!.length > 16) {
-                    return
-                }
-                lock = true
 
-                  for(i in 4..20 step 5 ){
-                      if (s.toString()[i] != ' ') {
-                          s.insert(i, " ");
-                      }
-
-                  }
-
-                lock = false
-                *//*  if(s!!.length%4==0)
-                {
-                    activityCardBinding!!.etnCardnumber.setText( activityCardBinding!!.etnCardnumber.getText().toString() + " ");
-                    activityCardBinding!!.etnCardnumber.setSelection(s.length)
-                }*//*
-                *//* var pos = 0
-                while (true) {
-                    if (pos >= s!!.length) break
-                    if (space === s.get(pos) && ((pos + 1) % 11 != 0 || pos + 1 == s.length)) {
-                        s.delete(pos, pos + 1)
-                    } else {
-                        pos++
-                    }
-                }
-                pos = 10
-                while (true) {
-                    if (pos >= s!!.length) break
-                    val c: Char = s!!.get(pos)
-                    if (Character.isDigit(c)) {
-                        s!!.insert(pos, "" + space)
-                    }
-                    pos += 11
-                }*//*
             }
 
             override fun beforeTextChanged(p0: CharSequence?, p1: Int, p2: Int, p3: Int) {
+                val str: String = activityCardBinding!!.etnCardnumber.getText().toString()
+                len = str.length
 
             }
-        })*/
+        })
 
         activityCardBinding!!.tvPay.setOnClickListener {
             if(!activityCardBinding!!.etnCardnumber.text.toString().equals("")) {
@@ -145,18 +121,16 @@ class CardActivity : AppCompatActivity() {
     }
 
     private fun callApiforpayment() {
-        var userdata: LoginResponseModel.Userdata? = AppSheardPreference(this!!).getUser(
-            PreferenceConstent.userData
-        )
+        var userdata: LoginResponseModel.Userdata? = AppSheardPreference(this!!).getUser(PreferenceConstent.userData)
         val  customProgress: CustomProgressDialog = CustomProgressDialog().getInstance()
         customProgress.showProgress(this, "Please Wait..", false)
         val apiInterface= Retrofit.retrofitInstance?.create(ApiInterface::class.java)
         try {
-
+           var cardno=removeChr(activityCardBinding!!.etnCardnumber.text.toString(),'-')
             val paramObject = JSONObject()
             paramObject.put("user_id", userdata!!.user_id)
             paramObject.put("subscription_package_id", selectedpackage!!.id)
-            paramObject.put("card_number", activityCardBinding!!.etnCardnumber.text.toString())
+            paramObject.put("card_number", cardno)
             paramObject.put("exp_month", activityCardBinding!!.etExpMonth.text.toString())
             paramObject.put("exp_year", activityCardBinding!!.etExpYear.text.toString())
             paramObject.put("cvc", activityCardBinding!!.etCvv.text.toString())
@@ -173,9 +147,13 @@ class CardActivity : AppCompatActivity() {
 
                     if (response.code() == 200) {
                         if (response.body()!!.status) {
-                            ToastAlert.CustomToastSuccess(this@CardActivity,response!!.body()!!.message)
+                            ToastAlert.CustomToastSuccess(
+                                this@CardActivity,
+                                response!!.body()!!.message
+                            )
                             val intent = Intent(this@CardActivity, ThankyouActivity::class.java)
-                            intent.flags=Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                            intent.flags =
+                                Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
                             startActivity(intent)
                         } else {
                             Alert.showalert(this@CardActivity!!, response!!.body()!!.message)
@@ -197,5 +175,16 @@ class CardActivity : AppCompatActivity() {
             e.printStackTrace()
         }
 
+    }
+    fun removeChr(str: String, x: Char): String? {
+        val strBuilder = StringBuilder()
+        val rmString = str.toCharArray()
+        for (i in rmString.indices) {
+            if (rmString[i] == x) {
+            } else {
+                strBuilder.append(rmString[i])
+            }
+        }
+        return strBuilder.toString()
     }
 }
