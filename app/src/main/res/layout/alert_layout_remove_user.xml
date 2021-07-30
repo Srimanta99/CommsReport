@@ -4,13 +4,14 @@
         android:layout_height="match_parent">
     <RelativeLayout
             android:layout_width="wrap_content"
-            android:layout_height="@dimen/_190sdp"
+            android:layout_height="@dimen/_210sdp"
             android:layout_centerVertical="true"
             android:layout_marginLeft="@dimen/_20sdp"
             android:layout_marginRight="@dimen/_20sdp"
         android:background="@drawable/rectangular_shape_white_round_corner_lightgrey_broder"
           >
         <ImageView
+            android:id="@+id/imgicon"
 
             android:layout_width="@dimen/_50sdp"
             android:layout_height="@dimen/_50sdp"
@@ -19,7 +20,7 @@
             android:layout_centerHorizontal="true">
 
         </ImageView>
-        <ImageView
+       <!-- <ImageView
            android:id="@+id/close"
             android:layout_width="@dimen/_15sdp"
             android:layout_height="@dimen/_15sdp"
@@ -27,17 +28,18 @@
             android:layout_margin="@dimen/_10sdp"
           android:layout_alignParentRight="true">
 
-        </ImageView>
+        </ImageView>-->
         <TextView
                 android:id="@+id/tv_message"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerInParent="true"
+              android:layout_below="@+id/imgicon"
                 android:textSize="@dimen/_12sdp"
                 android:gravity="center"
                 android:textColor="@color/black"
-            android:text="Do you want to delete your selected data?"
-                android:layout_margin="@dimen/_10sdp"></TextView>
+            android:text="Do you want to continue?"
+              android:layout_marginTop="@dimen/_11sdp"
+                ></TextView>
         <TextView
             android:id="@+id/tv_note"
             android:layout_width="match_parent"
@@ -45,10 +47,60 @@
            android:layout_below="@+id/tv_message"
             android:textSize="@dimen/_12sdp"
             android:gravity="center"
+            android:layout_marginTop="@dimen/_7sdp"
+            android:paddingLeft="@dimen/_7sdp"
+            android:paddingRight="@dimen/_7sdp"
             android:textColor="@color/black"
             android:text=" Note:  Data will be deleted permanently"
             ></TextView>
-        <TextView
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/_30sdp"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal"
+            android:layout_marginBottom="@dimen/_14sdp">
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/btn_ok"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentBottom="true"
+                    android:text="Confirm"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"
+                    android:gravity="center"
+                    android:background="@drawable/rectangular_shape_blue"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="@dimen/_10sdp"
+                    ></TextView>
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="1">
+                <TextView
+                    android:id="@+id/close"
+                    android:layout_width="@dimen/_70sdp"
+                    android:layout_height="@dimen/_30sdp"
+                    android:layout_alignParentBottom="true"
+                    android:text="Cancel"
+                    android:textAllCaps="false"
+                    android:textColor="@color/white"
+                    android:textSize="@dimen/_12sdp"
+                    android:background="@drawable/rectangular_shape_red"
+                    android:layout_alignParentLeft="true"
+                    android:gravity="center"
+                    android:layout_marginLeft="@dimen/_10sdp"
+                    ></TextView>
+            </RelativeLayout>
+
+        </LinearLayout>
+
+      <!--  <TextView
                 android:id="@+id/btn_ok"
                 android:layout_width="@dimen/_70sdp"
                 android:layout_height="@dimen/_30sdp"
@@ -60,7 +112,7 @@
                 android:textSize="@dimen/_12sdp"
                android:background="@drawable/rectangular_shape_blue"
 
-                android:layout_centerHorizontal="true"></TextView>
+                android:layout_centerHorizontal="true"></TextView>-->
     </RelativeLayout>
 
 </RelativeLayout>

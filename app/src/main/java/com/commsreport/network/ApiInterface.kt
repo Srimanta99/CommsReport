@@ -11,6 +11,9 @@ interface ApiInterface {
     @POST(NetworkUtility.LOGIN)
     fun callLogInApi(@Body body: JsonObject): Call<LoginResponseModel>
 
+    @POST(NetworkUtility.FORGOTPASSWORD)
+    fun callLogForgotPassword(@Body body: JsonObject): Call<AddUserResponse>
+
     @Headers("Content-Type: application/json")
     @POST(NetworkUtility.SITELIST)
     fun callSiteListApi(@Header("Authorization") token:String,@Body body: JsonObject): Call<SiteListModel>

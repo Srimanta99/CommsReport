@@ -85,5 +85,12 @@ class RemoveSiteAdapter(
     override fun getItemCount(): Int {
         return  row_site!!.size;
     }
+    override fun getItemId(position: Int): Long {
+        return position.toLong()
+    }
+
+    override fun getItemViewType(position: Int): Int {
+        return position
+    }
 
 }

@@ -7,6 +7,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.commsreport.R
 import com.commsreport.Utils.CustomTypeface
 import com.commsreport.Utils.alert.Alert
+import com.commsreport.Utils.alert.ToastAlert
 import com.commsreport.adapter.RemoveSiteAdapter
 import com.commsreport.adapter.RemoveUserAdapter
 import com.commsreport.databinding.ActivittyRemoveUserSiteBinding
@@ -69,13 +70,17 @@ class RemoveSiteUserActivity:AppCompatActivity() {
             finish()
         }
         activittyRemoveUserSiteBinding!!.tvRemove.setOnClickListener {
-            callApiforUserSiteRemove();
+            if(seletedUser.size>0 || selectedSite.size>0)
+            Alert.showalertForConfirmRemoveUser(this)
+            else
+                ToastAlert.CustomToastwornning(this,"Select user and site for remove from list")
+        //    callApiforUserSiteRemove();
 
         }
         callApiforDowngradepackage()
     }
 
-    private fun callApiforUserSiteRemove() {
+    public fun callApiforUserSiteRemove() {
         var userString=""
         var siteString=""
         var userdata= AppSheardPreference(this).getUser(PreferenceConstent.userData)
@@ -85,7 +90,7 @@ class RemoveSiteUserActivity:AppCompatActivity() {
         try {
 
             val userarr: Array<String> = seletedUser.toArray(arrayOfNulls<String>(seletedUser.size))
-            val sitearr: Array<String> = seletedUser.toArray(arrayOfNulls<String>(selectedSite.size))
+            val sitearr: Array<String> = selectedSite.toArray(arrayOfNulls<String>(selectedSite.size))
 
             for (s in userarr)
               userString=userString+","+s

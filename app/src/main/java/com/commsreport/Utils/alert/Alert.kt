@@ -142,11 +142,12 @@ class Alert {
             val tv_message: TextView = view.findViewById(R.id.tv_message)
             val btn_ok: TextView = view.findViewById(R.id.btn_ok)
             val tvnote:TextView=view.findViewById(R.id.tv_note)
-            val close:ImageView=view.findViewById(R.id.close)
+            val close:TextView=view.findViewById(R.id.close)
             btn_ok.typeface = CustomTypeface.getRajdhaniMedium(activity)
+            btn_ok.setText("Continue")
             tv_message.typeface = CustomTypeface.getRajdhaniMedium(activity)
             tvnote.typeface = CustomTypeface.getRajdhaniMedium(activity)
-            val textnote="<font color=#FE0100>Note: </font> <font color=#1E3F6C> Data will be deleted permanently</font>";
+            val textnote="<font color=#FE0100>Note: </font> <font color=#1E3F6C>  In order to downgrade your package, you have to remove sites and users from your list to match with your selected package.</font>";
             tvnote!!.setText(Html.fromHtml(textnote))
             btn_ok.setOnClickListener {
                 alertDialog.dismiss()
@@ -165,7 +166,46 @@ class Alert {
                 DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
             alertDialog.show()*/
         }
+        fun showalertForConfirmRemoveUser(activity: RemoveSiteUserActivity) {
+            //  var deviceResolution:DeviceResolution?=null
+            val alertDialog = Dialog(activity, R.style.Transparent)
+            /*alertDialog.setTitle(activity.resources.getString(R.string.app_name))
+            alertDialog.setMessage(message)*/
+            alertDialog.requestWindowFeature(Window.FEATURE_NO_TITLE)
+            val view: View = LayoutInflater.from(activity).inflate(R.layout.alert_layout_remove_user, null)
+            alertDialog.setContentView(view)
+            alertDialog.setCancelable(false)
+            val tv_message: TextView = view.findViewById(R.id.tv_message)
+            val btn_ok: TextView = view.findViewById(R.id.btn_ok)
+            val tvnote:TextView=view.findViewById(R.id.tv_note)
+            val close:TextView=view.findViewById(R.id.close)
+            btn_ok.typeface = CustomTypeface.getRajdhaniMedium(activity)
+
+            tv_message.typeface = CustomTypeface.getRajdhaniMedium(activity)
+            tvnote.typeface = CustomTypeface.getRajdhaniMedium(activity)
+            val textnote="<font color=#FE0100>Note: </font> <font color=#1E3F6C>  Data will be deleted permanently.</font>";
+            tvnote!!.setText(Html.fromHtml(textnote))
+            btn_ok.setOnClickListener {
+                alertDialog.dismiss()
+                activity.callApiforUserSiteRemove()
+
+            }
+            close.setOnClickListener {
+                alertDialog.dismiss()
+            }
+            //  tv_message.setText(message)
+
+
+            alertDialog.show()
+            /*alertDialog.setButton(AlertDialog.BUTTON_NEUTRAL, "OK",
+                DialogInterface.OnClickListener { dialog, which -> dialog.dismiss() })
+            alertDialog.show()*/
+        }
     }
+
+
+
+
 
 
 

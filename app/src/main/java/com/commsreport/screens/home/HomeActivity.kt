@@ -62,6 +62,7 @@ class HomeActivity : AppCompatActivity() {
             }
          homeBinding!!.drawerLayout!!.addDrawerListener(actionBarDrawerToggle)
          setTypeface();
+         getCurrentVersion()
          setuserdata();
          openFragment(LeaderDashboardFragment())
     }
@@ -188,9 +189,7 @@ class HomeActivity : AppCompatActivity() {
 
             if (onlineVersion != null && !onlineVersion.isEmpty()) {
 
-                if (java.lang.Float.valueOf(currentVersion!!) < java.lang.Float.valueOf(
-                        onlineVersion
-                    )) {
+                if (java.lang.Float.valueOf(currentVersion!!) < java.lang.Float.valueOf(onlineVersion)) {
                     //show anything
                     showUpdateDialog()
                 }

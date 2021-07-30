@@ -35,6 +35,7 @@ class NetworkUtility {
        const val CHECKUSERSUBCRIPTION="api/subscription/check/with/user"
       const val SiteUserListForRemove="api/site/and/user/list"
       const val REMOVEUSERSITE="api/site/and/user/remove"
+      const val  FORGOTPASSWORD="api/user/forgot-password"
 
     }
 }
